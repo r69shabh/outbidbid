@@ -985,23 +985,24 @@
 
   // Check for returning payment redirect
   const q = new URLSearchParams(location.search);
-  const sid = q.get('session_id') || q.get('payment_id') || q.get('invoice_id');
+  const sid = q.get('session_id') || q.get('payment_id') || q.get('invoice_id') || q.get('bid_id');
   const isPaid = q.get('paid') === '1' || !!sid;
 
   if (isPaid) {
     toast('Syncing your bid into the leaderboard…', '⏳', 'syncing', 8000);
     (async () => {
-      if (sid) {
-        for (let i = 0; i < 6; i++) {
-          try {
-            const param = q.get('payment_id') || q.get('invoice_id') ? 'payment_id=' : 'session_id=';
-            const r = await fetch(`/api/confirm?${param}${encodeURIComponent(sid)}`);
-            const d = await r.json();
-            if (d.paid) break;
-          } catch(e) {}
-          await new Promise(r => setTimeout(r, 1500));
-        }
-      } else {
+      const confirmParam = q.get('bid_id')
+        ? `bid_id=${encodeURIComponent(q.get('bid_id'))}`
+        : (q.get('payment_id') || q.get('invoice_id')
+            ? `payment_id=${encodeURIComponent(sid)}`
+            : (sid ? `session_id=${encodeURIComponent(sid)}` : 'paid=1'));
+
+      for (let i = 0; i < 6; i++) {
+        try {
+          const r = await fetch(`/api/confirm?${confirmParam}`);
+          const d = await r.json();
+          if (d.paid) break;
+        } catch(e) {}
         await new Promise(r => setTimeout(r, 1200));
       }
       await load();

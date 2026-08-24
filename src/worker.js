@@ -413,7 +413,7 @@ async function createDodoCheckout(env, { requestOrigin, bidId, amountCents, labe
   // whole-dollar multiples of the $1 "Outbidbid Bid" product.
   const session = await dodoClient(env).checkoutSessions.create({
     product_cart: [{ product_id: env.DODO_PRODUCT_ID, quantity: amountCents / 100 }],
-    return_url: `${requestOrigin}/?paid=1`,
+    return_url: `${requestOrigin}/?paid=1&bid_id=${bidId}`,
     metadata: { bid_id: String(bidId), label: label || 'Outbidbid Bid' },
   });
   if (!session?.checkout_url || !session?.session_id) {
@@ -601,7 +601,28 @@ async function handleDemoPay(request, env) {
 // Server-side confirmation: thanks page calls this with the provider session id.
 // Stripe ids start with cs_, Dodo ids with cks_ — routed accordingly.
 async function handleConfirm(request, env, url) {
-  const sessionId = url.searchParams.get('session_id');
+  let sessionId = url.searchParams.get('session_id');
+  const bidIdParam = url.searchParams.get('bid_id');
+
+  if (!sessionId && bidIdParam) {
+    const bid = await env.DB.prepare('SELECT provider_ref, provider FROM bids WHERE id = ?')
+      .bind(Number(bidIdParam))
+      .first();
+    if (bid?.provider_ref) {
+      sessionId = bid.provider_ref;
+    }
+  }
+
+  if (!sessionId) {
+    // Fallback: check latest pending bid from the last 15 minutes
+    const recent = await env.DB.prepare("SELECT provider_ref, id FROM bids WHERE status = 'pending' AND created_at > ? ORDER BY id DESC LIMIT 1")
+      .bind(now() - 900)
+      .first();
+    if (recent?.provider_ref) {
+      sessionId = recent.provider_ref;
+    }
+  }
+
   if (!sessionId) return json({ error: 'missing_session_id' }, 400);
 
   // NOWPayments returns payment_id (and sometimes invoice params) on success_url
