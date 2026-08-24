@@ -4,7 +4,7 @@
   "private": true,
   "description": "Bid-to-rank leaderboard for bid-to-rank boards. Outbid the outbidders.",
   "scripts": {
-    "dev": "wrangler dev --port 8788",
+    "dev": "wrangler dev --port 3000",
     "setup:local": "wrangler d1 execute outbidbid --local --file=schema.sql",
     "db:init:remote": "wrangler d1 execute outbidbid --remote --file=schema.sql",
     "deploy": "wrangler deploy"

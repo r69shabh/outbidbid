@@ -13,6 +13,7 @@
       "database_id": "97087313-2a79-4ac3-b6dd-e6840eff86c7"
     }
   ],
+  "workers_dev": true,
   "routes": [
     { "pattern": "outbidbid.lol", "custom_domain": true }
   ],
@@ -21,6 +22,20 @@
     "DODO_BASE": "https://test.dodopayments.com",
     "DODO_PRODUCT_ID": "pdt_0Nm2RvrIp9B6H5GqDB1Ai"
   },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "PRESENCE",
+        "class_name": "PresenceTracker"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["PresenceTracker"]
+    }
+  ],
   "observability": {
     "enabled": true
   }

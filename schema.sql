@@ -28,3 +28,18 @@ CREATE TABLE IF NOT EXISTS bids (
 
 CREATE INDEX IF NOT EXISTS idx_bids_site ON bids(site_id, status, paid_at);
 CREATE INDEX IF NOT EXISTS idx_bids_ref  ON bids(provider_ref);
+
+-- Analytics & Real-Time Presence
+CREATE TABLE IF NOT EXISTS page_views (
+  id         INTEGER PRIMARY KEY AUTOINCREMENT,
+  visitor_id TEXT NOT NULL,
+  created_at INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS presence (
+  visitor_id TEXT PRIMARY KEY,
+  last_seen  INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_presence_last_seen ON presence(last_seen);
+CREATE INDEX IF NOT EXISTS idx_page_views_created ON page_views(created_at);

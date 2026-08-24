@@ -1,6 +1,7 @@
 // Outbidbid — the bid-to-rank board for bid-to-rank boards.
 // Cloudflare Worker + D1. Payments via Dodo Payments official SDK. No other dependencies.
 
+import { DurableObject } from 'cloudflare:workers';
 import DodoPayments from 'dodopayments';
 
 const MIN_BID_CENTS = 100;              // $1 minimum
@@ -8,6 +9,8 @@ const MAX_BID_CENTS = 1_000_000;        // $10,000 cap per bid
 const BID_WINDOW_SECONDS = 30 * 86400;  // bids count toward rank for 30 days
 const PENDING_TTL_SECONDS = 86400;      // unpaid bids abandoned after 24h
 const MAX_SITES_RETURNED = 200;
+const ONLINE_WINDOW_SECONDS = 65;       // presence window (page polls every 10s)
+const VID_COOKIE = 'obb_vid';
 
 const DODO_BASES = {
   test_mode: 'https://test.dodopayments.com',
@@ -58,6 +61,56 @@ function parseSiteUrl(raw) {
   return { url: u.origin, host };
 }
 
+// ---------- presence & page view tracking ----------
+
+function getVisitorId(request) {
+  const cookieHeader = request.headers.get('cookie') || '';
+  const match = cookieHeader.match(/obb_vid=([^;]+)/);
+  if (match && match[1] && match[1].length >= 8) {
+    return { vid: match[1], isNew: false };
+  }
+  const vid = 'v_' + crypto.randomUUID().replace(/-/g, '').slice(0, 16);
+  return { vid, isNew: true };
+}
+
+async function recordPresenceAndView(env, request) {
+  const { vid, isNew } = getVisitorId(request);
+  const t = now();
+  const cutoff = t - ONLINE_WINDOW_SECONDS;
+
+  // Track active presence
+  try {
+    await env.DB.prepare(
+      `INSERT INTO presence (visitor_id, last_seen) VALUES (?1, ?2)
+       ON CONFLICT(visitor_id) DO UPDATE SET last_seen = ?2`
+    ).bind(vid, t).run();
+
+    // Occasional cleanup of stale presence rows
+    if (Math.random() < 0.05) {
+      await env.DB.prepare('DELETE FROM presence WHERE last_seen < ?').bind(cutoff - 300).run();
+    }
+  } catch (e) {
+    console.warn('Presence track error:', e);
+  }
+
+  // Track unique page view (once per 30 minutes per visitor)
+  try {
+    const recent = await env.DB.prepare(
+      'SELECT id FROM page_views WHERE visitor_id = ? AND created_at > ? LIMIT 1'
+    ).bind(vid, t - 1800).first();
+
+    if (!recent) {
+      await env.DB.prepare(
+        'INSERT INTO page_views (visitor_id, created_at) VALUES (?, ?)'
+      ).bind(vid, t).run();
+    }
+  } catch (e) {
+    console.warn('Page view track error:', e);
+  }
+
+  return { vid, isNew };
+}
+
 // ---------- leaderboard ----------
 
 async function getLeaderboard(env) {
@@ -90,6 +143,42 @@ async function getLeaderboard(env) {
     .bind(cutoff)
     .first();
 
+  let onlineCount = 1;
+  let viewCount = 1;
+
+  if (env.PRESENCE) {
+    try {
+      const id = env.PRESENCE.idFromName('global');
+      const stub = env.PRESENCE.get(id);
+      const res = await stub.fetch('http://presence/stats?hit=1');
+      if (res.ok) {
+        const stats = await res.json();
+        onlineCount = stats.online;
+        viewCount = stats.views;
+      }
+    } catch (err) {
+      console.warn('Presence DO query error:', err);
+    }
+  } else {
+    try {
+      const presenceRow = await env.DB.prepare(
+        'SELECT COUNT(*) AS count FROM presence WHERE last_seen >= ?'
+      ).bind(now() - ONLINE_WINDOW_SECONDS).first();
+      if (presenceRow && typeof presenceRow.count === 'number') {
+        onlineCount = Math.max(1, presenceRow.count);
+      }
+
+      const viewsRow = await env.DB.prepare(
+        'SELECT COUNT(*) AS count FROM page_views'
+      ).first();
+      if (viewsRow && typeof viewsRow.count === 'number') {
+        viewCount = Math.max(1, viewsRow.count);
+      }
+    } catch (err) {
+      console.warn('Analytics query error:', err);
+    }
+  }
+
   const sites = sitesRes.results.map((s, i) => ({
     rank: s.total_cents > 0 ? i + 1 : null,
     id: s.id,
@@ -115,6 +204,8 @@ async function getLeaderboard(env) {
     window_days: BID_WINDOW_SECONDS / 86400,
     sites,
     recent_bids: recentRes.results,
+    online_count: onlineCount,
+    view_count: viewCount,
   };
 }
 
@@ -550,11 +641,17 @@ async function handleConfirm(request, env, url) {
   } catch (e) {
     return json({ error: 'dodo_lookup_failed', detail: String(e?.message ?? e).slice(0, 120) }, 502);
   }
-  if (session?.payment_status === 'paid') {
+  const isPaid =
+    session?.payment_status === 'paid' ||
+    session?.payment_status === 'succeeded' ||
+    session?.status === 'succeeded' ||
+    session?.status === 'complete';
+
+  if (isPaid) {
     const result = await markPaid(env, { ref: sessionId });
     return json({ paid: true, ...result });
   }
-  return json({ paid: false, status: session?.payment_status ?? 'unknown' });
+  return json({ paid: false, status: session?.payment_status ?? session?.status ?? 'unknown' });
 }
 
 async function handleDodoWebhook(request, env) {
@@ -742,6 +839,78 @@ async function handleAdmin(request, env) {
   }
 }
 
+// ---------- PresenceTracker Durable Object (Cloudflare Native Real-Time) ----------
+
+export class PresenceTracker extends DurableObject {
+  constructor(ctx, env) {
+    super(ctx, env);
+    this.ctx = ctx;
+    this.storage = ctx.storage;
+    this.env = env;
+  }
+
+  async fetch(request) {
+    const url = new URL(request.url);
+
+    // WebSocket connection for real-time presence
+    if (request.headers.get('Upgrade') === 'websocket') {
+      const pair = new WebSocketPair();
+      const [client, server] = Object.values(pair);
+
+      if (this.ctx.acceptWebSocket) {
+        this.ctx.acceptWebSocket(server);
+      } else {
+        server.accept();
+      }
+
+      let views = (await this.storage.get('views')) || 0;
+      views++;
+      await this.storage.put('views', views);
+
+      const sockets = this.ctx.getWebSockets ? this.ctx.getWebSockets() : [];
+      const count = Math.max(1, sockets.length);
+      this.broadcast(JSON.stringify({ type: 'presence', online: count, views }));
+
+      return new Response(null, { status: 101, webSocket: client });
+    }
+
+    if (url.pathname.endsWith('/stats')) {
+      let views = (await this.storage.get('views')) || 0;
+      if (url.searchParams.get('hit') === '1') {
+        views++;
+        await this.storage.put('views', views);
+      }
+      const sockets = this.ctx.getWebSockets ? this.ctx.getWebSockets() : [];
+      const count = Math.max(1, sockets.length);
+      return new Response(JSON.stringify({ online: count, views: Math.max(1, views) }), {
+        headers: { 'content-type': 'application/json' },
+      });
+    }
+
+    return new Response('Not found', { status: 404 });
+  }
+
+  async webSocketClose(ws, code, reason, wasClean) {
+    const sockets = this.ctx.getWebSockets ? this.ctx.getWebSockets() : [];
+    const count = Math.max(1, sockets.length);
+    const views = (await this.storage.get('views')) || 1;
+    this.broadcast(JSON.stringify({ type: 'presence', online: count, views }));
+  }
+
+  async webSocketError(ws, error) {
+    try { ws.close(); } catch (e) {}
+  }
+
+  broadcast(message) {
+    if (!this.ctx.getWebSockets) return;
+    for (const ws of this.ctx.getWebSockets()) {
+      try {
+        ws.send(message);
+      } catch (e) {}
+    }
+  }
+}
+
 // ---------- entry ----------
 
 export default {
@@ -749,19 +918,43 @@ export default {
     const url = new URL(request.url);
     const { pathname } = url;
 
+    // Track active presence and page view
+    let visitorInfo = { vid: '', isNew: false };
+    try {
+      visitorInfo = await recordPresenceAndView(env, request);
+    } catch (e) {
+      console.warn('Analytics tracking error:', e);
+    }
+
+    const attachCookies = (res) => {
+      if (visitorInfo.isNew && visitorInfo.vid) {
+        res.headers.append(
+          'Set-Cookie',
+          `${VID_COOKIE}=${visitorInfo.vid}; Path=/; Max-Age=31536000; SameSite=Lax; HttpOnly`
+        );
+      }
+      return res;
+    };
+
     if (pathname.startsWith('/api/')) {
       try {
+        if (pathname === '/api/presence') {
+          if (!env.PRESENCE) return json({ error: 'presence_not_configured' }, 501);
+          const id = env.PRESENCE.idFromName('global');
+          const stub = env.PRESENCE.get(id);
+          return stub.fetch(request);
+        }
         if (request.method === 'GET' && pathname === '/api/leaderboard') {
-          return json(await getLeaderboard(env));
+          return attachCookies(json(await getLeaderboard(env)));
         }
         if (request.method === 'POST' && pathname === '/api/bid') {
-          return await handleBid(request, env);
+          return attachCookies(await handleBid(request, env));
         }
         if (request.method === 'POST' && pathname === '/api/demo-pay') {
-          return await handleDemoPay(request, env);
+          return attachCookies(await handleDemoPay(request, env));
         }
         if (request.method === 'GET' && pathname === '/api/confirm') {
-          return await handleConfirm(request, env, url);
+          return attachCookies(await handleConfirm(request, env, url));
         }
         if (request.method === 'POST' && pathname === '/api/dodo/webhook') {
           return await handleDodoWebhook(request, env);
@@ -775,13 +968,13 @@ export default {
         if (request.method === 'POST' && pathname === '/api/admin') {
           return await handleAdmin(request, env);
         }
-        return json({ error: 'not_found' }, 404);
+        return attachCookies(json({ error: 'not_found' }, 404));
       } catch (err) {
-        return json({ error: 'internal', detail: String(err?.message ?? err) }, 500);
+        return attachCookies(json({ error: 'internal', detail: String(err?.message ?? err) }, 500));
       }
     }
 
     // non-API unknown paths fall back to the SPA (asset miss reaches here)
-    return Response.redirect(url.origin + '/', 302);
+    return attachCookies(Response.redirect(url.origin + '/', 302));
   },
 };

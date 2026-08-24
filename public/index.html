@@ -2,1629 +2,812 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/logo.png?v=2" type="image/png">
 <title>Outbidbid — The Pay-to-Rank Leaderboard Arena | Outbid the Outbidders</title>
 <meta name="description" content="Outbidbid is the premier pay-to-rank leaderboard: bidding sites pay $1+ to list and battle for the #1 throne. Ranks decay after 30 days, highest bid wears the crown.">
-<meta name="author" content="Outbidbid">
-<link rel="canonical" href="https://outbidbid.lol/">
-<meta name="keywords" content="pay to rank, bid to rank, leaderboard, airdrop arena, outbid, bidding sites, outbid.lol, listing board, pay per rank, bid board">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Outbidbid">
-<meta property="og:title" content="Outbidbid 👑 — The Pay-to-Rank Leaderboard Arena">
-<meta property="og:description" content="List your bidding site. Pay to rank. Outbid the outbidders. $1 minimum bid, 30-day crown.">
-<meta property="og:url" content="https://outbidbid.lol/">
-<meta property="og:image" content="https://outbidbid.lol/og.png">
-<meta property="og:image:alt" content="Outbidbid Leaderboard Arena">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@outbidbid">
-<meta name="twitter:creator" content="@outbidbid">
-<meta name="twitter:title" content="Outbidbid 👑 — Outbid the Outbidders">
-<meta name="twitter:description" content="The bid-to-rank arena for bid-to-rank boards. $1 takes the throne.">
-<meta name="twitter:image" content="https://outbidbid.lol/og.png">
-<meta name="twitter:image:alt" content="Outbidbid Leaderboard Arena">
-<meta name="theme-color" content="#050505">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Outbidbid",
-  "url": "https://outbidbid.lol/",
-  "description": "The pay-to-rank leaderboard arena where bidding sites outbid each other for the #1 spot."
-}
-</script>
-
 <style>
   :root {
-    --bg-base: #050505;
-    --bg-surface: #0a0a0a;
-    --bg-card: #0f0f0f;
-    --bg-card-hover: #171717;
-    --border-subtle: rgba(255, 255, 255, 0.06);
-    --border-highlight: rgba(255, 255, 255, 0.16);
+    --bg: #f7f9fa;
+    --card-bg: #ffffff;
+    --text-main: #3c3c3c;
+    --text-sub: #777777;
+    --text-faint: #afafaf;
+    --line: #e5e5e5;
     
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --gold: #ffc800;
+    --gold-light: #ffeba3;
+    --silver: #e5e5e5;
+    --bronze: #cda886;
     
-    --accent-blue: #0084ff;
-    --accent-blue-hover: #0070db;
-    --accent-blue-glow: rgba(0, 132, 255, 0.4);
+    --gold-text: #b98e00;
+    --silver-text: #7b7b7b;
+    --bronze-text: #8c5e31;
+
+    --green: #58cc02;
+    --green-dark: #46a302;
     
-    --accent-emerald: #00e599;
-    --accent-cyan: #38bdf8;
-    --accent-pink: #f43f5e;
-    
-    --gold-primary: #ffd028;
-    --gold-bg: linear-gradient(135deg, rgba(255, 208, 40, 0.14) 0%, rgba(26, 20, 8, 0.85) 50%, rgba(10, 15, 26, 0.95) 100%);
-    --gold-border: rgba(255, 208, 40, 0.5);
-    --gold-glow: rgba(255, 208, 40, 0.18);
-    
-    --silver-primary: #cbd5e1;
-    --silver-bg: linear-gradient(135deg, rgba(203, 213, 225, 0.12) 0%, rgba(20, 26, 38, 0.85) 50%, rgba(10, 15, 26, 0.95) 100%);
-    --silver-border: rgba(203, 213, 225, 0.38);
-    --silver-glow: rgba(203, 213, 225, 0.12);
-    
-    --bronze-primary: #e08b52;
-    --bronze-bg: linear-gradient(135deg, rgba(224, 139, 82, 0.12) 0%, rgba(28, 18, 14, 0.85) 50%, rgba(10, 15, 26, 0.95) 100%);
-    --bronze-border: rgba(224, 139, 82, 0.42);
-    --bronze-glow: rgba(224, 139, 82, 0.14);
-    
-    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
-    --radius-sm: 10px;
-    --radius-md: 16px;
-    --radius-lg: 22px;
-    --radius-full: 9999px;
+    --blue: #1cb0f6;
+    --blue-dark: #1899d6;
+
+    --radius: 16px;
+    --font: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  [data-theme="dark"] {
+    --bg: #111b21;
+    --card-bg: #1f2c34;
+    --text-main: #e8e8e8;
+    --text-sub: #b0b0b0;
+    --text-faint: #606060;
+    --line: #2a3942;
+    --gold-light: #443c16;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  html {
-    background-color: var(--bg-base);
-    color: var(--text-primary);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    scrollbar-color: #1e293b var(--bg-base);
-  }
 
   body {
+    background-color: var(--bg);
+    color: var(--text-main);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
     min-height: 100vh;
-    background: var(--bg-base);
-    background-image: 
-      radial-gradient(1200px 600px at 50% -100px, rgba(0, 132, 255, 0.14), transparent 70%),
-      radial-gradient(900px 450px at 50% 180px, rgba(255, 208, 40, 0.06), transparent 70%),
-      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
-    color: var(--text-primary);
-    padding-bottom: 120px;
+    padding: 80px 20px 40px;
+    transition: background-color 0.2s, color 0.2s;
   }
-
-  a { color: inherit; text-decoration: none; }
-
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
-
-  /* Top Navigation Bar */
-  .top-nav {
+  
+  .header-top {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    right: 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 0 12px;
-    margin-bottom: 4px;
   }
   
-  .nav-brand {
+  .header-top-left {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 900;
-    font-size: 20px;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    gap: 12px;
   }
 
-  .nav-brand .crown-icon {
-    font-size: 24px;
-    filter: drop-shadow(0 0 10px rgba(255, 208, 40, 0.6));
-    -webkit-text-fill-color: initial;
+  .brand-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+  
+  .brand {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
   }
 
-  /* Hero Section */
-  .hero {
-    text-align: center;
-    padding: 6px 0 20px;
+  .header-top-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
   }
 
-  .hero-title {
-    font-size: clamp(32px, 7vw, 44px);
-    font-weight: 900;
-    letter-spacing: -0.035em;
-    color: #ffffff;
-    margin-bottom: 14px;
-    line-height: 1.15;
-  }
-
-  /* Inspo Callout Banner */
-  .inspo-banner {
+  .info-btn, .theme-toggle {
+    background: var(--card-bg);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    background: rgba(25, 25, 25, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    backdrop-filter: blur(12px);
-    border-radius: var(--radius-md);
-    padding: 12px 18px;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #e2e8f0;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    color: var(--text-main);
+    box-shadow: 0 4px 0 var(--line);
+    transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s, border-color 0.2s;
   }
-
-  .inspo-banner svg {
-    flex-shrink: 0;
-    color: var(--accent-cyan);
+  .info-btn:active, .theme-toggle:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--line);
   }
+  .info-btn svg, .theme-toggle svg { width: 22px; height: 22px; fill: currentColor; }
 
-  /* Quick Stat Chips */
-  .stats-bar {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 24px;
+  .info-popover {
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 60px;
+    width: 250px;
+    background: var(--card-bg);
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 16px 18px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 100;
+    animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
+  .info-popover.open { display: flex; }
+  @keyframes popIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 
-  .stat-chip {
-    background: rgba(15, 15, 15, 0.7);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    padding: 10px 6px;
-    text-align: center;
-    backdrop-filter: blur(8px);
-  }
-
-  .stat-chip .val {
-    font-family: var(--font-mono);
+  .info-popover-text {
     font-size: 14px;
     font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: -0.02em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: var(--text-main);
+    line-height: 1.4;
   }
-
-  .stat-chip.highlight .val {
-    color: var(--gold-primary);
-  }
-
-  .stat-chip.emerald .val {
-    color: var(--accent-emerald);
-  }
-
-  .stat-chip .lbl {
-    font-size: 9.5px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-top: 3px;
-  }
-
-  /* =========================================
-     3D PODIUM STAGE (PROMINENT TOP 3)
-     ========================================= */
-
-  .podium-stage {
-    display: grid;
-    grid-template-columns: 1fr 1.15fr 1fr;
-    gap: 12px;
-    align-items: flex-end;
-    margin-bottom: 28px;
-    padding: 22px 14px 0;
-    background: radial-gradient(circle at 50% 30%, rgba(255, 208, 40, 0.09), transparent 70%), rgba(10, 16, 28, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  }
-
-  .podium-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .podium-item:hover {
-    transform: translateY(-4px);
-  }
-
-  .podium-crown {
-    font-size: 30px;
-    margin-bottom: 4px;
-    filter: drop-shadow(0 0 14px rgba(255, 208, 40, 0.75));
-    animation: floatCrown 2.8s ease-in-out infinite;
-  }
-
-  @keyframes floatCrown {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-
-  .podium-coin-wrap {
-    position: relative;
-    margin-bottom: 16px;
-  }
-
-  .podium-rank-pill {
-    position: absolute;
-    bottom: -9px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px;
-    font-weight: 900;
-    padding: 2px 8px;
-    border-radius: var(--radius-full);
-    z-index: 5;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-  }
-
-  .podium-rank-pill.gold {
-    background: #ffd028;
-    color: #1a1400;
-  }
-  .podium-rank-pill.silver {
-    background: #cbd5e1;
-    color: #0f172a;
-  }
-  .podium-rank-pill.bronze {
-    background: #e08b52;
-    color: #1a0f08;
-  }
-  .podium-rank-pill.open {
-    background: rgba(255, 255, 255, 0.12);
-    color: #94a3b8;
-    border: 1px dashed rgba(255, 255, 255, 0.3);
-  }
-
-  .podium-title {
-    font-size: 14.5px;
+  .info-popover-text .dev-tag {
+    color: var(--blue);
     font-weight: 800;
-    color: #ffffff;
-    margin-bottom: 2px;
-    letter-spacing: -0.2px;
-    text-align: center;
-    text-decoration: none;
-    transition: color 0.2s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    display: block;
-    padding: 0 4px;
-  }
-  a.podium-title:hover {
-    color: #ffd028;
   }
 
-  .podium-points {
-    font-family: var(--font-mono);
-    font-size: 13.5px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-top: 2px;
-    margin-bottom: 12px;
-    white-space: nowrap;
-  }
-
-  .podium-pillar {
-    width: 100%;
-    border-radius: 14px 14px 0 0;
+  .info-social-links {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 26px;
-    color: rgba(255, 255, 255, 0.2);
-    position: relative;
-    overflow: hidden;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 2px solid var(--line);
   }
-
-  .podium-pillar.rank-1 {
-    height: 115px;
-    background: linear-gradient(180deg, rgba(255, 208, 40, 0.28) 0%, rgba(20, 26, 42, 0.9) 100%);
-    border: 1px solid rgba(255, 208, 40, 0.45);
-    border-bottom: none;
-    box-shadow: 0 0 30px rgba(255, 208, 40, 0.18);
-  }
-
-  .podium-pillar.rank-2 {
-    height: 85px;
-    background: linear-gradient(180deg, rgba(203, 213, 225, 0.2) 0%, rgba(20, 26, 42, 0.9) 100%);
-    border: 1px solid rgba(203, 213, 225, 0.32);
-    border-bottom: none;
-  }
-
-  .podium-pillar.rank-3 {
-    height: 65px;
-    background: linear-gradient(180deg, rgba(224, 139, 82, 0.2) 0%, rgba(20, 26, 42, 0.9) 100%);
-    border: 1px solid rgba(224, 139, 82, 0.32);
-    border-bottom: none;
-  }
-
-  /* =========================================
-     LARGE 3D METALLIC COIN MEDALS
-     ========================================= */
-
-  .brand-coin {
-    position: relative;
-    width: 74px;
-    height: 74px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.6);
-  }
-
-  .brand-coin.large {
-    width: 86px;
-    height: 86px;
-  }
-
-  /* Gold Coin */
-  .brand-coin.gold {
-    background: radial-gradient(circle at 35% 35%, #ffeaa0, #c89518 60%, #6e4e04 100%);
-    border: 2.5px solid #ffd54f;
-    box-shadow: 0 0 28px rgba(255, 208, 40, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.7);
-  }
-  .brand-coin.gold .coin-disc {
-    border-color: rgba(255, 215, 0, 0.75);
-  }
-
-  /* Silver Coin */
-  .brand-coin.silver {
-    background: radial-gradient(circle at 35% 35%, #ffffff, #94a3b8 60%, #475569 100%);
-    border: 2.5px solid #e2e8f0;
-    box-shadow: 0 0 22px rgba(203, 213, 225, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.85);
-  }
-  .brand-coin.silver .coin-disc {
-    border-color: rgba(203, 213, 225, 0.75);
-  }
-
-  /* Bronze Coin */
-  .brand-coin.bronze {
-    background: radial-gradient(circle at 35% 35%, #fca566, #b45309 60%, #542203 100%);
-    border: 2.5px solid #fb923c;
-    box-shadow: 0 0 22px rgba(224, 139, 82, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.7);
-  }
-  .brand-coin.bronze .coin-disc {
-    border-color: rgba(224, 139, 82, 0.75);
-  }
-
-  /* Open Spot Coin */
-  .brand-coin.open {
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px dashed rgba(255, 255, 255, 0.25);
-    box-shadow: none;
-  }
-  .brand-coin.open .coin-disc {
-    background: transparent;
-    border: none;
-  }
-
-  /* Coin Inner Disc Container */
-  .coin-disc {
-    width: calc(100% - 10px);
-    height: calc(100% - 10px);
-    border-radius: 50%;
-    background: #090e1a;
-    border: 1.5px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-  }
-
-  /* Crisp, Full-Visibility Logo Image */
-  .coin-logo {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 6px;
-    border-radius: 50%;
-    background: transparent;
-    position: relative;
-    z-index: 2;
-  }
-
-  .coin-monogram {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    font-weight: 900;
-    color: #ffffff;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    z-index: 1;
-  }
-
-  /* =========================================
-     LEADERBOARD CARDS
-     ========================================= */
-
-  .leaderboard-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .board-card {
-    position: relative;
-    border-radius: var(--radius-lg);
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    padding: 20px 22px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s, border-color 0.18s;
-  }
-
-  .board-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--border-highlight);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-  }
-
-  /* Giant Watermark Numbers */
-  .rank-watermark {
-    position: absolute;
-    left: 8px;
-    top: -6px;
-    font-size: 96px;
-    font-weight: 900;
-    line-height: 1;
-    color: rgba(255, 255, 255, 0.035);
-    pointer-events: none;
-    user-select: none;
-    font-family: var(--font-sans);
-  }
-
-  /* PODIUM TOP 3 CARDS */
-  .board-card.podium-1 {
-    background: var(--gold-bg);
-    border-color: var(--gold-border);
-    box-shadow: 0 8px 32px var(--gold-glow), inset 0 1px 0 rgba(255, 230, 100, 0.2);
-  }
-  .board-card.podium-1 .rank-watermark {
-    color: rgba(255, 208, 40, 0.08);
-  }
-
-  .board-card.podium-2 {
-    background: var(--silver-bg);
-    border-color: var(--silver-border);
-    box-shadow: 0 8px 28px var(--silver-glow), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
-  .board-card.podium-2 .rank-watermark {
-    color: rgba(203, 213, 225, 0.07);
-  }
-
-  .board-card.podium-3 {
-    background: var(--bronze-bg);
-    border-color: var(--bronze-border);
-    box-shadow: 0 8px 28px var(--bronze-glow), inset 0 1px 0 rgba(255, 180, 120, 0.15);
-  }
-  .board-card.podium-3 .rank-watermark {
-    color: rgba(224, 139, 82, 0.07);
-  }
-
-  /* Regular Rank (4+) Left Column */
-  .rank-badge-col {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-shrink: 0;
-    min-width: 100px;
-    z-index: 2;
-  }
-
-  .rank-num-text {
-    font-family: var(--font-mono);
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text-secondary);
-    min-width: 34px;
-  }
-
-  /* Brand Logo Tile (Rank 4+) */
-  .brand-avatar-tile {
-    width: 56px;
-    height: 56px;
-    border-radius: var(--radius-sm);
-    background: #080c16;
-    border: 1px solid var(--border-subtle);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-    flex-shrink: 0;
-  }
-
-  .brand-avatar-tile img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 6px;
-  }
-
-  /* Card Center Content */
-  .card-main-content {
-    flex: 1;
-    min-width: 0;
-    z-index: 2;
-  }
-
-  @media (min-width: 768px) {
-    .card-main-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      min-width: 0;
-    }
-    .card-info {
-      flex: 1 1 auto;
-      min-width: 0;
-      max-width: calc(100% - 320px);
-    }
-    .card-metrics-grid {
-      margin-top: 0 !important;
-      flex-shrink: 0;
-    }
-  }
-
-  .card-info {
-    min-width: 0;
-  }
-
-  .card-title-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 4px;
-    margin-top: 0;
-    min-width: 0;
-  }
-
-  .card-crown-tag {
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
-  .card-title-link {
-    font-size: 17.5px;
-    font-weight: 800;
-    letter-spacing: -0.015em;
-    color: #ffffff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
-    min-width: 0;
-  }
-
-  .card-title-link:hover {
-    color: var(--accent-cyan);
-    text-decoration: underline;
-  }
-
-  .card-host-pill {
-    font-size: 12.5px;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    min-width: 0;
-    max-width: 100%;
-    overflow: hidden;
-  }
-
-  .card-host-pill .host-name {
-    font-weight: 600;
-    color: var(--text-secondary);
-    flex-shrink: 0;
-  }
-
-  .card-host-pill .host-dot {
-    color: var(--text-muted);
-    flex-shrink: 0;
-  }
-
-  .card-tagline {
-    font-size: 12.5px;
-    color: var(--text-muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
-    flex: 1;
-  }
-
-  /* Card Metrics Grid */
-  .card-metrics-grid {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-    margin-top: 10px;
-    flex-wrap: nowrap;
-  }
-
-  .metric-item {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .metric-label {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .metric-value {
-    font-family: var(--font-mono);
-    font-size: 14.5px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: -0.02em;
-  }
-
-  .metric-value.emerald {
-    color: var(--accent-emerald);
-    font-weight: 700;
-  }
-
-  .metric-value.cyan {
-    color: var(--accent-cyan);
-  }
-
-  /* Card Action Column */
-  .card-action-col {
-    flex-shrink: 0;
-    z-index: 2;
-    text-align: right;
-  }
-
-  .outbid-pill-btn {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: #ffffff;
-    font-family: var(--font-sans);
-    font-size: 12px;
-    font-weight: 700;
-    padding: 9px 16px;
-    border-radius: var(--radius-full);
-    cursor: pointer;
-    transition: all 0.15s ease;
+  .social-link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    letter-spacing: 0.01em;
-  }
-
-  .outbid-pill-btn:hover {
-    background: var(--accent-blue);
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 18px var(--accent-blue-glow);
-    transform: scale(1.03);
-  }
-
-  /* Empty State */
-  .empty-throne-card {
-    background: radial-gradient(circle at 50% 0%, rgba(255, 208, 40, 0.12), transparent 70%), var(--bg-card);
-    border: 1px dashed rgba(255, 208, 40, 0.4);
-    border-radius: var(--radius-lg);
-    padding: 48px 20px;
-    text-align: center;
-  }
-
-  .empty-throne-icon {
-    font-size: 56px;
-    margin-bottom: 12px;
-    filter: drop-shadow(0 0 20px rgba(255, 208, 40, 0.4));
-    animation: floatCrown 3s ease-in-out infinite;
-  }
-
-  .empty-throne-title {
-    font-size: 22px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--bg);
+    border: 2px solid var(--line);
+    color: var(--text-main);
+    font-size: 13px;
     font-weight: 800;
-    color: var(--gold-primary);
-    margin-bottom: 6px;
-  }
-
-  .empty-throne-desc {
-    font-size: 14px;
-    color: var(--text-secondary);
-    max-width: 420px;
-    margin: 0 auto 20px;
-    line-height: 1.5;
-  }
-
-  /* =========================================
-     STICKY BOTTOM ACTION BAR (CRYPTO.COM STYLE)
-     ========================================= */
-
-  .sticky-bottom-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(5, 5, 5, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 14px 16px max(14px, env(safe-area-inset-bottom));
-    z-index: 50;
-  }
-
-  .sticky-bottom-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .primary-action-btn {
+    text-decoration: none;
+    transition: all 0.15s;
     flex: 1;
-    background: var(--accent-blue);
-    color: #ffffff;
-    border: none;
-    border-radius: var(--radius-md);
-    padding: 16px 20px;
-    font-family: var(--font-sans);
-    font-size: 15.5px;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    cursor: pointer;
-    box-shadow: 0 4px 24px var(--accent-blue-glow);
-    transition: all 0.15s ease;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 8px;
+    box-shadow: 0 2px 0 var(--line);
   }
-
-  .primary-action-btn:hover {
-    background: var(--accent-blue-hover);
-    box-shadow: 0 6px 28px rgba(0, 132, 255, 0.55);
+  .social-link:hover {
+    border-color: var(--blue);
+    color: var(--blue);
     transform: translateY(-1px);
   }
-
-  .primary-action-btn:active {
-    transform: translateY(1px);
+  .social-link:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 0 var(--line);
   }
+  .social-link svg { width: 15px; height: 15px; fill: currentColor; }
 
-  /* =========================================
-     MODAL DIALOG
-     ========================================= */
+  .layout {
+    display: grid;
+    grid-template-columns: 220px 1fr 280px;
+    grid-template-rows: auto auto 1fr;
+    column-gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    align-items: start;
+  }
+  .left-side { grid-column: 1; grid-row: 3; }
+  .right-side { grid-column: 3; grid-row: 3; }
+  .center-header { grid-column: 2; grid-row: 1; display:flex; flex-direction:column; align-items:center; }
+  .center-card { grid-column: 2; grid-row: 3; }
 
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(3, 6, 12, 0.82);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    display: none;
+  .side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .side-card {
+    background: var(--card-bg);
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  }
+  
+  .stat-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-weight: 700;
+    color: var(--text-main);
+    font-size: 16px;
+  }
+  .stat-icon-wrap {
+    display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
-    padding: 16px;
-    overflow-y: auto;
+    width: 32px;
   }
-
-  .modal-overlay.open {
-    display: flex;
-  }
-
-  .modal-window {
-    background: #0d1627;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: var(--radius-lg);
-    width: 100%;
-    max-width: 480px;
-    padding: 24px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 132, 255, 0.15);
-    position: relative;
-    animation: modalAppear 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  @keyframes modalAppear {
-    from { opacity: 0; transform: scale(0.96) translateY(10px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
-  .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 6px;
-  }
-
-  .modal-title {
-    font-size: 18px;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -0.02em;
-  }
-
-  .modal-close-btn {
+  
+  .claim-banner {
     background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 20px;
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 6px;
-    transition: color 0.15s;
-    line-height: 1;
-  }
-
-  .modal-close-btn:hover {
-    color: #ffffff;
-  }
-
-  .modal-sub {
-    font-size: 12.5px;
-    color: var(--text-secondary);
-    line-height: 1.45;
-    margin-bottom: 18px;
-  }
-
-  .form-group {
-    margin-bottom: 14px;
-  }
-
-  .form-label {
-    display: block;
-    font-size: 11.5px;
-    font-weight: 700;
-    color: var(--text-secondary);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  .form-input {
-    width: 100%;
-    background: #080d18;
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: #ffffff;
-    outline: none;
-    transition: border-color 0.15s;
-  }
-
-  .form-input:focus {
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.2);
-  }
-
-  .amount-input-box {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  .amount-symbol {
-    position: absolute;
-    left: 14px;
-    font-family: var(--font-mono);
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--accent-emerald);
-  }
-
-  .amount-input {
-    padding-left: 32px;
-    font-family: var(--font-mono);
-    font-size: 18px;
-    font-weight: 700;
-    color: #ffffff;
-  }
-
-  .quick-chips {
-    display: flex;
-    gap: 6px;
-    margin-top: 8px;
-  }
-
-  .chip-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-subtle);
-    border-radius: 6px;
-    color: var(--text-secondary);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 600;
-    padding: 5px 8px;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-
-  .chip-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: #ffffff;
-  }
-
-  .sim-feedback {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(0, 229, 153, 0.08);
-    border: 1px solid rgba(0, 229, 153, 0.2);
-    border-radius: var(--radius-sm);
-    padding: 8px 12px;
-    color: var(--accent-emerald);
-    font-size: 12.5px;
-    font-weight: 700;
-    margin-top: 10px;
-    min-height: 38px;
-  }
-
-  .sim-feedback.king {
-    background: rgba(255, 208, 40, 0.1);
-    border-color: rgba(255, 208, 40, 0.3);
-    color: var(--gold-primary);
-  }
-
-  .modal-err {
-    color: var(--accent-pink);
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: 8px;
-    min-height: 16px;
-  }
-
-  .modal-submit-btn {
-    width: 100%;
-    margin-top: 16px;
-    background: var(--accent-blue);
-    color: #ffffff;
-    border: none;
-    border-radius: var(--radius-md);
-    padding: 14px;
-    font-family: var(--font-sans);
-    font-size: 15px;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 4px 16px var(--accent-blue-glow);
-    transition: all 0.15s;
-  }
-
-  .modal-submit-btn:hover {
-    background: var(--accent-blue-hover);
-  }
-
-  .modal-submit-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  /* Toast Notification */
-  #toast {
-    position: fixed;
-    bottom: 84px;
-    left: 50%;
-    transform: translateX(-50%) translateY(30px);
-    background: #0f1c32;
-    border: 1px solid var(--accent-emerald);
-    color: #ffffff;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 10px 20px;
-    border-radius: var(--radius-full);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-    z-index: 200;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    max-width: 90vw;
+    padding: 0 0 24px 0;
     text-align: center;
-  }
-
-  #toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  #toast.err {
-    border-color: var(--accent-pink);
-    color: #fecdd3;
-  }
-
-  /* Responsive Adjustments */
-  @media (max-width: 600px) {
-    .app-header {
-      margin-bottom: 20px;
-    }
-    .hero-title {
-      font-size: 24px;
-      margin-bottom: 16px;
-    }
-    .stats-bar {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-    .stat-chip {
-      padding: 10px 12px;
-    }
-    .stat-chip .val {
-      font-size: 16px;
-    }
-    .stat-chip .lbl {
-      font-size: 10px;
-    }
-
-    /* Mobile Podium */
-    .podium-stage {
-      gap: 6px;
-      padding: 16px 8px 0;
-      margin-bottom: 20px;
-    }
-    .podium-crown {
-      font-size: 22px;
-    }
-    .brand-coin {
-      width: 52px;
-      height: 52px;
-    }
-    .brand-coin.large {
-      width: 64px;
-      height: 64px;
-    }
-    .coin-monogram {
-      font-size: 16px;
-    }
-    .podium-rank-pill {
-      font-size: 10px;
-      padding: 1px 7px;
-      bottom: -8px;
-    }
-    .podium-title {
-      font-size: 12px;
-      max-width: 90px;
-    }
-    .podium-points {
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
-    .podium-pillar.rank-1 {
-      height: 80px;
-      font-size: 20px;
-    }
-    .podium-pillar.rank-2 {
-      height: 55px;
-      font-size: 18px;
-    }
-    .podium-pillar.rank-3 {
-      height: 42px;
-      font-size: 16px;
-    }
-
-    /* Mobile Cards */
-    .board-card {
-      padding: 14px 16px;
-      gap: 12px;
-    }
-    .rank-badge-col {
-      min-width: 64px;
-      gap: 8px;
-    }
-    .card-title-link {
-      font-size: 15.5px;
-    }
-    .card-metrics-grid {
-      gap: 16px;
-      margin-top: 8px;
-    }
-    .metric-label {
-      font-size: 9px;
-    }
-    .metric-value {
-      font-size: 13px;
-    }
-    .card-action-col {
-      display: none;
-    }
-  }
-  .app-footer {
-    margin-top: 48px;
-    padding: 32px 16px;
-    border-top: 1px solid var(--border-subtle);
-    color: var(--text-muted);
-    font-size: 13px;
-    text-align: center;
-  }
-  .app-footer .footer-content {
-    max-width: var(--content-max-w);
-    margin: 0 auto;
+    margin-bottom: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
   }
-  .app-footer p {
-    margin: 0;
+  
+  .claim-text {
+    font-size: 54px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    background: linear-gradient(90deg, #ffc800 0%, #ffe066 20%, #ffc800 40%, #ffc800 100%);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    animation: shimmer 3s linear infinite;
+    text-align: center;
   }
-  .footer-nav {
+  @keyframes shimmer {
+    to { background-position: -200% center; }
+  }
+
+  .filters {
     display: flex;
-    gap: 16px;
+    gap: 12px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
-  .footer-nav a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: color 0.2s;
+  .filters::-webkit-scrollbar { display: none; }
+  
+  .filter-chip {
+    background: var(--card-bg);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-sub);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    font-family: var(--font);
+    box-shadow: 0 2px 0 var(--line);
   }
-  .footer-nav a:hover {
-    color: var(--text-primary);
+  .filter-chip:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 0 var(--line);
+  }
+  
+  .filter-chip.active {
+    background: var(--blue-dark);
+    border-color: var(--blue-dark);
+    color: #fff;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+  }
+  
+  .card {
+    background: var(--card-bg);
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    overflow: hidden;
+  }
+  
+  .list {
+    list-style: none;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .row:last-child {
+    border-bottom: none;
+  }
+
+  .row:hover {
+    background: var(--bg);
+  }
+
+  .row.top-3 {
+    padding: 24px 28px;
+    background: var(--card-bg);
+  }
+  .row.top-3:hover {
+    background: var(--bg);
+  }
+  .row.top-3 .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    border-width: 3px;
+  }
+  .row.top-3 .name {
+    font-size: 22px;
+    font-weight: 900;
+  }
+  .row.top-3 .desc {
+    font-size: 16px;
+  }
+  .row.top-3 .price {
+    font-size: 22px;
+  }
+  .row.top-3 .rank {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+
+  .rank {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 16px;
+    margin-right: 16px;
+    flex-shrink: 0;
+  }
+
+  .rank-1 { background: var(--gold); color: white; border-radius: 50%; box-shadow: 0 3px 0 var(--gold-text); }
+  .rank-2 { background: var(--silver); color: var(--silver-text); border-radius: 50%; box-shadow: 0 3px 0 #cccccc; }
+  .rank-3 { background: var(--bronze); color: white; border-radius: 50%; box-shadow: 0 3px 0 var(--bronze-text); }
+  .rank-plain { color: var(--green); }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    margin-right: 16px;
+    background: #f0f0f0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 2px solid var(--line);
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .name {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .desc {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-sub);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: normal;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .price {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-left: 16px;
+  }
+
+  .row:hover .price {
+    display: none;
+  }
+
+  .btn-outbid-row {
+    display: none;
+    background: var(--blue);
+    color: white;
+    font-weight: 800;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--blue-dark);
+  }
+
+  .row:hover .btn-outbid-row {
+    display: block;
+  }
+
+  .btn-outbid-row:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--blue-dark);
+  }
+  
+  .bet-input {
+    width: 100%;
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    outline: none;
+    color: var(--text-main);
+    font-family: var(--font);
+  }
+  .bet-input:focus {
+    border-color: var(--gold);
+  }
+  
+  .side-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 20px;
+  }
+  
+  .btn-primary {
+    background: var(--green);
+    color: white;
+    font-weight: 800;
+    font-size: 16px;
+    padding: 16px 32px;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--green-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: transform 0.1s, box-shadow 0.1s;
+    width: 100%;
+  }
+
+  .btn-primary:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--green-dark);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(0, 0, 0, 0.4);
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-window {
+    width: 100%; max-width: 400px;
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 32px 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    position: relative;
+    border: 2px solid var(--line);
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none; border: none;
+    font-size: 24px; color: var(--text-faint);
+    cursor: pointer;
+  }
+  .modal-title { font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; text-align: center; }
+  .modal-sub { font-size: 15px; color: var(--text-sub); margin-bottom: 24px; text-align: center; font-weight: 600; }
+
+  .form-group { margin-bottom: 16px; }
+  .form-input {
+    width: 100%;
+    background: var(--bg);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-main);
+    outline: none;
+    font-family: var(--font);
+  }
+  .form-input:focus {
+    border-color: var(--blue);
+  }
+  .form-input::placeholder { color: var(--text-faint); }
+  
+  .amount-box { position: relative; }
+  .amount-box .cur { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-weight: 800; color: var(--text-main); font-size: 18px; }
+  .amount-input { padding-left: 32px; font-size: 18px; }
+
+  .modal-err { color: #ff4b4b; font-size: 14px; font-weight: 700; margin-bottom: 16px; text-align: center; min-height: 20px; }
+  
+  .sim { text-align: center; font-size: 15px; color: var(--text-sub); margin-bottom: 16px; font-weight: 700; }
+
+  @media (max-width: 900px) {
+    .layout {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .center-header { order: 1; width: 100%; max-width: 100vw; }
+    
+    .left-side { 
+      order: 2; 
+      width: 100%; 
+    }
+    .left-side .side-card {
+      flex-direction: row !important;
+      justify-content: space-evenly;
+      gap: 16px !important;
+      padding: 16px;
+    }
+    
+    .center-card { order: 3; width: 100%; margin-bottom: 90px; }
+    
+    .right-side { display: none; }
+    
+    .mobile-bet-bar {
+      display: block !important;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      padding: 16px 20px;
+      background: var(--bg);
+      border-top: 2px solid var(--line);
+      z-index: 50;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+    }
+
+    body { padding: 80px 16px 16px; }
+    .header-top { position: absolute; top: 16px; left: 16px; right: 16px; }
+    
+    .claim-text { font-size: 42px; }
   }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="container">
-  <!-- Top Navigation Bar -->
-  <header class="top-nav">
-    <div class="nav-brand">
-      <span class="crown-icon">👑</span>
-      <span>OUTBIDBID</span>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1 class="hero-title">Join the Leaderboard</h1>
-
-    <!-- Stats Bar -->
-    <div class="stats-bar" id="statsBar">
-      <div class="stat-chip highlight">
-        <div class="val" id="stPot">$0</div>
-        <div class="lbl">Active Pot (30D)</div>
-      </div>
-      <div class="stat-chip emerald">
-        <div class="val" id="stTakeOver">$1</div>
-        <div class="lbl">To Take #1</div>
-      </div>
-      <div class="stat-chip">
-        <div class="val" id="stCount">0</div>
-        <div class="lbl">Sites Listed</div>
-      </div>
-      <div class="stat-chip">
-        <div class="val" id="stMin">$1.00</div>
-        <div class="lbl">Min Bid</div>
+<div class="header-top">
+  <div class="header-top-left">
+    <img src="/logo.png" alt="Outbidbid Logo" class="brand-logo">
+    <div class="brand">outbidbid</div>
+  </div>
+  <div class="header-top-right">
+    <button class="info-btn" id="infoBtn" aria-label="About developer" aria-expanded="false" title="About">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    </button>
+    <div class="info-popover" id="infoPopover" role="dialog" aria-label="Developer Information">
+      <div class="info-popover-text">Developed by <span class="dev-tag">@r69shabh</span></div>
+      <div class="info-social-links">
+        <a href="https://github.com/r69shabh" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+        <a href="https://x.com/r69shabh" target="_blank" rel="noopener noreferrer" class="social-link" title="X (Twitter)">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span>X</span>
+        </a>
       </div>
     </div>
-  </section>
-
-  <!-- 3D Podium Stage (Top 3 Brands) -->
-  <section id="podiumSection">
-    <div class="podium-stage" id="podiumStage">
-      <!-- Injected via JavaScript -->
-    </div>
-  </section>
-
-  <!-- Leaderboard List Section -->
-  <main id="boardSection">
-    <section class="leaderboard-list" id="leaderboardList">
-      <!-- Injected via JavaScript -->
-    </section>
-  </main>
-
-  <footer class="app-footer" aria-label="Site Footer">
-    <div class="footer-content">
-      <p>&copy; 2026 Outbidbid.lol — The premier pay-to-rank arena.</p>
-      <nav class="footer-nav" aria-label="Footer Navigation">
-        <a href="/">Home</a>
-        <a href="mailto:contact@outbidbid.lol">Contact</a>
-      </nav>
-    </div>
-  </footer>
-</div>
-
-<!-- Sticky Bottom Bar -->
-<div class="sticky-bottom-bar">
-  <div class="sticky-bottom-inner">
-    <button class="primary-action-btn" id="claimThroneBtn">
-      <span>👑</span>
-      <span id="claimBtnText">Transfer to join</span>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg id="moonIcon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg id="sunIcon" style="display:none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
     </button>
   </div>
 </div>
 
-<!-- Bid & Listing Modal -->
-<div class="modal-overlay" id="bidModal" role="dialog" aria-modal="true">
-  <div class="modal-window">
-    <div class="modal-header">
-      <h3 class="modal-title" id="modalTitle">Place Your Bid</h3>
-      <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
-    </div>
-    <div class="modal-sub" id="modalSub">Beat the top bid to claim #1 on the leaderboard.</div>
-
-    <!-- New Site Fields -->
-    <div id="newSiteFields" style="display:none">
-      <div class="form-group">
-        <label class="form-label" for="inTitle">Site / Project Title *</label>
-        <input class="form-input" id="inTitle" maxlength="60" placeholder="e.g. My Bidding App">
+<div class="layout">
+  <!-- Left Sidebar -->
+  <div class="side-panel left-side">
+    <div class="side-card" style="display:flex; flex-direction:column; gap:24px;">
+      <div class="stat-row">
+        <div class="stat-icon-wrap">
+          <svg viewBox="0 0 24 24" style="width:32px; height:32px; fill:#58cc02;"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        </div>
+        <span id="onlineCount">1 Online</span>
       </div>
-      <div class="form-group">
-        <label class="form-label" for="inUrl">Website URL *</label>
-        <input class="form-input" id="inUrl" maxlength="300" placeholder="e.g. myboard.lol">
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="inTagline">Tagline (Optional)</label>
-        <input class="form-input" id="inTagline" maxlength="140" placeholder="e.g. The fastest auction on the web">
+      <div class="stat-row">
+        <div class="stat-icon-wrap">
+          <svg viewBox="0 0 24 24" style="width:32px; height:32px; fill:#1cb0f6;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        </div>
+        <span id="viewCount">1 Views</span>
       </div>
     </div>
+  </div>
 
-    <!-- Payer Name -->
-    <div class="form-group">
-      <label class="form-label" for="inPayer">Your Name / Handle (Optional)</label>
-      <input class="form-input" id="inPayer" maxlength="40" placeholder="e.g. anon">
+  <div class="center-header">
+    <div class="claim-banner">
+      <div class="claim-text" id="arenaTitle">Claim #1 for $1</div>
     </div>
-
-    <!-- Amount Input -->
-    <div class="form-group">
-      <label class="form-label" for="inAmount">Bid Amount (USD) *</label>
-      <div class="amount-input-box">
-        <span class="amount-symbol">$</span>
-        <input class="form-input amount-input" id="inAmount" type="number" min="1" step="1" placeholder="5">
-      </div>
-      <div class="quick-chips" id="quickChips">
-        <button type="button" class="chip-btn" data-add="5">+$5</button>
-        <button type="button" class="chip-btn" data-add="25">+$25</button>
-        <button type="button" class="chip-btn" data-add="100">+$100</button>
-        <button type="button" class="chip-btn" id="chipTake1">Take #1</button>
-      </div>
+    <div class="filters">
+      <button class="filter-chip active">All</button>
+      <button class="filter-chip">SaaS</button>
+      <button class="filter-chip">Crypto</button>
+      <button class="filter-chip">AI</button>
+      <button class="filter-chip">Design</button>
+      <button class="filter-chip">Tools</button>
     </div>
+  </div>
 
-    <!-- Live Simulation Projection -->
-    <div class="sim-feedback" id="simFeedback">
-      <span>⚡</span>
-      <span id="simText">Calculating projected rank...</span>
+  <div class="center-card">
+    <div class="card">
+      <ul class="list" id="boardList">
+        <!-- Dynamic listings -->
+      </ul>
     </div>
+  </div>
 
-    <div class="modal-err" id="modalErr"></div>
-
-    <button class="modal-submit-btn" id="modalSubmitBtn">CONFIRM &amp; CLIMB</button>
+  <!-- Right Sidebar -->
+  <div class="side-panel right-side">
+    <div class="side-card">
+      <div class="side-title">Create your bet</div>
+      <input type="number" id="quickBetAmount" class="bet-input" placeholder="$ Amount" min="1" step="1">
+      <button class="btn-primary" id="quickBetBtn" style="padding:14px; font-size:16px; border-radius:14px;">Place Bet</button>
+    </div>
   </div>
 </div>
 
-<!-- Toast Message -->
-<div id="toast" role="status"></div>
+<div class="mobile-bet-bar" style="display: none;">
+  <button class="btn-primary" onclick="window.openModal()" style="width: 100%; padding: 18px; font-size: 18px;">PLACE BET</button>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="bidModal">
+  <div class="modal-window">
+    <button class="modal-close" onclick="window.closeModal()">&times;</button>
+    <div class="modal-title" id="modalTitle">Place Your Bet</div>
+    <div class="modal-sub" id="modalSub">Outbid the competition to take the rank</div>
+
+    <div class="form-group">
+      <input type="text" id="inTitle" class="form-input" placeholder="Site / App Name">
+    </div>
+    <div class="form-group">
+      <input type="url" id="inUrl" class="form-input" placeholder="https://example.com">
+    </div>
+    <div class="form-group">
+      <input type="text" id="inTagline" class="form-input" placeholder="Short description / tagline">
+    </div>
+    <div class="form-group">
+      <input type="text" id="inPayer" class="form-input" placeholder="Your name (optional)">
+    </div>
+    <div class="form-group amount-box">
+      <span class="cur">$</span>
+      <input type="number" id="inAmount" class="form-input amount-input" placeholder="1" min="1" step="1">
+    </div>
+
+    <div class="sim" id="simText">Projected Rank: #1</div>
+    <div class="modal-err" id="modalErr"></div>
+
+    <button class="btn-primary" id="modalSubmitBtn" onclick="window.submitBid()">Pay &amp; Climb</button>
+  </div>
+</div>
 
 <script>
 (() => {
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const money = (c) => '$' + (c / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
-  const daysLeft = (t) => Math.max(0, Math.ceil((t + 30 * 86400 - Date.now() / 1000) / 86400));
+  const money = (c) => '$' + Math.round(c / 100);
 
-  // Vibrant gradient palettes for brand logo monogram fallback
-  const MONOGRAM_PALETTES = [
-    'linear-gradient(135deg, #6366f1, #a855f7)',
-    'linear-gradient(135deg, #059669, #06b6d4)',
-    'linear-gradient(135deg, #f43f5e, #fb923c)',
-    'linear-gradient(135deg, #0284c7, #38bdf8)',
-    'linear-gradient(135deg, #d97706, #fbbf24)',
-    'linear-gradient(135deg, #8b5cf6, #ec4899)',
-    'linear-gradient(135deg, #10b981, #3b82f6)',
-    'linear-gradient(135deg, #ec4899, #f43f5e)'
-  ];
-
-  function getDomainHash(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = ((hash << 5) - hash) + str.charCodeAt(i);
-      hash |= 0;
-    }
-    return Math.abs(hash);
+  // Theme support
+  let isDark = localStorage.getItem('theme');
+  if (isDark === null) {
+    isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  } else {
+    isDark = isDark === 'dark';
   }
 
-  function getMonogram(title, host) {
-    if (host && (host.includes('outbidbid') || host.includes('outbidbid'))) {
-      return '👑';
-    }
-    const clean = (title || host || '?').trim().replace(/^https?:\/\//i, '').replace(/^www\./i, '');
-    const words = clean.split(/[\s.-]+/);
-    if (words.length >= 2 && words[0] && words[1]) {
-      return (words[0][0] + words[1][0]).toUpperCase();
-    }
-    return (clean.slice(0, 2) || '?').toUpperCase();
+  function updateTheme() {
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    $('sunIcon').style.display = isDark ? 'block' : 'none';
+    $('moonIcon').style.display = isDark ? 'none' : 'block';
+  }
+  updateTheme();
+
+  $('themeToggle').addEventListener('click', () => {
+    isDark = !isDark;
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateTheme();
+  });
+
+  // Info popover
+  const infoBtn = $('infoBtn');
+  const infoPopover = $('infoPopover');
+  if (infoBtn && infoPopover) {
+    infoBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = infoPopover.classList.toggle('open');
+      infoBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', (e) => {
+      if (!infoPopover.contains(e.target) && e.target !== infoBtn) {
+        infoPopover.classList.remove('open');
+        infoBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        infoPopover.classList.remove('open');
+        infoBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
 
   let LB = null;
-  let modalCtx = { siteId: null, host: null };
-  let payBusy = false;
+  let modalCtx = { siteId: null, host: null, totalCents: null };
 
-  const toast = (msg, isErr = false) => {
-    const el = $('toast');
-    el.innerHTML = (isErr ? '⚠️ ' : '👑 ') + esc(msg);
-    el.className = isErr ? 'err show' : 'show';
-    clearTimeout(el._t);
-    el._t = setTimeout(() => el.classList.remove('show'), 3500);
-  };
-
-  // High-Resolution Multi-Tier Logo Generator
   function getLogoUrls(host) {
     const cleanHost = encodeURIComponent(host || 'default.com');
     return [
+      `https://logo.clearbit.com/${cleanHost}`,
       `https://unavatar.io/${cleanHost}?fallback=false`,
-      `https://www.google.com/s2/favicons?domain=${cleanHost}&sz=256`,
-      `https://icons.duckduckgo.com/ip3/${cleanHost}.ico`
+      `https://www.google.com/s2/favicons?domain=${cleanHost}&sz=256`
     ];
   }
 
-  // Create High-Visibility Brand Coin for Podium & Cards
-  function createBrandCoinHTML(rank, host, title, isLarge = false) {
-    const metal = rank === 1 ? 'gold' : rank === 2 ? 'silver' : 'bronze';
-    const hash = getDomainHash(host || 'default');
-    const bg = MONOGRAM_PALETTES[hash % MONOGRAM_PALETTES.length];
-    const initial = getMonogram(title, host);
-    const logos = getLogoUrls(host);
-
-    return `
-      <div class="brand-coin ${metal} ${isLarge ? 'large' : ''}">
-        <div class="coin-disc">
-          <div class="coin-monogram" style="background:${bg};">${esc(initial)}</div>
-          <img class="coin-logo" src="${esc(logos[0])}" alt="${esc(title)}" loading="lazy"
-            onerror="if(this.dataset.tried!=='1'){this.dataset.tried='1'; this.src='${esc(logos[1])}';} else if(this.dataset.tried!=='2'){this.dataset.tried='2'; this.src='${esc(logos[2])}';} else {this.remove();}">
-        </div>
-      </div>`;
-  }
-
-  // Create Avatar Tile for Rank 4+
-  function createAvatarHTML(host, title) {
-    const hash = getDomainHash(host || 'default');
-    const bg = MONOGRAM_PALETTES[hash % MONOGRAM_PALETTES.length];
-    const initial = getMonogram(title, host);
-    const logos = getLogoUrls(host);
-
-    return `
-      <div class="brand-avatar-tile">
-        <div class="coin-monogram" style="background:${bg}; font-size:16px;">${esc(initial)}</div>
-        <img src="${esc(logos[0])}" alt="${esc(title)}" loading="lazy"
-          style="position:relative; z-index:2; width:100%; height:100%; object-fit:contain; background:#080c16; padding:6px;"
-          onerror="if(this.dataset.tried!=='1'){this.dataset.tried='1'; this.src='${esc(logos[1])}';} else if(this.dataset.tried!=='2'){this.dataset.tried='2'; this.src='${esc(logos[2])}';} else {this.remove();}">
-      </div>`;
+  function rankBadgeHTML(rank) {
+    if (rank === 1) return `<div class="rank rank-1">1</div>`;
+    if (rank === 2) return `<div class="rank rank-2">2</div>`;
+    if (rank === 3) return `<div class="rank rank-3">3</div>`;
+    return `<div class="rank rank-plain">${rank}</div>`;
   }
 
   function render() {
     if (!LB) return;
 
-    // Stats
-    $('stPot').textContent = money(LB.pot_cents);
-    $('stTakeOver').textContent = money(LB.take_over_cents);
-    $('stCount').textContent = LB.sites.length;
-    $('stMin').textContent = money(LB.min_bid_cents);
-
-    $('claimBtnText').textContent = `Transfer to join • ${money(LB.take_over_cents)}`;
-    $('chipTake1').textContent = `Take #1 (${money(LB.take_over_cents)})`;
-
-    const sites = LB.sites || [];
-
-    // Render 3D Podium
-    if (sites.length > 0) {
-      $('podiumSection').style.display = 'block';
-      const s1 = sites[0];
-      const s2 = sites[1] || null;
-      const s3 = sites[2] || null;
-
-      $('podiumStage').innerHTML = `
-        <!-- Rank 2 (Left) -->
-        <div class="podium-item" data-site="${s2 ? s2.id : ''}" data-host="${s2 ? esc(s2.host) : ''}" data-total="${s2 ? s2.total_cents : ''}" onclick="${s2 ? '' : 'openModal(null, null, null)'}">
-          <div class="podium-coin-wrap">
-            ${s2 ? createBrandCoinHTML(2, s2.host, s2.title, false) : `
-              <div class="brand-coin open">
-                <div class="coin-disc" style="font-size:24px; color:#64748b;">+</div>
-              </div>
-            `}
-            <span class="podium-rank-pill ${s2 ? 'silver' : 'open'}">#2</span>
-          </div>
-          ${s2 
-            ? `<a href="${esc(s2.url)}" target="_blank" rel="noopener sponsored" class="podium-title" onclick="event.stopPropagation();">${esc(s2.title)}</a>` 
-            : `<div class="podium-title">Challenger</div>`
-          }
-          <div class="podium-points">${s2 ? money(s2.total_cents) : 'Open Spot'}</div>
-          <div class="podium-pillar rank-2">2</div>
-        </div>
-
-        <!-- Rank 1 (Center) -->
-        <div class="podium-item" data-site="${s1.id}" data-host="${esc(s1.host)}" data-total="${s1.total_cents}">
-          <div class="podium-crown">👑</div>
-          <div class="podium-coin-wrap">
-            ${createBrandCoinHTML(1, s1.host, s1.title, true)}
-            <span class="podium-rank-pill gold">#1</span>
-          </div>
-          <a href="${esc(s1.url)}" target="_blank" rel="noopener sponsored" class="podium-title" style="font-weight:900; color:#ffd028; font-size:16px; text-decoration:none;" onclick="event.stopPropagation();">${esc(s1.title)}</a>
-          <div class="podium-points" style="font-size:16px; font-weight:800;">${money(s1.total_cents)}</div>
-          <div class="podium-pillar rank-1">1</div>
-        </div>
-
-        <!-- Rank 3 (Right) -->
-        <div class="podium-item" data-site="${s3 ? s3.id : ''}" data-host="${s3 ? esc(s3.host) : ''}" data-total="${s3 ? s3.total_cents : ''}" onclick="${s3 ? '' : 'openModal(null, null, null)'}">
-          <div class="podium-coin-wrap">
-            ${s3 ? createBrandCoinHTML(3, s3.host, s3.title, false) : `
-              <div class="brand-coin open">
-                <div class="coin-disc" style="font-size:24px; color:#64748b;">+</div>
-              </div>
-            `}
-            <span class="podium-rank-pill ${s3 ? 'bronze' : 'open'}">#3</span>
-          </div>
-          ${s3 
-            ? `<a href="${esc(s3.url)}" target="_blank" rel="noopener sponsored" class="podium-title" onclick="event.stopPropagation();">${esc(s3.title)}</a>` 
-            : `<div class="podium-title">Challenger</div>`
-          }
-          <div class="podium-points">${s3 ? money(s3.total_cents) : 'Open Spot'}</div>
-          <div class="podium-pillar rank-3">3</div>
-        </div>
-      `;
-
-      // Podium clicks
-      document.querySelectorAll('.podium-item').forEach(item => {
-        item.addEventListener('click', () => {
-          const siteId = item.dataset.site ? Number(item.dataset.site) : null;
-          const host = item.dataset.host || null;
-          const total = item.dataset.total ? Number(item.dataset.total) : null;
-          openModal(siteId, host, total);
-        });
-      });
-    } else {
-      $('podiumSection').style.display = 'none';
+    $('arenaTitle').textContent = `Claim #1 for ${money(LB.take_over_cents || 100)}`;
+    if ($('onlineCount') && typeof LB.online_count !== 'undefined') {
+      $('onlineCount').textContent = `${LB.online_count} Online`;
+    }
+    if ($('viewCount') && typeof LB.view_count !== 'undefined') {
+      const vc = LB.view_count >= 1000 ? (LB.view_count / 1000).toFixed(1) + 'k' : LB.view_count;
+      $('viewCount').textContent = `${vc} Views`;
     }
 
-    // Render Full Leaderboard Cards
-    if (sites.length === 0) {
-      $('leaderboardList').innerHTML = `
-        <div class="empty-throne-card">
-          <div class="empty-throne-icon">👑</div>
-          <h3 class="empty-throne-title">The Throne Arena is Empty</h3>
-          <p class="empty-throne-desc">Be the founding King of Outbidbid. Place the very first bid and claim Rank #1 instantly.</p>
-          <button class="primary-action-btn" style="max-width:280px; margin:0 auto;" id="firstBidBtn">
-            👑 Claim Rank #1 — ${money(LB.take_over_cents)}
-          </button>
-        </div>`;
-      const fb = $('firstBidBtn');
-      if (fb) fb.addEventListener('click', () => openModal(null, null, null));
-    } else {
-      $('leaderboardList').innerHTML = sites.map((s) => {
-        const rank = s.rank;
-        const isPodium = rank === 1 || rank === 2 || rank === 3;
-        const podiumClass = rank === 1 ? 'podium-1' : rank === 2 ? 'podium-2' : rank === 3 ? 'podium-3' : '';
-        const crown = rank === 1 ? '👑' : '';
-
-        return `
-          <article class="board-card ${podiumClass}" data-site="${s.id}" data-host="${esc(s.host)}" data-total="${s.total_cents}">
-            <div class="rank-watermark">${rank ? rank : ''}</div>
-            
-            ${isPodium ? createBrandCoinHTML(rank, s.host, s.title, false) : `
-              <div class="rank-badge-col">
-                <span class="rank-num-text">#${rank ? rank : '—'}</span>
-                ${createAvatarHTML(s.host, s.title)}
-              </div>
-            `}
-
-            <div class="card-main-content">
-              <div class="card-info">
-                <h3 class="card-title-row">
-                  ${crown ? `<span class="card-crown-tag">${crown}</span>` : ''}
-                  <a href="${esc(s.url)}" target="_blank" rel="noopener sponsored" class="card-title-link" onclick="event.stopPropagation();">
-                    ${esc(s.title)}
-                  </a>
-                </h3>
-                <div class="card-host-pill">
-                  <span class="host-name">${esc(s.host)}</span>
-                  ${s.tagline ? `<span class="host-dot">•</span> <span class="card-tagline">${esc(s.tagline)}</span>` : ''}
-                </div>
-              </div>
-              <div class="card-metrics-grid">
-                <div class="metric-item">
-                  <span class="metric-label">Points / Bid</span>
-                  <span class="metric-value">${money(s.total_cents)}</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-action-col">
-              <button class="outbid-pill-btn" data-site="${s.id}" data-host="${esc(s.host)}" data-total="${s.total_cents}" onclick="event.stopPropagation();">
-                <span>⚔️</span>
-                <span>Outbid</span>
-              </button>
-            </div>
-          </article>
-        `;
-      }).join('');
-
-      document.querySelectorAll('.board-card').forEach(card => {
-        card.addEventListener('click', () => {
-          openModal(Number(card.dataset.site), card.dataset.host, Number(card.dataset.total));
-        });
-      });
-      document.querySelectorAll('.outbid-pill-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          openModal(Number(btn.dataset.site), btn.dataset.host, Number(btn.dataset.total));
-        });
-      });
-
-      // Inject dynamic JSON-LD for SEO
-      injectDynamicJSONLD(sites);
+    const list = $('boardList');
+    if (!LB.sites || LB.sites.length === 0) {
+      list.innerHTML = `
+        <li class="row" style="justify-content:center; padding:48px 24px; text-align:center; color:var(--text-sub);">
+          <div>
+            <div style="font-size:20px; font-weight:800; color:var(--text-main); margin-bottom:8px;">The board is empty!</div>
+            <div style="font-size:15px; font-weight:600;">Be the first to claim #1 for just ${money(LB.min_bid_cents || 100)}.</div>
+          </div>
+        </li>`;
+      return;
     }
-  }
 
-  function injectDynamicJSONLD(sites) {
-    let script = document.getElementById('dynamic-json-ld');
-    if (!script) {
-      script = document.createElement('script');
-      script.id = 'dynamic-json-ld';
-      script.type = 'application/ld+json';
-      document.head.appendChild(script);
-    }
-    const itemListElements = sites.map((s, idx) => ({
-      "@type": "ListItem",
-      "position": s.rank || idx + 1,
-      "item": {
-        "@type": "WebSite",
-        "name": s.title || s.host,
-        "url": s.url,
-        "description": s.tagline || ("Bidding site " + (s.host || "") + " on Outbidbid leaderboard")
-      }
-    }));
-    script.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "itemListElement": itemListElements,
-      "name": "Outbidbid Leaderboard",
-      "description": "Live rankings of bidding sites outbidding each other."
-    });
+    list.innerHTML = LB.sites.map(s => {
+      const logos = getLogoUrls(s.host);
+      return `
+        <li class="row ${s.rank <= 3 ? 'top-3' : ''}" onclick="window.open('${esc(s.url)}', '_blank')">
+          ${rankBadgeHTML(s.rank)}
+          <div class="avatar">
+            <img src="${esc(logos[0])}" alt="" onerror="if(this.dataset.tried!=='1'){this.dataset.tried='1'; this.src='${esc(logos[1])}';} else if(this.dataset.tried!=='2'){this.dataset.tried='2'; this.src='${esc(logos[2])}';}">
+          </div>
+          <div class="info">
+            <div class="name">${esc(s.title || s.host)}</div>
+            <div class="desc">${esc(s.tagline || 'Leading innovation with high quality tools and products.')}</div>
+          </div>
+          <div class="price">${money(s.total_cents)}</div>
+          <button class="btn-outbid-row" onclick="event.stopPropagation(); window.openModal(${s.id}, '${esc(s.host)}', ${s.total_cents})">Outbid</button>
+        </li>`;
+    }).join('');
   }
 
   async function load() {
@@ -1632,89 +815,63 @@
       const r = await fetch('/api/leaderboard');
       LB = await r.json();
       render();
-    } catch (e) {
+    } catch(e) {
       console.warn('Leaderboard refresh error:', e);
     }
   }
 
-  // Modal Functions - Always opens full form for both transfer to join and outbid
-  function openModal(siteId, host, totalCents) {
+  window.openModal = function(siteId = null, host = null, totalCents = null) {
     modalCtx = { siteId, host, totalCents };
-    payBusy = false;
-
-    // Calculate base amount: +$1 of the target card's bid price if outbidding a card
     let defaultAmt;
     if (typeof totalCents === 'number' && totalCents > 0) {
       defaultAmt = Math.ceil((totalCents + 100) / 100);
     } else if (LB && LB.take_over_cents) {
       defaultAmt = Math.ceil(LB.take_over_cents / 100);
     } else {
-      defaultAmt = 2;
+      defaultAmt = 1;
     }
 
-    $('modalTitle').textContent = host ? `Outbid ${host.toUpperCase()}` : 'Join the Leaderboard';
-    $('modalSub').textContent = `Submit your site with $${(LB?.min_bid_cents || 100) / 100}+ to secure your spot. Beat ${money(LB?.take_over_cents || 100)} to take #1.`;
-
-    $('newSiteFields').style.display = 'block';
-    $('modalErr').textContent = '';
+    $('modalTitle').textContent = host ? `Outbid ${host}` : 'Place Your Bet';
+    $('modalSub').textContent = `Minimum bid ${money(LB?.min_bid_cents || 100)}. Beat ${money(LB?.take_over_cents || 100)} to take #1.`;
     $('inAmount').value = defaultAmt;
-
+    $('modalErr').textContent = '';
+    
     updateSimulation();
     $('bidModal').classList.add('open');
-    setTimeout(() => $('inTitle').focus(), 60);
-  }
+    setTimeout(() => $('inTitle').focus(), 80);
+  };
 
-  function closeModal() {
+  window.closeModal = function() {
     $('bidModal').classList.remove('open');
-  }
-
-  function simProjectedRank(siteId, addCents, isNew) {
-    if (!LB) return 1;
-    const totals = LB.sites
-      .map(s => ({ id: s.id, total: s.total_cents }))
-      .filter(s => s.total > 0);
-    
-    let rank = 1;
-    for (const s of totals) {
-      if (s.total >= addCents) {
-        rank++;
-      }
-    }
-    return rank;
-  }
+  };
 
   function updateSimulation() {
     if (!LB) return;
-    const cents = Math.round(parseFloat($('inAmount').value || '0') * 100);
-    const simBox = $('simFeedback');
-    const simTxt = $('simText');
-
-    if (!Number.isFinite(cents) || cents < LB.min_bid_cents) {
-      simTxt.textContent = `Minimum bid is ${money(LB.min_bid_cents)}`;
-      simBox.className = 'sim-feedback';
-      return;
+    const amount = parseFloat($('inAmount').value || '0');
+    const cents = Math.round(amount * 100);
+    let rank = 1;
+    if (LB.sites) {
+      for (const s of LB.sites) {
+        if (s.total_cents >= cents) rank++;
+      }
     }
-
-    const r = simProjectedRank(modalCtx.siteId, cents, !modalCtx.siteId);
-    if (r === 1) {
-      simTxt.textContent = `👑 Takes Rank #1 — Wears the Crown!`;
-      simBox.className = 'sim-feedback king';
-    } else {
-      simTxt.textContent = `⚡ Projected Rank: #${r} on the Leaderboard`;
-      simBox.className = 'sim-feedback';
-    }
+    $('simText').textContent = rank === 1 ? '👑 Projected Rank: #1 (Takes the Crown!)' : `⚡ Projected Rank: #${rank}`;
   }
 
-  async function submitBid() {
-    if (payBusy || !LB) return;
-    const cents = Math.round(parseFloat($('inAmount').value || '0') * 100);
-
-    if (!Number.isFinite(cents) || cents < LB.min_bid_cents) {
-      $('modalErr').textContent = `Minimum bid is ${money(LB.min_bid_cents)}.`;
-      return;
+  $('inAmount').addEventListener('input', updateSimulation);
+  $('quickBetBtn').addEventListener('click', () => {
+    const amt = parseFloat($('quickBetAmount').value || '0');
+    window.openModal(null, null, null);
+    if (amt > 0) {
+      $('inAmount').value = amt;
+      updateSimulation();
     }
-    if (LB.mode === 'dodo' && cents % 100 !== 0) {
-      $('modalErr').textContent = 'Whole-dollar bids only (e.g. $5, $25, $100).';
+  });
+
+  window.submitBid = async function() {
+    const cents = Math.round(parseFloat($('inAmount').value || '0') * 100);
+    if (!cents || cents < (LB?.min_bid_cents || 100)) {
+      $('modalErr').textContent = `Minimum bid is ${money(LB?.min_bid_cents || 100)}`;
       return;
     }
 
@@ -1722,44 +879,44 @@
       amount_cents: cents,
       payer_name: $('inPayer').value.trim(),
       new_site: {
-        title: $('inTitle').value.trim(),
-        url: $('inUrl').value.trim(),
+        title: $('inTitle').value.trim() || modalCtx.host || 'My Project',
+        url: $('inUrl').value.trim() || (modalCtx.host ? `https://${modalCtx.host}` : ''),
         tagline: $('inTagline').value.trim()
       }
     };
 
-    if (payload.new_site.title.length < 2 || !payload.new_site.url) {
-      $('modalErr').textContent = 'Site Title (2+ chars) and URL are required.';
+    if (modalCtx.siteId) {
+      payload.site_id = modalCtx.siteId;
+    }
+
+    if (!payload.new_site.url) {
+      $('modalErr').textContent = 'Please enter a valid website URL.';
       return;
     }
 
-    payBusy = true;
     $('modalSubmitBtn').disabled = true;
-    $('modalSubmitBtn').textContent = 'PROCESSING…';
+    $('modalSubmitBtn').textContent = 'PROCESSING...';
     $('modalErr').textContent = '';
 
     try {
-      const r = await fetch('/api/bid', {
+      const res = await fetch('/api/bid', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      const data = await r.json();
+      const data = await res.json();
 
-      if (!r.ok) {
-        $('modalErr').textContent = data.error === 'invalid_amount'
-          ? `Bid must be between ${money(data.min)} and ${money(data.max)}.`
-          : (data.detail || data.error || 'Bid failed.');
+      if (!res.ok) {
+        $('modalErr').textContent = data.detail || data.error || 'Bid failed';
         return;
       }
 
-      // Hosted checkout redirection
       if (data.type === 'dodo' || data.type === 'stripe' || data.type === 'nowpayments') {
         window.location.href = data.checkout_url;
         return;
       }
 
-      // Demo pay
+      // Demo Pay
       const pay = await fetch('/api/demo-pay', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -1768,53 +925,19 @@
       const pr = await pay.json();
       if (!pay.ok) throw new Error(pr.error || 'Payment failed');
 
-      closeModal();
-      toast(`👑 Bid of ${money(cents)} secured! Rank updated.`);
+      window.closeModal();
       await load();
-    } catch (e) {
+    } catch(e) {
       $('modalErr').textContent = 'Network or payment error. Please try again.';
     } finally {
-      payBusy = false;
       $('modalSubmitBtn').disabled = false;
-      $('modalSubmitBtn').textContent = 'CONFIRM & CLIMB';
+      $('modalSubmitBtn').textContent = 'PAY & CLIMB';
     }
-  }
-
-  // Event Listeners
-  $('claimThroneBtn').addEventListener('click', () => openModal(null, null));
-  $('modalCloseBtn').addEventListener('click', closeModal);
-  $('bidModal').addEventListener('click', (e) => {
-    if (e.target === $('bidModal')) closeModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  $('modalSubmitBtn').addEventListener('click', submitBid);
-  $('inAmount').addEventListener('input', updateSimulation);
-
-  // Quick Amount Chips
-  document.querySelectorAll('.chip-btn[data-add]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const add = parseFloat(btn.dataset.add);
-      const cur = parseFloat($('inAmount').value || '0');
-      $('inAmount').value = Math.max(1, cur + add);
-      updateSimulation();
-    });
-  });
-
-  $('chipTake1').addEventListener('click', () => {
-    if (!LB) return;
-    $('inAmount').value = Math.ceil(LB.take_over_cents / 100);
-    updateSimulation();
-  });
+  };
 
   // Boot
   load();
   setInterval(load, 10000);
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) load();
-  });
 })();
 </script>
 </body>
