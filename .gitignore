@@ -1,0 +1,7 @@
+.admin_token
+.dev.vars
+.wrangler/
+dist/
+node_modules/
+.dodo_key
+.dodo_live_key

@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "outbidbid",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./public"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "outbidbid",
+      "database_id": "97087313-2a79-4ac3-b6dd-e6840eff86c7"
+    }
+  ],
+  "routes": [
+    { "pattern": "outbidbid.lol", "custom_domain": true }
+  ],
+  "vars": {
+    // LIVE (staged, ready): DODO_BASE https://live.dodopayments.com, product pdt_0Nm2g6AkVcf4sSybPOz5T, key in .dodo_live_key
+    "DODO_BASE": "https://test.dodopayments.com",
+    "DODO_PRODUCT_ID": "pdt_0Nm2RvrIp9B6H5GqDB1Ai"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

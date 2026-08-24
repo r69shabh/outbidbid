@@ -1,0 +1,11 @@
+/index.html
+  Cache-Control: public, max-age=120, stale-while-revalidate=300
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+
+/robots.txt
+  Cache-Control: public, max-age=3600
+
+/og.png
+  Cache-Control: public, max-age=86400

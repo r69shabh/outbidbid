@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Outbidbid 👑 — Payment Confirmation</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #060a12;
+    --bg-card: #0d1627;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-blue: #0084ff;
+    --accent-emerald: #00e599;
+    --gold-primary: #ffd028;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-base);
+    background-image: 
+      radial-gradient(800px 400px at 50% 20%, rgba(0, 132, 255, 0.12), transparent 70%),
+      radial-gradient(600px 300px at 50% 80%, rgba(255, 208, 40, 0.06), transparent 70%);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    text-align: center;
+  }
+  .confirm-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 40px 28px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 132, 255, 0.12);
+  }
+  .icon-wrapper {
+    font-size: 52px;
+    margin-bottom: 16px;
+    display: inline-block;
+    filter: drop-shadow(0 0 16px rgba(255, 208, 40, 0.4));
+    animation: bounce 2s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  h1 {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .btn-return {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--accent-blue);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 14.5px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(0, 132, 255, 0.35);
+    transition: all 0.15s ease;
+    letter-spacing: -0.01em;
+  }
+  .btn-return:hover {
+    background: #0070db;
+    box-shadow: 0 6px 20px rgba(0, 132, 255, 0.5);
+    transform: translateY(-1px);
+  }
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="confirm-box">
+  <div class="icon-wrapper" id="icon">👑</div>
+  <h1 id="msg">Verifying Payment…</h1>
+  <p id="sub">Hold tight while the ledger confirms your gold and recalculates the leaderboard.</p>
+  <a href="/" id="back" class="btn-return" style="visibility:hidden">← View Leaderboard</a>
+</div>
+<script>
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const sid = q.get('session_id') ?? q.get('payment_id') ?? q.get('invoice_id');
+  const msg = document.getElementById('msg');
+  const sub = document.getElementById('sub');
+  const back = document.getElementById('back');
+  const icon = document.getElementById('icon');
+  let paid = false;
+  try {
+    if (!sid) throw new Error('no session');
+    for (let i = 0; i < 8 && !paid; i++) {
+      const r = await fetch('/api/confirm?' + (q.get('payment_id') || q.get('invoice_id') ? 'payment_id=' : 'session_id=') + encodeURIComponent(sid));
+      const d = await r.json();
+      paid = !!d.paid;
+      if (!paid) await new Promise(res => setTimeout(res, 2000));
+    }
+    if (paid) {
+      icon.textContent = '🎉';
+      msg.textContent = 'Bid Secured & Ranked!';
+      sub.textContent = 'Your bid has settled into the ledger. Check your new standing in the Throne Arena.';
+    } else {
+      icon.textContent = '⏳';
+      msg.textContent = 'Payment Processing';
+      sub.textContent = 'Payment was received but the ledger is syncing. Your rank will update in a moment.';
+    }
+  } catch {
+    icon.textContent = '👑';
+    msg.textContent = 'Check Your Standing';
+    sub.textContent = 'If your payment was completed, your bid will reflect on the leaderboard automatically.';
+  }
+  back.style.visibility = 'visible';
+})();
+</script>
+</body>
+</html>
