@@ -1548,7 +1548,7 @@
         "@type": "WebSite",
         "name": s.title || s.host,
         "url": s.url,
-        "description": s.tagline || \`Bidding site \${s.host} on Outbidbid leaderboard\`
+        "description": s.tagline || ("Bidding site " + (s.host || "") + " on Outbidbid leaderboard")
       }
     }));
     script.textContent = JSON.stringify({
