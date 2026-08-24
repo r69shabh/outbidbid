@@ -408,23 +408,14 @@ const dodoClient = (env) =>
     environment: (env.DODO_BASE ?? '').includes('test') ? 'test_mode' : 'live_mode',
   });
 
-async function createDodoCheckout(env, { requestOrigin, bidId, amountCents, label, payerName }) {
+async function createDodoCheckout(env, { requestOrigin, bidId, amountCents, label }) {
   // Dodo product carts price by quantity of a fixed-price product, so bids are
   // whole-dollar multiples of the $1 "Outbidbid Bid" product.
-  const checkoutPayload = {
+  const session = await dodoClient(env).checkoutSessions.create({
     product_cart: [{ product_id: env.DODO_PRODUCT_ID, quantity: amountCents / 100 }],
     return_url: `${requestOrigin}/?paid=1`,
     metadata: { bid_id: String(bidId), label: label || 'Outbidbid Bid' },
-    customer_business_name: 'Outbidbid',
-  };
-  if (payerName) {
-    checkoutPayload.customer = {
-      name: payerName,
-      email: `${payerName.toLowerCase().replace(/[^a-z0-9]/g, '') || 'bidder'}@outbidbid.lol`,
-    };
-  }
-
-  const session = await dodoClient(env).checkoutSessions.create(checkoutPayload);
+  });
   if (!session?.checkout_url || !session?.session_id) {
     return { error: session?.message ?? 'dodo_checkout_failed' };
   }
@@ -580,7 +571,6 @@ async function handleBid(request, env) {
       bidId,
       amountCents: amount,
       label,
-      payerName,
     });
     if (checkout.error) {
       await env.DB.prepare("UPDATE bids SET status = 'abandoned' WHERE id = ?").bind(bidId).run();
