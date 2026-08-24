@@ -1288,9 +1288,43 @@
     })();
   }
 
+  // Real-time WebSocket Presence & Live Sync
+  function connectPresence() {
+    try {
+      const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const ws = new WebSocket(`${proto}//${location.host}/api/presence`);
+
+      ws.onmessage = (e) => {
+        try {
+          const data = JSON.parse(e.data);
+          if (data.type === 'presence') {
+            if (typeof data.online !== 'undefined' && $('onlineCount')) {
+              $('onlineCount').textContent = `${data.online} Online`;
+            }
+            if (typeof data.views !== 'undefined' && $('viewCount')) {
+              const vc = data.views >= 1000 ? (data.views / 1000).toFixed(1) + 'k' : data.views;
+              $('viewCount').textContent = `${vc} Views`;
+            }
+          }
+        } catch(err) {}
+      };
+
+      ws.onclose = () => {
+        setTimeout(connectPresence, 3000 + Math.random() * 2000);
+      };
+
+      ws.onerror = () => {
+        try { ws.close(); } catch(e) {}
+      };
+    } catch(e) {
+      console.warn('WebSocket presence not supported or blocked:', e);
+    }
+  }
+
   // Boot
   load();
   setInterval(load, 10000);
+  connectPresence();
 })();
 </script>
 <div id="toast"></div>

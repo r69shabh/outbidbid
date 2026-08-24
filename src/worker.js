@@ -146,36 +146,40 @@ async function getLeaderboard(env) {
   let onlineCount = 1;
   let viewCount = 1;
 
+  try {
+    const presenceRow = await env.DB.prepare(
+      'SELECT COUNT(*) AS count FROM presence WHERE last_seen >= ?'
+    ).bind(now() - ONLINE_WINDOW_SECONDS).first();
+    if (presenceRow && typeof presenceRow.count === 'number') {
+      onlineCount = Math.max(1, presenceRow.count);
+    }
+
+    const viewsRow = await env.DB.prepare(
+      'SELECT COUNT(*) AS count FROM page_views'
+    ).first();
+    if (viewsRow && typeof viewsRow.count === 'number') {
+      viewCount = Math.max(1, viewsRow.count);
+    }
+  } catch (err) {
+    console.warn('Analytics DB query error:', err);
+  }
+
   if (env.PRESENCE) {
     try {
       const id = env.PRESENCE.idFromName('global');
       const stub = env.PRESENCE.get(id);
-      const res = await stub.fetch('http://presence/stats?hit=1');
+      const res = await stub.fetch('http://presence/stats');
       if (res.ok) {
         const stats = await res.json();
-        onlineCount = stats.online;
-        viewCount = stats.views;
+        if (typeof stats.online === 'number' && stats.online > 0) {
+          onlineCount = Math.max(onlineCount, stats.online);
+        }
+        if (typeof stats.views === 'number' && stats.views > 0) {
+          viewCount = Math.max(viewCount, stats.views);
+        }
       }
     } catch (err) {
       console.warn('Presence DO query error:', err);
-    }
-  } else {
-    try {
-      const presenceRow = await env.DB.prepare(
-        'SELECT COUNT(*) AS count FROM presence WHERE last_seen >= ?'
-      ).bind(now() - ONLINE_WINDOW_SECONDS).first();
-      if (presenceRow && typeof presenceRow.count === 'number') {
-        onlineCount = Math.max(1, presenceRow.count);
-      }
-
-      const viewsRow = await env.DB.prepare(
-        'SELECT COUNT(*) AS count FROM page_views'
-      ).first();
-      if (viewsRow && typeof viewsRow.count === 'number') {
-        viewCount = Math.max(1, viewsRow.count);
-      }
-    } catch (err) {
-      console.warn('Analytics query error:', err);
     }
   }
 
