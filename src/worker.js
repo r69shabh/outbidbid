@@ -834,6 +834,17 @@ async function handleAdmin(request, env) {
       if (!res.ok) return json({ ok: false, error: 'webhook_create_failed', detail: wh?.error?.message ?? wh }, 502);
       return json({ ok: true, webhook_id: wh.id, url: wh.url, note: 'copy signing secret from dashboard -> DODO_WEBHOOK_SECRET' });
     }
+    case 'dodo_info': {
+      if (!env.DODO_API_KEY) return json({ error: 'no_dodo_api_key' }, 400);
+      try {
+        const client = dodoClient(env);
+        const brands = await client.brands.list().catch((e) => ({ error: e?.message ?? e }));
+        const products = await client.products.list().catch((e) => ({ error: e?.message ?? e }));
+        return json({ ok: true, brands, products, current_product_id: env.DODO_PRODUCT_ID });
+      } catch (err) {
+        return json({ ok: false, error: err?.message ?? String(err) }, 500);
+      }
+    }
     default:
       return json({ error: 'unknown_action' }, 400);
   }
