@@ -579,6 +579,40 @@
     
     .claim-text { font-size: 42px; }
   }
+
+  /* TOAST NOTIFICATION */
+  #toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-40px);
+    background: var(--card-bg);
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text-main);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+  #toast.toast-syncing {
+    border-color: var(--blue);
+  }
+  #toast.toast-success {
+    border-color: var(--green);
+  }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
@@ -935,10 +969,54 @@
     }
   };
 
+  // Toast helper
+  const toast = (msg, icon = '👑', type = '', dur = 4000) => {
+    let t = $('toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'toast';
+      document.body.appendChild(t);
+    }
+    t.className = type ? `show toast-${type}` : 'show';
+    t.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
+    clearTimeout(t._t);
+    t._t = setTimeout(() => t.classList.remove('show'), dur);
+  };
+
+  // Check for returning payment redirect
+  const q = new URLSearchParams(location.search);
+  const sid = q.get('session_id') || q.get('payment_id') || q.get('invoice_id');
+  const isPaid = q.get('paid') === '1' || !!sid;
+
+  if (isPaid) {
+    toast('Syncing your bid into the leaderboard…', '⏳', 'syncing', 8000);
+    (async () => {
+      if (sid) {
+        for (let i = 0; i < 6; i++) {
+          try {
+            const param = q.get('payment_id') || q.get('invoice_id') ? 'payment_id=' : 'session_id=';
+            const r = await fetch(`/api/confirm?${param}${encodeURIComponent(sid)}`);
+            const d = await r.json();
+            if (d.paid) break;
+          } catch(e) {}
+          await new Promise(r => setTimeout(r, 1500));
+        }
+      } else {
+        await new Promise(r => setTimeout(r, 1200));
+      }
+      await load();
+      toast('Payment settled! Your bid is now live on the board.', '👑', 'success', 5000);
+      try {
+        history.replaceState(null, '', window.location.pathname);
+      } catch(e) {}
+    })();
+  }
+
   // Boot
   load();
   setInterval(load, 10000);
 })();
 </script>
+<div id="toast"></div>
 </body>
 </html>

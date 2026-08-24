@@ -253,7 +253,7 @@ async function markPaid(env, { id, ref }) {
 async function createStripeCheckout(env, { requestOrigin, bidId, amountCents, label }) {
   const p = new URLSearchParams();
   p.set('mode', 'payment');
-  p.set('success_url', `${requestOrigin}/thanks?session_id={CHECKOUT_SESSION_ID}`);
+  p.set('success_url', `${requestOrigin}/?paid=1&session_id={CHECKOUT_SESSION_ID}`);
   p.set('cancel_url', `${requestOrigin}/`);
   p.set('client_reference_id', `bid_${bidId}`);
   p.set('metadata[bid_id]', String(bidId));
@@ -337,7 +337,7 @@ async function createNpInvoice(env, { requestOrigin, bidId, amountCents, label }
       price_currency: 'usd',
       order_id: `bid_${bidId}`,
       order_description: `Outbidbid bid — ${label}`,
-      success_url: `${requestOrigin}/thanks`,
+      success_url: `${requestOrigin}/?paid=1`,
       cancel_url: `${requestOrigin}/`,
       ipn_callback_url: `${requestOrigin}/api/nowpayments/ipn`,
     }),
@@ -408,14 +408,23 @@ const dodoClient = (env) =>
     environment: (env.DODO_BASE ?? '').includes('test') ? 'test_mode' : 'live_mode',
   });
 
-async function createDodoCheckout(env, { requestOrigin, bidId, amountCents, label }) {
+async function createDodoCheckout(env, { requestOrigin, bidId, amountCents, label, payerName }) {
   // Dodo product carts price by quantity of a fixed-price product, so bids are
   // whole-dollar multiples of the $1 "Outbidbid Bid" product.
-  const session = await dodoClient(env).checkoutSessions.create({
+  const checkoutPayload = {
     product_cart: [{ product_id: env.DODO_PRODUCT_ID, quantity: amountCents / 100 }],
-    return_url: `${requestOrigin}/thanks`,
-    metadata: { bid_id: String(bidId), label },
-  });
+    return_url: `${requestOrigin}/?paid=1`,
+    metadata: { bid_id: String(bidId), label: label || 'Outbidbid Bid' },
+    customer_business_name: 'Outbidbid',
+  };
+  if (payerName) {
+    checkoutPayload.customer = {
+      name: payerName,
+      email: `${payerName.toLowerCase().replace(/[^a-z0-9]/g, '') || 'bidder'}@outbidbid.lol`,
+    };
+  }
+
+  const session = await dodoClient(env).checkoutSessions.create(checkoutPayload);
   if (!session?.checkout_url || !session?.session_id) {
     return { error: session?.message ?? 'dodo_checkout_failed' };
   }
@@ -571,6 +580,7 @@ async function handleBid(request, env) {
       bidId,
       amountCents: amount,
       label,
+      payerName,
     });
     if (checkout.error) {
       await env.DB.prepare("UPDATE bids SET status = 'abandoned' WHERE id = ?").bind(bidId).run();
@@ -972,6 +982,13 @@ export default {
       } catch (err) {
         return attachCookies(json({ error: 'internal', detail: String(err?.message ?? err) }, 500));
       }
+    }
+
+    if (pathname === '/thanks') {
+      const target = new URL(url.origin + '/');
+      url.searchParams.forEach((v, k) => target.searchParams.set(k, v));
+      target.searchParams.set('paid', '1');
+      return Response.redirect(target.toString(), 302);
     }
 
     // non-API unknown paths fall back to the SPA (asset miss reaches here)
