@@ -6,6 +6,83 @@
 <link rel="icon" href="/logo.png?v=3" type="image/png">
 <title>Outbidbid — The Pay-to-Rank Leaderboard Arena | Outbid the Outbidders</title>
 <meta name="description" content="Outbidbid is the premier pay-to-rank leaderboard: bidding sites pay $1+ to list and battle for the #1 throne. Ranks decay after 30 days, highest bid wears the crown.">
+<link rel="canonical" href="https://outbidbid.lol/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="author" content="Outbidbid">
+<meta name="keywords" content="pay to rank, bid to rank, leaderboard, outbid, bidding sites, listing board, pay per rank, bid board, backlink board, promote your site">
+<meta name="theme-color" content="#f7f9fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111b21" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Outbidbid">
+<meta property="og:title" content="Outbidbid — The Pay-to-Rank Leaderboard Arena">
+<meta property="og:description" content="List your bidding site. Pay to rank. Outbid the outbidders. $1 minimum bid, 30-day crown.">
+<meta property="og:url" content="https://outbidbid.lol/">
+<meta property="og:image" content="https://outbidbid.lol/og.png">
+<meta property="og:image:alt" content="Outbidbid Leaderboard Arena">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@outbidbid">
+<meta name="twitter:title" content="Outbidbid — Outbid the Outbidders">
+<meta name="twitter:description" content="The bid-to-rank arena for bid-to-rank boards. $1 takes the throne.">
+<meta name="twitter:image" content="https://outbidbid.lol/og.png">
+<meta name="twitter:image:alt" content="Outbidbid Leaderboard Arena">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://icons.duckduckgo.com">
+<link rel="dns-prefetch" href="https://unavatar.io">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://outbidbid.lol/#website",
+      "url": "https://outbidbid.lol/",
+      "name": "Outbidbid",
+      "description": "The pay-to-rank leaderboard arena where bidding sites outbid each other for the #1 spot.",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://outbidbid.lol/#org",
+      "name": "Outbidbid",
+      "url": "https://outbidbid.lol/",
+      "logo": { "@type": "ImageObject", "url": "https://outbidbid.lol/logo.png" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://outbidbid.lol/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does Outbidbid work?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Sites pay real money to list on the leaderboard. Your rank is the total of your paid bids in the last 30 days — the highest total is #1. Pay more than the site above you to take its spot." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the minimum bid on Outbidbid?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The minimum bid is $1 USD, paid in whole dollars. Every listing on the board comes from a real, settled payment." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do ranks drop on Outbidbid?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Only bids from the last 30 days count toward your rank. As bids age out of the 30-day window, totals decay and the leaderboard reshuffles — keep bidding to defend your spot." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Outbidbid advertising worth it?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Every listing is a direct, dofollow-free sponsored link seen by every visitor of the arena. You set your own budget — from $1 to $10,000 per bid — and only pay to climb." }
+        }
+      ]
+    }
+  ]
+}
+</script>
 <style>
   :root {
     --bg: #f7f9fa;
@@ -362,6 +439,7 @@
   .rank-plain { color: var(--green); }
 
   .avatar {
+    position: relative;
     width: 52px;
     height: 52px;
     border-radius: 12px;
@@ -376,9 +454,23 @@
   }
 
   .avatar img {
+    position: relative;
+    z-index: 2;
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .avatar .mono {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 900;
+    z-index: 1;
+    user-select: none;
   }
 
   .info {
@@ -531,6 +623,37 @@
   }
   .form-input::placeholder { color: var(--text-faint); }
   
+  .form-select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23777777' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    padding-right: 40px;
+  }
+  
+  .category-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--bg);
+    border: 1.5px solid var(--line);
+    color: var(--text-sub);
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .category-pill.cat-outbid {
+    border-color: var(--gold);
+    color: var(--gold-text);
+    background: var(--gold-light);
+  }
+
   .amount-box { position: relative; }
   .amount-box .cur { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-weight: 800; color: var(--text-main); font-size: 18px; }
   .amount-input { padding-left: 32px; font-size: 18px; }
@@ -670,13 +793,18 @@
     <div class="claim-banner">
       <div class="claim-text" id="arenaTitle">Claim #1 for $1</div>
     </div>
-    <div class="filters">
-      <button class="filter-chip active">All</button>
-      <button class="filter-chip">SaaS</button>
-      <button class="filter-chip">Crypto</button>
-      <button class="filter-chip">AI</button>
-      <button class="filter-chip">Design</button>
-      <button class="filter-chip">Tools</button>
+    <div class="filters" id="categoryFilters">
+      <button class="filter-chip active" data-cat="All">All</button>
+      <button class="filter-chip" data-cat="Outbid">Outbid</button>
+      <button class="filter-chip" data-cat="Site">Site</button>
+      <button class="filter-chip" data-cat="App">App</button>
+      <button class="filter-chip" data-cat="Startup">Startup</button>
+      <button class="filter-chip" data-cat="SaaS">SaaS</button>
+      <button class="filter-chip" data-cat="AI">AI</button>
+      <button class="filter-chip" data-cat="Crypto">Crypto</button>
+      <button class="filter-chip" data-cat="Tools">Tools</button>
+      <button class="filter-chip" data-cat="Directory">Directory</button>
+      <button class="filter-chip" data-cat="Other">Other</button>
     </div>
   </div>
 
@@ -714,6 +842,20 @@
     </div>
     <div class="form-group">
       <input type="url" id="inUrl" class="form-input" placeholder="https://example.com">
+    </div>
+    <div class="form-group">
+      <select id="inCategory" class="form-input form-select" title="Category">
+        <option value="Outbid">Outbid (Bidding / Pay-to-Rank Arena)</option>
+        <option value="Site" selected>Site (Website / Landing Page)</option>
+        <option value="App">App (Web / Mobile App)</option>
+        <option value="Startup">Startup (Indie Project / Company)</option>
+        <option value="SaaS">SaaS (Software as a Service)</option>
+        <option value="AI">AI (AI App / Agent / Tool)</option>
+        <option value="Crypto">Crypto (Crypto / Web3 Project)</option>
+        <option value="Tools">Tools (Developer / Creator Tool)</option>
+        <option value="Directory">Directory (Curated List / Platform)</option>
+        <option value="Other">Other</option>
+      </select>
     </div>
     <div class="form-group">
       <input type="text" id="inTagline" class="form-input" placeholder="Short description / tagline">
@@ -784,15 +926,63 @@
   }
 
   let LB = null;
-  let modalCtx = { siteId: null, host: null, totalCents: null };
+  let modalCtx = { siteId: null, host: null, totalCents: null, category: null };
+  let selectedCategory = 'All';
+
+  // Category filter buttons
+  document.querySelectorAll('#categoryFilters .filter-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#categoryFilters .filter-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedCategory = btn.dataset.cat || 'All';
+      render();
+    });
+  });
 
   function getLogoUrls(host) {
     const cleanHost = encodeURIComponent(host || 'default.com');
+    // 404-driven chain, fastest first: DDG answers or 404s instantly, unavatar
+    // aggregates social logos, Google is the always-200 last resort.
     return [
-      `https://logo.clearbit.com/${cleanHost}`,
+      `https://icons.duckduckgo.com/ip3/${host}.ico`,
       `https://unavatar.io/${cleanHost}?fallback=false`,
-      `https://www.google.com/s2/favicons?domain=${cleanHost}&sz=256`
+      `https://www.google.com/s2/favicons?domain=${cleanHost}&sz=128`
     ];
+  }
+
+  // Walk the fallback chain; drop the img entirely at the end so the
+  // monogram tile underneath shows instead.
+  window.logoNext = function(img) {
+    if (img.dataset.done) return;
+    let urls = [];
+    try { urls = JSON.parse(img.dataset.urls || '[]'); } catch { return; }
+    const next = Number(img.dataset.tried || 0) + 1;
+    if (next < urls.length) {
+      img.dataset.tried = next;
+      img.src = urls[next];
+    } else {
+      img.dataset.done = '1';
+      img.remove();
+    }
+  };
+
+  function logoImgHTML(host) {
+    const urls = getLogoUrls(host);
+    return `<img src="${esc(urls[0])}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"
+      data-urls='${esc(JSON.stringify(urls))}'
+      onload="if(this.src.indexOf('s2/favicons')!==-1 && this.naturalWidth && this.naturalWidth<48){window.logoNext(this)}"
+      onerror="window.logoNext(this)">`;
+  }
+
+  const MONOGRAM_COLORS = [
+    ['#ffe199', '#8a5b00'], ['#d3f2ff', '#0b6e99'], ['#e2dcff', '#4c3fa3'],
+    ['#ffd6e0', '#a31b48'], ['#d6f5d6', '#1e7a1e'], ['#ffe6cc', '#99500a']
+  ];
+  function monogramHTML(text, host) {
+    let h = 0;
+    for (let i = 0; i < (host || '').length; i++) h = (h * 31 + host.charCodeAt(i)) | 0;
+    const [bg, fg] = MONOGRAM_COLORS[Math.abs(h) % MONOGRAM_COLORS.length];
+    return `<span class="mono" style="background:${bg};color:${fg}">${esc(text)}</span>`;
   }
 
   function rankBadgeHTML(rank) {
@@ -826,22 +1016,71 @@
       return;
     }
 
-    list.innerHTML = LB.sites.map(s => {
-      const logos = getLogoUrls(s.host);
+    const filtered = LB.sites.filter(s => {
+      if (selectedCategory === 'All') return true;
+      return (s.category || 'Site').toLowerCase() === selectedCategory.toLowerCase();
+    });
+
+    if (filtered.length === 0) {
+      list.innerHTML = `
+        <li class="row" style="justify-content:center; padding:48px 24px; text-align:center; color:var(--text-sub);">
+          <div>
+            <div style="font-size:18px; font-weight:800; color:var(--text-main); margin-bottom:6px;">No sites in "${esc(selectedCategory)}" yet</div>
+            <div style="font-size:14px; font-weight:600;">Be the first to rank in this category!</div>
+          </div>
+        </li>`;
+      return;
+    }
+
+    list.innerHTML = filtered.map(s => {
+      const letter = (s.title || s.host || '?').trim().charAt(0).toUpperCase();
+      const cat = s.category || 'Site';
       return `
         <li class="row ${s.rank <= 3 ? 'top-3' : ''}" onclick="window.open('${esc(s.url)}', '_blank')">
           ${rankBadgeHTML(s.rank)}
           <div class="avatar">
-            <img src="${esc(logos[0])}" alt="" onerror="if(this.dataset.tried!=='1'){this.dataset.tried='1'; this.src='${esc(logos[1])}';} else if(this.dataset.tried!=='2'){this.dataset.tried='2'; this.src='${esc(logos[2])}';}">
+            ${monogramHTML(letter, s.host)}
+            ${logoImgHTML(s.host)}
           </div>
           <div class="info">
-            <div class="name">${esc(s.title || s.host)}</div>
+            <div class="name">
+              ${esc(s.title || s.host)}
+              <span class="category-pill ${cat === 'Outbid' ? 'cat-outbid' : ''}">${esc(cat)}</span>
+            </div>
             <div class="desc">${esc(s.tagline || 'Leading innovation with high quality tools and products.')}</div>
           </div>
           <div class="price">${money(s.total_cents)}</div>
           <button class="btn-outbid-row" onclick="event.stopPropagation(); window.openModal(${s.id}, '${esc(s.host)}', ${s.total_cents})">Outbid</button>
         </li>`;
     }).join('');
+
+    injectDynamicJSONLD(LB.sites);
+  }
+
+  function injectDynamicJSONLD(sites) {
+    let script = document.getElementById('dynamic-json-ld');
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'dynamic-json-ld';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Outbidbid Leaderboard",
+      "description": "Live rankings of bidding sites outbidding each other for the #1 spot.",
+      "itemListElement": sites.map((s, idx) => ({
+        "@type": "ListItem",
+        "position": s.rank || idx + 1,
+        "item": {
+          "@type": "WebSite",
+          "name": s.title || s.host,
+          "url": s.url,
+          "description": s.tagline || ("Bidding site " + (s.host || "") + " on the Outbidbid leaderboard")
+        }
+      }))
+    });
   }
 
   async function load() {
@@ -854,8 +1093,8 @@
     }
   }
 
-  window.openModal = function(siteId = null, host = null, totalCents = null) {
-    modalCtx = { siteId, host, totalCents };
+  window.openModal = function(siteId = null, host = null, totalCents = null, category = null) {
+    modalCtx = { siteId, host, totalCents, category };
     let defaultAmt;
     if (typeof totalCents === 'number' && totalCents > 0) {
       defaultAmt = Math.ceil((totalCents + 100) / 100);
@@ -868,6 +1107,11 @@
     $('modalTitle').textContent = host ? `Outbid ${host}` : 'Place Your Bet';
     $('modalSub').textContent = `Minimum bid ${money(LB?.min_bid_cents || 100)}. Beat ${money(LB?.take_over_cents || 100)} to take #1.`;
     $('inAmount').value = defaultAmt;
+    if (category && $('inCategory')) {
+      $('inCategory').value = category;
+    } else if (selectedCategory !== 'All' && $('inCategory')) {
+      $('inCategory').value = selectedCategory;
+    }
     $('modalErr').textContent = '';
     
     updateSimulation();
@@ -915,7 +1159,8 @@
       new_site: {
         title: $('inTitle').value.trim() || modalCtx.host || 'My Project',
         url: $('inUrl').value.trim() || (modalCtx.host ? `https://${modalCtx.host}` : ''),
-        tagline: $('inTagline').value.trim()
+        tagline: $('inTagline').value.trim(),
+        category: $('inCategory') ? $('inCategory').value : 'Site'
       }
     };
 

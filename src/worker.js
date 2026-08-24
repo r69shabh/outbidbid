@@ -117,7 +117,7 @@ async function getLeaderboard(env) {
   const cutoff = now() - BID_WINDOW_SECONDS;
 
   const sitesRes = await env.DB.prepare(
-    `SELECT s.id, s.title, s.url, s.host, s.tagline, s.created_at,
+    `SELECT s.id, s.title, s.url, s.host, s.tagline, s.category, s.created_at,
             COALESCE(SUM(CASE WHEN b.status='paid' AND b.paid_at >= ?1 THEN b.amount_cents END), 0) AS total_cents,
             COALESCE(SUM(CASE WHEN b.status='paid' AND b.paid_at >= ?1 THEN 1 ELSE 0 END), 0) AS bid_count,
             COALESCE(MAX(CASE WHEN b.status='paid' AND b.paid_at >= ?1 THEN b.paid_at END), 0) AS last_bid_at
@@ -186,6 +186,7 @@ async function getLeaderboard(env) {
     url: s.url,
     host: s.host,
     tagline: s.tagline,
+    category: s.category || 'Site',
     total_cents: s.total_cents,
     bid_count: s.bid_count,
     last_bid_at: s.last_bid_at,
@@ -231,9 +232,9 @@ async function markPaid(env, { id, ref }) {
       siteId = existing.id;
     } else {
       const ins = await env.DB.prepare(
-        'INSERT INTO sites (title, url, host, tagline, created_at) VALUES (?, ?, ?, ?, ?)'
+        'INSERT INTO sites (title, url, host, tagline, category, created_at) VALUES (?, ?, ?, ?, ?, ?)'
       )
-        .bind(bid.new_title, parsed.url, parsed.host, bid.new_tagline ?? '', now())
+        .bind(bid.new_title, parsed.url, parsed.host, bid.new_tagline ?? '', bid.new_category ?? 'Site', now())
         .run();
       siteId = ins.meta.last_row_id;
     }
@@ -409,10 +410,12 @@ const dodoClient = (env) =>
   });
 
 async function createDodoCheckout(env, { requestOrigin, bidId, amountCents, label }) {
-  // Dodo product carts price by quantity of a fixed-price product, so bids are
-  // whole-dollar multiples of the $1 "Outbidbid Bid" product.
+  // One product per dollar amount, quantity 1 — so the checkout shows the real
+  // price ("$5.00 + tax") instead of "$1.00 × 5". Products are cached in D1 and
+  // reused across bids; a duplicate product for the same amount is harmless.
+  const productId = await getDodoProductForAmount(env, amountCents);
   const session = await dodoClient(env).checkoutSessions.create({
-    product_cart: [{ product_id: env.DODO_PRODUCT_ID, quantity: amountCents / 100 }],
+    product_cart: [{ product_id: productId, quantity: 1 }],
     return_url: `${requestOrigin}/?paid=1&bid_id=${bidId}`,
     metadata: { bid_id: String(bidId), label: label || 'Outbidbid Bid' },
   });
@@ -424,6 +427,51 @@ async function createDodoCheckout(env, { requestOrigin, bidId, amountCents, labe
     .run();
   return { url: session.checkout_url };
 }
+
+// Resolve (and memoize) the Dodo product id for an exact USD amount.
+async function getDodoProductForAmount(env, amountCents) {
+  const cached = await env.DB.prepare('SELECT product_id FROM price_products WHERE amount_cents = ?1')
+    .bind(amountCents)
+    .first();
+  if (cached) return cached.product_id;
+
+  // reuse an existing product with the exact price if the catalog has one
+  try {
+    const listRes = await fetch(`${env.DODO_BASE}/products?limit=100`, { headers: dodoHeaders(env) });
+    if (listRes.ok) {
+      const list = await listRes.json().catch(() => ({}));
+      const match = (list.items ?? []).find(
+        (p) => p.price === amountCents && p.currency === 'USD' && !p.is_recurring
+      );
+      if (match?.product_id) {
+        await cachePriceProduct(env, amountCents, match.product_id);
+        return match.product_id;
+      }
+    }
+  } catch { /* fall through to create */ }
+
+  const createRes = await fetch(`${env.DODO_BASE}/products`, {
+    method: 'POST',
+    headers: dodoHeaders(env),
+    body: JSON.stringify({
+      name: 'Outbidbid Bid',
+      description: `$${amountCents / 100} of ranking power on Outbidbid.`,
+      tax_category: 'digital_products',
+      price: { type: 'one_time_price', currency: 'USD', price: amountCents, discount: 0 },
+    }),
+  });
+  const product = await createRes.json().catch(() => ({}));
+  if (!createRes.ok || !product.product_id) {
+    throw new Error(product?.error?.message ?? 'dodo_product_create_failed');
+  }
+  await cachePriceProduct(env, amountCents, product.product_id);
+  return product.product_id;
+}
+
+const cachePriceProduct = (env, amountCents, productId) =>
+  env.DB.prepare('INSERT OR REPLACE INTO price_products (amount_cents, product_id, created_at) VALUES (?1, ?2, ?3)')
+    .bind(amountCents, productId, now())
+    .run();
 
 // Standard Webhooks verification: HMAC-SHA256 over "{id}.{timestamp}.{body}", base64.
 async function verifyDodoSignature(rawBody, headers, secret) {
@@ -476,11 +524,14 @@ async function handleBid(request, env) {
   const payerName = body.payer_name ? cleanText(body.payer_name, 40) : '';
   if (body.payer_name && payerName === null) return json({ error: 'invalid_name' }, 400);
 
-  // accept both flat (new_url/new_title) and nested ({new_site:{url,title,tagline}}) payloads
+  // accept both flat (new_url/new_title/new_category) and nested ({new_site:{url,title,tagline,category}}) payloads
   const ns = body.new_site ?? {};
   const newUrl = body.new_url ?? ns.url;
   const newTitle = body.new_title ?? ns.title;
   const newTagline = body.new_tagline ?? ns.tagline;
+  const validCategories = ['Outbid', 'Site', 'App', 'Startup', 'SaaS', 'Tools', 'AI', 'Crypto', 'Directory', 'Other'];
+  const rawCat = body.new_category ?? ns.category ?? body.category ?? 'Site';
+  const category = validCategories.find((c) => c.toLowerCase() === String(rawCat).trim().toLowerCase()) || 'Site';
 
   // expire stale pending bids so the board can't be squatted forever
   await env.DB.prepare("UPDATE bids SET status = 'abandoned' WHERE status = 'pending' AND created_at < ?")
@@ -507,26 +558,27 @@ async function handleBid(request, env) {
     if (existing) {
       siteId = existing.id;
       label = title || existing.title;
-      if (title || tagline) {
-        await env.DB.prepare('UPDATE sites SET title = COALESCE(?, title), tagline = COALESCE(?, tagline) WHERE id = ?')
-          .bind(title || null, tagline || null, existing.id)
+      if (title || tagline || category) {
+        await env.DB.prepare('UPDATE sites SET title = COALESCE(?, title), tagline = COALESCE(?, tagline), category = COALESCE(?, category) WHERE id = ?')
+          .bind(title || null, tagline || null, category || null, existing.id)
           .run();
       }
     } else {
       label = title;
-      var newSite = { title, url: parsed.url, tagline };
+      var newSite = { title, url: parsed.url, tagline, category };
     }
   }
 
   const ins = await env.DB.prepare(
-    `INSERT INTO bids (site_id, new_title, new_url, new_tagline, amount_cents, payer_name, provider, status, created_at)
-     VALUES (?, ?, ?, ?, ?, ?, 'demo', 'pending', ?)`
+    `INSERT INTO bids (site_id, new_title, new_url, new_tagline, new_category, amount_cents, payer_name, provider, status, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, 'demo', 'pending', ?)`
   )
     .bind(
       siteId,
       newSite ? newSite.title : null,
       newSite ? newSite.url : null,
       newSite ? newSite.tagline : null,
+      newSite ? newSite.category : category,
       amount,
       payerName,
       now()

@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS sites (
   url        TEXT NOT NULL,
   host       TEXT NOT NULL UNIQUE,
   tagline    TEXT NOT NULL DEFAULT '',
+  category   TEXT NOT NULL DEFAULT 'Site',
   created_at INTEGER NOT NULL
 );
 
@@ -17,6 +18,7 @@ CREATE TABLE IF NOT EXISTS bids (
   new_title    TEXT,
   new_url      TEXT,
   new_tagline  TEXT,
+  new_category TEXT DEFAULT 'Site',
   amount_cents INTEGER NOT NULL,
   payer_name   TEXT NOT NULL DEFAULT '',
   provider     TEXT NOT NULL DEFAULT 'demo',  -- 'stripe' | 'demo'
@@ -28,6 +30,13 @@ CREATE TABLE IF NOT EXISTS bids (
 
 CREATE INDEX IF NOT EXISTS idx_bids_site ON bids(site_id, status, paid_at);
 CREATE INDEX IF NOT EXISTS idx_bids_ref  ON bids(provider_ref);
+
+-- one Dodo product per dollar amount, so checkouts show "$N + tax" not "$1 x N"
+CREATE TABLE IF NOT EXISTS price_products (
+  amount_cents INTEGER PRIMARY KEY,
+  product_id   TEXT NOT NULL,
+  created_at   INTEGER NOT NULL
+);
 
 -- Analytics & Real-Time Presence
 CREATE TABLE IF NOT EXISTS page_views (
