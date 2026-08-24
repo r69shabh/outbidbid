@@ -412,12 +412,19 @@ async function handleBid(request, env) {
     }
     const tagline = newTagline ? cleanText(newTagline, 140) ?? '' : '';
 
-    const existing = await env.DB.prepare('SELECT id FROM sites WHERE host = ?').bind(parsed.host).first();
+    const existing = await env.DB.prepare('SELECT id, title FROM sites WHERE host = ?').bind(parsed.host).first();
     if (existing) {
-      return json({ error: 'already_listed', site_id: existing.id }, 409);
+      siteId = existing.id;
+      label = title || existing.title;
+      if (title || tagline) {
+        await env.DB.prepare('UPDATE sites SET title = COALESCE(?, title), tagline = COALESCE(?, tagline) WHERE id = ?')
+          .bind(title || null, tagline || null, existing.id)
+          .run();
+      }
+    } else {
+      label = title;
+      var newSite = { title, url: parsed.url, tagline };
     }
-    label = title;
-    var newSite = { title, url: parsed.url, tagline };
   }
 
   const ins = await env.DB.prepare(

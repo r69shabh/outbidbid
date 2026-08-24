@@ -333,13 +333,6 @@
     font-weight: 700;
     color: var(--text-primary);
     margin-top: 2px;
-    white-space: nowrap;
-  }
-
-  .podium-rate {
-    font-size: 11.5px;
-    font-weight: 700;
-    color: var(--accent-emerald);
     margin-bottom: 12px;
     white-space: nowrap;
   }
@@ -1142,9 +1135,6 @@
     }
     .podium-points {
       font-size: 12px;
-    }
-    .podium-rate {
-      font-size: 10.5px;
       margin-bottom: 8px;
     }
     .podium-pillar.rank-1 {
@@ -1447,14 +1437,6 @@
       </div>`;
   }
 
-  function getRewardsRate(rank, totalCents) {
-    if (rank === 1) return '15.08% p.a.';
-    if (rank === 2) return '9.37% p.a.';
-    if (rank === 3) return '15.02% p.a.';
-    if (totalCents > 0) return `${Math.max(1, (18 - (rank * 0.8))).toFixed(2)}% p.a.`;
-    return '- p.a.';
-  }
-
   function render() {
     if (!LB) return;
 
@@ -1478,7 +1460,7 @@
 
       $('podiumStage').innerHTML = `
         <!-- Rank 2 (Left) -->
-        <div class="podium-item" data-site="${s2 ? s2.id : ''}" data-host="${s2 ? esc(s2.host) : ''}" onclick="${s2 ? '' : 'openModal(null, null)'}">
+        <div class="podium-item" data-site="${s2 ? s2.id : ''}" data-host="${s2 ? esc(s2.host) : ''}" data-total="${s2 ? s2.total_cents : ''}" onclick="${s2 ? '' : 'openModal(null, null, null)'}">
           <div class="podium-coin-wrap">
             ${s2 ? createBrandCoinHTML(2, s2.host, s2.title, false) : `
               <div class="brand-coin open">
@@ -1492,12 +1474,11 @@
             : `<div class="podium-title">Challenger</div>`
           }
           <div class="podium-points">${s2 ? money(s2.total_cents) : 'Open Spot'}</div>
-          <div class="podium-rate">${s2 ? getRewardsRate(2, s2.total_cents) : 'Outbid to Join'}</div>
           <div class="podium-pillar rank-2">2</div>
         </div>
 
         <!-- Rank 1 (Center) -->
-        <div class="podium-item" data-site="${s1.id}" data-host="${esc(s1.host)}">
+        <div class="podium-item" data-site="${s1.id}" data-host="${esc(s1.host)}" data-total="${s1.total_cents}">
           <div class="podium-crown">👑</div>
           <div class="podium-coin-wrap">
             ${createBrandCoinHTML(1, s1.host, s1.title, true)}
@@ -1505,12 +1486,11 @@
           </div>
           <a href="${esc(s1.url)}" target="_blank" rel="noopener sponsored" class="podium-title" style="font-weight:900; color:#ffd028; font-size:16px; text-decoration:none;" onclick="event.stopPropagation();">${esc(s1.title)}</a>
           <div class="podium-points" style="font-size:16px; font-weight:800;">${money(s1.total_cents)}</div>
-          <div class="podium-rate" style="font-size:12.5px;">${getRewardsRate(1, s1.total_cents)}</div>
           <div class="podium-pillar rank-1">1</div>
         </div>
 
         <!-- Rank 3 (Right) -->
-        <div class="podium-item" data-site="${s3 ? s3.id : ''}" data-host="${s3 ? esc(s3.host) : ''}" onclick="${s3 ? '' : 'openModal(null, null)'}">
+        <div class="podium-item" data-site="${s3 ? s3.id : ''}" data-host="${s3 ? esc(s3.host) : ''}" data-total="${s3 ? s3.total_cents : ''}" onclick="${s3 ? '' : 'openModal(null, null, null)'}">
           <div class="podium-coin-wrap">
             ${s3 ? createBrandCoinHTML(3, s3.host, s3.title, false) : `
               <div class="brand-coin open">
@@ -1524,7 +1504,6 @@
             : `<div class="podium-title">Challenger</div>`
           }
           <div class="podium-points">${s3 ? money(s3.total_cents) : 'Open Spot'}</div>
-          <div class="podium-rate">${s3 ? getRewardsRate(3, s3.total_cents) : 'Outbid to Join'}</div>
           <div class="podium-pillar rank-3">3</div>
         </div>
       `;
@@ -1534,7 +1513,8 @@
         item.addEventListener('click', () => {
           const siteId = item.dataset.site ? Number(item.dataset.site) : null;
           const host = item.dataset.host || null;
-          openModal(siteId, host);
+          const total = item.dataset.total ? Number(item.dataset.total) : null;
+          openModal(siteId, host, total);
         });
       });
     } else {
@@ -1553,18 +1533,16 @@
           </button>
         </div>`;
       const fb = $('firstBidBtn');
-      if (fb) fb.addEventListener('click', () => openModal(null, null));
+      if (fb) fb.addEventListener('click', () => openModal(null, null, null));
     } else {
       $('leaderboardList').innerHTML = sites.map((s) => {
         const rank = s.rank;
         const isPodium = rank === 1 || rank === 2 || rank === 3;
         const podiumClass = rank === 1 ? 'podium-1' : rank === 2 ? 'podium-2' : rank === 3 ? 'podium-3' : '';
         const crown = rank === 1 ? '👑' : '';
-        const rewardsRate = getRewardsRate(rank, s.total_cents);
-        const days = s.last_bid_at ? daysLeft(s.last_bid_at) : 30;
 
         return `
-          <article class="board-card ${podiumClass}" data-site="${s.id}" data-host="${esc(s.host)}">
+          <article class="board-card ${podiumClass}" data-site="${s.id}" data-host="${esc(s.host)}" data-total="${s.total_cents}">
             <div class="rank-watermark">${rank ? rank : ''}</div>
             
             ${isPodium ? createBrandCoinHTML(rank, s.host, s.title, false) : `
@@ -1592,21 +1570,11 @@
                   <span class="metric-label">Points / Bid</span>
                   <span class="metric-value">${money(s.total_cents)}</span>
                 </div>
-                <div class="metric-item">
-                  <span class="metric-label">Rewards Rate</span>
-                  <span class="metric-value emerald">${rewardsRate}</span>
-                </div>
-                ${s.total_cents > 0 ? `
-                  <div class="metric-item">
-                    <span class="metric-label">Crown Expiry</span>
-                    <span class="metric-value cyan">${days}d</span>
-                  </div>
-                ` : ''}
               </div>
             </div>
 
             <div class="card-action-col">
-              <button class="outbid-pill-btn" data-site="${s.id}" data-host="${esc(s.host)}" onclick="event.stopPropagation();">
+              <button class="outbid-pill-btn" data-site="${s.id}" data-host="${esc(s.host)}" data-total="${s.total_cents}" onclick="event.stopPropagation();">
                 <span>⚔️</span>
                 <span>Outbid</span>
               </button>
@@ -1617,13 +1585,13 @@
 
       document.querySelectorAll('.board-card').forEach(card => {
         card.addEventListener('click', () => {
-          openModal(Number(card.dataset.site), card.dataset.host);
+          openModal(Number(card.dataset.site), card.dataset.host, Number(card.dataset.total));
         });
       });
       document.querySelectorAll('.outbid-pill-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
-          openModal(Number(btn.dataset.site), btn.dataset.host);
+          openModal(Number(btn.dataset.site), btn.dataset.host, Number(btn.dataset.total));
         });
       });
 
@@ -1669,30 +1637,31 @@
     }
   }
 
-  // Modal Functions
-  function openModal(siteId, host) {
-    modalCtx = { siteId, host };
+  // Modal Functions - Always opens full form for both transfer to join and outbid
+  function openModal(siteId, host, totalCents) {
+    modalCtx = { siteId, host, totalCents };
     payBusy = false;
-    const isNew = !siteId;
 
-    $('modalTitle').textContent = isNew ? 'Join the Leaderboard' : `Outbid ${host.toUpperCase()}`;
-    $('modalSub').textContent = isNew
-      ? `Submit your site with $${(LB?.min_bid_cents || 100) / 100}+ to secure your spot. Beat ${money(LB?.take_over_cents || 100)} to take #1.`
-      : `Stack more gold on ${host} to ascend the ranks.`;
+    // Calculate base amount: +$1 of the target card's bid price if outbidding a card
+    let defaultAmt;
+    if (typeof totalCents === 'number' && totalCents > 0) {
+      defaultAmt = Math.ceil((totalCents + 100) / 100);
+    } else if (LB && LB.take_over_cents) {
+      defaultAmt = Math.ceil(LB.take_over_cents / 100);
+    } else {
+      defaultAmt = 2;
+    }
 
-    $('newSiteFields').style.display = isNew ? 'block' : 'none';
+    $('modalTitle').textContent = host ? `Outbid ${host.toUpperCase()}` : 'Join the Leaderboard';
+    $('modalSub').textContent = `Submit your site with $${(LB?.min_bid_cents || 100) / 100}+ to secure your spot. Beat ${money(LB?.take_over_cents || 100)} to take #1.`;
+
+    $('newSiteFields').style.display = 'block';
     $('modalErr').textContent = '';
-
-    const defaultAmt = isNew
-      ? (LB ? (LB.take_over_cents / 100) : 5)
-      : 5;
     $('inAmount').value = defaultAmt;
 
     updateSimulation();
     $('bidModal').classList.add('open');
-
-    if (isNew) setTimeout(() => $('inTitle').focus(), 60);
-    else setTimeout(() => $('inAmount').focus(), 60);
+    setTimeout(() => $('inTitle').focus(), 60);
   }
 
   function closeModal() {
@@ -1702,16 +1671,12 @@
   function simProjectedRank(siteId, addCents, isNew) {
     if (!LB) return 1;
     const totals = LB.sites
-      .filter(s => !isNew || s.id !== siteId)
-      .map(s => ({ id: s.id, total: s.total_cents + (s.id === siteId ? addCents : 0) }))
+      .map(s => ({ id: s.id, total: s.total_cents }))
       .filter(s => s.total > 0);
     
-    const currentMine = isNew ? 0 : (LB.sites.find(s => s.id === siteId)?.total_cents ?? 0);
-    const myProjected = currentMine + addCents;
-
     let rank = 1;
     for (const s of totals) {
-      if (s.total > myProjected || (s.total === myProjected && s.id !== siteId)) {
+      if (s.total >= addCents) {
         rank++;
       }
     }
@@ -1755,21 +1720,17 @@
 
     const payload = {
       amount_cents: cents,
-      payer_name: $('inPayer').value.trim()
-    };
-
-    if (!modalCtx.siteId) {
-      payload.new_site = {
+      payer_name: $('inPayer').value.trim(),
+      new_site: {
         title: $('inTitle').value.trim(),
         url: $('inUrl').value.trim(),
         tagline: $('inTagline').value.trim()
-      };
-      if (payload.new_site.title.length < 2 || !payload.new_site.url) {
-        $('modalErr').textContent = 'Site Title (2+ chars) and URL are required.';
-        return;
       }
-    } else {
-      payload.site_id = modalCtx.siteId;
+    };
+
+    if (payload.new_site.title.length < 2 || !payload.new_site.url) {
+      $('modalErr').textContent = 'Site Title (2+ chars) and URL are required.';
+      return;
     }
 
     payBusy = true;
@@ -1784,13 +1745,6 @@
         body: JSON.stringify(payload)
       });
       const data = await r.json();
-
-      if (r.status === 409 && data.site_id) {
-        modalCtx.siteId = data.site_id;
-        toast('That domain is already listed — redirecting bid to it ⚔️');
-        $('newSiteFields').style.display = 'none';
-        return;
-      }
 
       if (!r.ok) {
         $('modalErr').textContent = data.error === 'invalid_amount'
