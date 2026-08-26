@@ -73,7 +73,7 @@
     align-items: center;
     justify-content: space-between;
     background: var(--bg);
-    border-bottom: 2px solid var(--line);
+    border-bottom: none;
   }
   .logo {
     display: flex; align-items: center; gap: 10px;
@@ -133,7 +133,7 @@
   .sidebar-card {
     background: var(--card);
     border-radius: var(--radius);
-    padding: 24px;
+    padding: 32px 24px;
     margin-bottom: 16px;
   }
   .sidebar-title {
@@ -161,7 +161,7 @@
     background: var(--bg);
     border: 1.5px solid var(--card2);
     border-radius: 12px;
-    padding: 16px 20px;
+    padding: 32px 24px;
     display: flex; justify-content: space-between; align-items: center;
   }
 
@@ -187,7 +187,7 @@
     margin-bottom: 20px;
   }
   .king-card-inner {
-    padding: 24px;
+    padding: 32px 24px;
     display: flex;
     align-items: flex-start;
     gap: 20px;
@@ -217,7 +217,7 @@
     font-family: var(--font); font-size: 20px; font-weight: 900;
     padding: 16px 40px; border-radius: 12px; border: none; cursor: pointer;
     box-shadow: 0 6px 0 #166534; transition: transform .1s, box-shadow .1s;
-    width: 100%; max-width: 380px; text-transform: uppercase; letter-spacing: 0.5px;
+    width: 100%; text-transform: uppercase; letter-spacing: 0.5px;
   }
   .btn-claim:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #166534; }
   .btn-claim:active { transform: translateY(6px); box-shadow: 0 0px 0 #166534; }
@@ -231,7 +231,7 @@
   .hof-card {
     background: var(--card);
     border-radius: 12px;
-    padding: 16px 20px;
+    padding: 32px 24px;
     display: flex;
     align-items: center;
     gap: 16px;
@@ -371,15 +371,15 @@
   </aside>
 
   <main class="main-center">
-    <section class="throne-section">
-      <div class="throne-crown">👑</div>
-      <div class="throne-label" id="throneLabel">CURRENT KING OF THE HILL</div>
-    </section>
+    
 
     <!-- KING CARD -->
     <div id="kingCard" class="king-card">
       <div class="king-card-inner">
-        <div class="king-avatar"><span class="king-initial">👑</span></div>
+        <div class="king-avatar" style="position:relative;">
+          <div style="position:absolute; top:-16px; left:-16px; transform:rotate(-20deg); font-size:36px; z-index:10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">👑</div>
+          <span class="king-initial">?</span>
+        </div>
         <div class="king-info">
           <div class="king-name">Loading…</div>
         </div>
@@ -524,12 +524,14 @@
   }
 
   function avatarHTML(name, url, sizeClass) {
-    const fav = url ? faviconUrl(url) : null;
     const initial = (name || '?')[0].toUpperCase();
-    if (fav) {
-      return `<img src="${esc(fav)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<span class=\\"${sizeClass === 'king' ? 'king-initial' : 'hof-initial'}\\">${esc(initial)}</span>'">`;
+    if (url) {
+      let hostname = url.replace(/^https?:\/\//, '').split('/')[0];
+      const fav = `https://www.google.com/s2/favicons?domain=${hostname}&sz=128`;
+      const fallback = `this.style.display='none'; this.nextElementSibling.style.display='flex';`;
+      return `<img src="${fav}" alt="" style="width:100%; height:100%; object-fit:contain; border-radius:inherit;" onerror="${fallback}"><span class="${sizeClass === 'king' ? 'king-initial' : 'hof-initial'}" style="display:none; align-items:center; justify-content:center; width:100%; height:100%;">${esc(initial)}</span>`;
     }
-    return `<span class="${sizeClass === 'king' ? 'king-initial' : 'hof-initial'}">${esc(initial)}</span>`;
+    return `<span class="${sizeClass === 'king' ? 'king-initial' : 'hof-initial'}" style="display:flex; align-items:center; justify-content:center; width:100%; height:100%;">${esc(initial)}</span>`;
   }
 
   // ---------- render ----------
@@ -542,15 +544,18 @@
           <div class="empty-title">The throne is empty!</div>
           <div class="empty-sub">Be the first king for just $1</div>
         </div>`;
-      $('throneLabel').textContent = 'NO ONE RULES YET';
+      
       return;
     }
-    $('throneLabel').textContent = 'CURRENT KING OF THE HILL';
+    
     const link = king.payer_url ? `<a class="king-url" href="${esc(king.payer_url)}" target="_blank" rel="noopener">${esc(king.payer_url.replace(/^https?:\/\//, ''))}</a>` : '';
     const tagline = king.payer_tagline ? `<div class="king-tagline">${esc(king.payer_tagline)}</div>` : '';
     card.innerHTML = `
       <div class="king-card-inner">
-        <div class="king-avatar">${avatarHTML(king.payer_name, king.payer_url, 'king')}</div>
+        <div class="king-avatar" style="position:relative;">
+          <div style="position:absolute; top:-16px; left:-16px; transform:rotate(-20deg); font-size:36px; z-index:10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">👑</div>
+          ${avatarHTML(king.payer_name, king.payer_url, 'king')}
+        </div>
         <div class="king-info">
           <div class="king-name">${esc(king.payer_name || 'Anonymous')}</div>
           ${link}
