@@ -98,320 +98,157 @@
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(.85)} }
 
   
+  
   /* ── LAYOUT ── */
-  .page-wrapper {
-    max-width: 680px;
+  .content-container {
+    max-width: 1040px;
     margin: 0 auto;
-    padding: 80px 20px 40px;
+    padding: 100px 20px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+  .top-split {
     display: flex;
     flex-direction: column;
     gap: 32px;
   }
   .desktop-only { display: none; }
   
-  @media (min-width: 1080px) {
-    .page-wrapper {
-      max-width: 1400px;
+  @media (min-width: 1000px) {
+    .top-split {
       display: grid;
-      grid-template-columns: 1fr 640px 1fr;
+      grid-template-columns: 280px 1fr 280px;
+      gap: 32px;
       align-items: start;
     }
+    .hero-main { grid-column: 2; }
     .desktop-only { 
       display: block; 
       position: sticky; 
-      top: 90px; 
-      grid-column: 1;
-      justify-self: end;
-      width: 300px;
+      top: 100px;
     }
     .mobile-only { display: none; }
-    .page { 
-      grid-column: 2;
-      padding: 0 !important; 
-      max-width: 640px; 
-      width: 100%; 
-      margin: 0 auto; 
-    }
   }
 
-  .info-btn { cursor: pointer; background: var(--card); border: 1.5px solid var(--line); padding: 5px 10px; }
-  .info-btn:hover { background: var(--line); }
-
-  /* ── MAIN LAYOUT ── */
-  .page {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 80px 16px 32px;
+  /* ── SIDEBAR CARDS ── */
+  .sidebar-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
   }
-
-  /* ── THRONE HERO ── */
-  .throne-section {
-    text-align: center;
-    padding: 36px 0 28px;
-  }
-  .throne-crown {
-    font-size: 64px;
-    line-height: 1;
-    margin-bottom: 12px;
-    animation: floatCrown 3s ease-in-out infinite;
-  }
-  @keyframes floatCrown { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-
-  .throne-label {
+  .sidebar-title {
     font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-faint);
-    margin-bottom: 8px;
-  }
-
-  /* ── KING CARD ── */
-  .king-card {
-    background: var(--card2);
-    border: 2px solid var(--gold);
-    border-radius: var(--radius);
-    padding: 24px 22px;
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px rgba(245,197,24,.15), 0 8px 32px rgba(0,0,0,.3);
-  }
-  .king-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
-  }
-  .king-card-inner {
-    display: flex; align-items: center; gap: 16px;
-  }
-  .king-avatar {
-    width: 64px; height: 64px;
-    border-radius: 14px;
-    border: 2.5px solid var(--gold);
-    background: var(--card);
-    overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .king-avatar img {
-    width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; padding: 4px;
-    background: transparent; display: block;
-  }
-  .king-avatar .king-initial {
-    font-size: 28px; font-weight: 900; color: var(--gold);
-  }
-  .king-info { flex: 1; min-width: 0; }
-  .king-name {
-    font-size: 22px; font-weight: 900; color: var(--text);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .king-url {
-    font-size: 13.5px; font-weight: 700; color: var(--blue);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    text-decoration: none;
-    display: block; margin-top: 2px;
-  }
-  .king-url:hover { text-decoration: underline; }
-  .king-tagline {
-    font-size: 13px; font-weight: 700; color: var(--text-sub);
-    margin-top: 5px; line-height: 1.35;
-  }
-  .king-time {
-    font-size: 11.5px; font-weight: 800; color: var(--gold-dark);
-    text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;
-  }
-
-  .empty-throne {
-    text-align: center; padding: 32px 20px;
-  }
-  .empty-throne .big-emoji { font-size: 48px; margin-bottom: 12px; }
-  .empty-throne .empty-title { font-size: 20px; font-weight: 900; color: var(--text); margin-bottom: 6px; }
-  .empty-throne .empty-sub { font-size: 14px; font-weight: 700; color: var(--text-sub); }
-
-  /* ── CTA BUTTON ── */
-  .cta-wrap {
-    display: flex; flex-direction: column; align-items: center; gap: 10px;
-    margin-bottom: 36px;
-  }
-  .btn-claim {
-    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    background: var(--green);
-    color: white;
-    font-family: var(--font);
-    font-size: 20px;
-    font-weight: 900;
-    padding: 16px 40px;
-    border-radius: 16px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 6px 0 var(--green-dark);
-    transition: transform .1s, box-shadow .1s;
-    width: 100%;
-    max-width: 380px;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-  }
-  .btn-claim:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--green-dark); }
-  .btn-claim:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--green-dark); }
-  .btn-claim .btn-price { background: rgba(0,0,0,.18); border-radius: 8px; padding: 3px 10px; font-size: 16px; }
-  .cta-hint { font-size: 13px; font-weight: 700; color: var(--text-faint); }
-
-  /* ── DIVIDER ── */
-  .section-title {
-    font-size: 13px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-faint);
-    padding: 0 4px;
-    margin-bottom: 12px;
-  }
-
-  /* ── HOW IT WORKS ── */
-  .how-card {
-    background: var(--card);
-    border: 2px solid var(--line);
-    border-radius: var(--radius);
-    padding: 20px 20px 18px;
-    margin-bottom: 28px;
-  }
-  .how-title {
-    font-size: 13px;
     font-weight: 900;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--text-faint);
-    margin-bottom: 14px;
+    margin-bottom: 20px;
   }
-  .how-steps { display: flex; flex-direction: column; gap: 12px; }
-  .how-step {
-    display: flex; align-items: flex-start; gap: 12px;
-  }
+  .how-steps { display: flex; flex-direction: column; gap: 16px; }
+  .how-step { display: flex; align-items: flex-start; gap: 12px; }
   .how-num {
-    width: 26px; height: 26px; border-radius: 50%;
-    background: var(--line);
-    color: var(--text-sub);
-    font-size: 13px; font-weight: 900;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--card2);
+    color: var(--text-faint);
+    font-size: 12px; font-weight: 900;
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; margin-top: 1px;
+    flex-shrink: 0; margin-top: -2px;
   }
-  .how-text {
-    font-size: 14px; font-weight: 700; color: var(--text-sub);
-    line-height: 1.45;
+  .how-text { font-size: 13.5px; font-weight: 600; color: var(--text-sub); line-height: 1.5; }
+  .how-text strong { color: var(--text); font-weight: 800; }
+
+  .credit-card {
+    background: var(--bg);
+    border: 1.5px solid var(--card2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex; justify-content: space-between; align-items: center;
   }
-  .how-text strong { color: var(--text); font-weight: 900; }
+
+  /* ── HERO MAIN ── */
+  .hero-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .throne-section { text-align: center; margin-bottom: 24px; }
+  .throne-crown { font-size: 48px; line-height: 1; margin-bottom: 8px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5)); }
+  .throne-label { font-size: 12px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--text-faint); }
+
+  /* KING CARD */
+  .king-card {
+    width: 100%;
+    background: var(--card);
+    border-radius: 16px;
+    border-top: 6px solid var(--gold);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .king-card-inner {
+    padding: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .king-avatar {
+    width: 80px; height: 80px;
+    border-radius: 16px;
+    background: var(--card2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; overflow: hidden;
+  }
+  .king-avatar img { width: 100%; height: 100%; max-width:100%; max-height:100%; object-fit: contain; padding: 4px; display: block; border-radius: inherit; }
+  .king-initial { font-size: 36px; font-weight: 900; color: var(--text-faint); }
+  
+  .king-info { flex: 1; min-width: 0; padding-top: 4px; }
+  .king-name { font-size: 22px; font-weight: 900; color: var(--text); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 80px; }
+  .king-url { font-size: 14px; font-weight: 700; color: var(--text-faint); text-decoration: none; display: block; margin-bottom: 6px; }
+  .king-url:hover { color: var(--blue); }
+  .king-tagline { font-size: 14px; font-weight: 600; color: var(--text-sub); line-height: 1.5; }
+
+  /* CTA */
+  .cta-wrap { text-align: center; width: 100%; }
+  .btn-claim {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: #4ade80; color: #064e3b;
+    font-family: var(--font); font-size: 20px; font-weight: 900;
+    padding: 16px 40px; border-radius: 12px; border: none; cursor: pointer;
+    box-shadow: 0 6px 0 #166534; transition: transform .1s, box-shadow .1s;
+    width: 100%; max-width: 380px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .btn-claim:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #166534; }
+  .btn-claim:active { transform: translateY(6px); box-shadow: 0 0px 0 #166534; }
+  .btn-claim .btn-price { background: rgba(0,0,0,0.15); border-radius: 6px; padding: 2px 8px; font-size: 16px; }
+  .cta-hint { font-size: 12px; font-weight: 700; color: var(--text-faint); margin-top: 16px; }
 
   /* ── HALL OF FAME ── */
-  .hof-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .hof-section { width: 100%; }
+  .section-title { font-size: 12px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--text-faint); margin-bottom: 16px; padding-left: 8px; }
+  .hof-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
   .hof-card {
     background: var(--card);
-    border: 2px solid var(--line);
-    border-radius: 14px;
-    padding: 14px 16px;
+    border-radius: 12px;
+    padding: 16px 20px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
-    cursor: default;
-    transition: border-color .15s;
+    gap: 16px;
+    transition: background .15s;
   }
-  .hof-card:hover { border-color: #3a5c70; }
-  .hof-card.is-king { border-color: var(--gold); background: var(--card2); }
-  .hof-rank {
-    font-size: 14px; font-weight: 900; color: var(--text-faint);
-    width: 28px; text-align: center; flex-shrink: 0;
-  }
-  .hof-rank.rank-1 { color: var(--gold); font-size: 16px; }
-  .hof-avatar {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    border: 2px solid var(--line);
-    background: var(--bg);
-    overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .hof-avatar img { width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; padding: 3px; background: transparent; display: block; }
-  .hof-avatar .hof-initial { font-size: 18px; font-weight: 900; color: var(--text-sub); }
-  .hof-info { flex: 1; min-width: 0; }
-  .hof-name {
-    font-size: 15px; font-weight: 800; color: var(--text);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .hof-sub {
-    font-size: 12px; font-weight: 700; color: var(--text-faint);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    margin-top: 2px;
-  }
-  .hof-time { font-size: 11.5px; font-weight: 800; color: var(--text-faint); flex-shrink: 0; text-align: right; }
-
-  /* ── MODAL ── */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(0,0,0,.65);
-    display: none; align-items: center; justify-content: center;
-    padding: 20px;
-    backdrop-filter: blur(4px);
-  }
-  .modal-overlay.open { display: flex; }
-  .modal-window {
-    width: 100%; max-width: 420px;
-    background: var(--card);
-    border-radius: 24px;
-    padding: 32px 24px 24px;
-    border: 2px solid var(--line);
-    position: relative;
-  }
-  .modal-close {
-    position: absolute; top: 16px; right: 16px;
-    background: none; border: none; font-size: 24px; color: var(--text-faint); cursor: pointer;
-  }
-  .modal-crown { font-size: 48px; text-align: center; margin-bottom: 8px; }
-  .modal-title { font-size: 22px; font-weight: 900; text-align: center; margin-bottom: 4px; }
-  .modal-sub { font-size: 14px; font-weight: 700; color: var(--text-sub); text-align: center; margin-bottom: 24px; }
-  .form-group { margin-bottom: 14px; }
-  .form-label { font-size: 12px; font-weight: 800; color: var(--text-sub); letter-spacing: .5px; text-transform: uppercase; margin-bottom: 6px; display: block; }
-  .form-input {
-    width: 100%; background: var(--bg); border: 2px solid var(--line);
-    border-radius: 12px; padding: 12px 14px; font-size: 15px; font-weight: 700;
-    color: var(--text); outline: none; font-family: var(--font);
-  }
-  .form-input:focus { border-color: var(--blue); }
-  .form-input::placeholder { color: var(--text-faint); }
-  .modal-price-row {
-    display: flex; align-items: center; justify-content: space-between;
-    background: var(--gold-light); border: 2px solid var(--gold);
-    border-radius: 14px; padding: 14px 16px; margin: 20px 0 16px;
-  }
-  .modal-price-label { font-size: 14px; font-weight: 800; color: var(--gold-dark); }
-  .modal-price-val { font-size: 28px; font-weight: 900; color: var(--gold); }
-  .modal-err { color: var(--red); font-size: 13px; font-weight: 800; text-align: center; min-height: 18px; margin-bottom: 10px; }
-  .btn-pay {
-    width: 100%; background: var(--green); color: white; font-family: var(--font);
-    font-size: 18px; font-weight: 900; padding: 15px; border-radius: 14px; border: none;
-    cursor: pointer; box-shadow: 0 5px 0 var(--green-dark); transition: transform .1s, box-shadow .1s;
-    text-transform: uppercase; letter-spacing: .5px;
-  }
-  .btn-pay:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--green-dark); }
-  .btn-pay:disabled { opacity: .6; cursor: not-allowed; }
-
-  /* ── TOAST ── */
-  #toast {
-    position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-80px);
-    background: var(--card); border: 2px solid var(--line); border-radius: 14px;
-    padding: 12px 22px; font-size: 14px; font-weight: 800; color: var(--text);
-    box-shadow: 0 8px 24px rgba(0,0,0,.25); z-index: 300; opacity: 0;
-    pointer-events: none; transition: all .3s cubic-bezier(.16,1,.3,1);
-    display: flex; align-items: center; gap: 8px; white-space: nowrap;
-    max-width: calc(100vw - 32px);
-  }
-  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  #toast.toast-success { border-color: var(--green); }
-  #toast.toast-syncing { border-color: var(--gold); }
-
-  /* ── RESPONSIVE ── */
+  .hof-card:hover { background: var(--card2); }
+  .hof-rank { font-size: 14px; font-weight: 900; color: var(--text); width: 24px; text-align: center; flex-shrink: 0; margin-top:0 !important; }
+  .hof-avatar { width: 44px; height: 44px; border-radius: 10px; background: var(--card2); overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink:0; margin-top:0 !important; }
+  .hof-avatar img { width: 100%; height: 100%; max-width:100%; max-height:100%; object-fit: contain; padding: 3px; display: block; border-radius: inherit; }
+  .hof-initial { font-size: 20px; font-weight: 900; color: var(--text-faint); }
+  .hof-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+  .hof-name { font-size: 15px; font-weight: 900; color: var(--text); margin-bottom: 2px; }
+  .hof-time { flex-shrink: 0; text-transform: uppercase; text-align: right; }
+/* ── RESPONSIVE ── */
   @media (max-width: 520px) {
     .header-stats { gap: 8px; }
     .stat-pill { font-size: 12px; padding: 4px 9px; }
@@ -438,93 +275,99 @@
   </div>
 </header>
 
-<!-- MAIN -->
-<div class="page-wrapper">
-  <aside class="sidebar desktop-only">
-    <div class="how-card">
-    <div class="how-title">How it works</div>
-    <div class="how-steps">
-      <div class="how-step">
-        <span class="how-num">1</span>
-        <div class="how-text"><strong>Pay $1</strong> — enter your name, link, and a message. Then pay one dollar.</div>
-      </div>
-      <div class="how-step">
-        <span class="how-num">2</span>
-        <div class="how-text"><strong>You're #1</strong> — you instantly become the current king of the hill.</div>
-      </div>
-      <div class="how-step">
-        <span class="how-num">3</span>
-        <div class="how-text"><strong>Get dethroned</strong> — the moment anyone else pays $1, they take your crown. Most recent always wins.</div>
-      </div>
-    </div>
-  </div>
-    <div class="credit-card" style="margin-top: 16px; padding: 16px 20px; border: 2px solid var(--line); border-radius: var(--radius); background: var(--card); display: flex; justify-content: space-between; align-items: center;">
-       <span style="font-size:14px; font-weight:800; color:var(--text-sub);">Made by r69shabh</span>
-       <div style="display:flex; gap: 16px;">
-         <a href="https://github.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-         <a href="https://x.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-       </div>
-    </div>
-  </aside>
-  <main class="page">
-
-  <!-- THRONE HERO -->
-  <section class="throne-section">
-    <div class="throne-crown">👑</div>
-    <div class="throne-label" id="throneLabel">Current King of the Hill</div>
-  </section>
-
-  <!-- KING CARD -->
-  <div id="kingCard" class="king-card">
-    <div class="king-card-inner">
-      <div class="king-avatar">
-        <span class="king-initial">👑</span>
-      </div>
-      <div class="king-info">
-        <div class="king-name">Loading…</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-wrap">
-    <button class="btn-claim" onclick="openModal()">
-      Claim the Throne <span class="btn-price">$1</span>
-    </button>
-    <div class="cta-hint">Most recent $1 is always #1 · Dethrone anyone instantly</div>
-  </div>
-
+<div class="content-container">
   
+  <div class="top-split">
+    <aside class="sidebar desktop-only">
+
+      <div class="sidebar-card">
+        <div class="sidebar-title">How it works</div>
+        <div class="how-steps">
+          <div class="how-step">
+            <span class="how-num">1</span>
+            <div class="how-text"><strong>Pay $1</strong> — enter your name, link, and a message. Then pay one dollar.</div>
+          </div>
+          <div class="how-step">
+            <span class="how-num">2</span>
+            <div class="how-text"><strong>You're #1</strong> — you instantly become the current king of the hill.</div>
+          </div>
+          <div class="how-step">
+            <span class="how-num">3</span>
+            <div class="how-text"><strong>Get dethroned</strong> — the moment anyone else pays $1, they take your crown. Most recent always wins.</div>
+          </div>
+        </div>
+      </div>
+      <div class="credit-card">
+        <span style="font-size:13px; font-weight:800; color:var(--text-sub);">Made by r69shabh</span>
+        <div style="display:flex; gap: 12px;">
+          <a href="https://github.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+          <a href="https://x.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        </div>
+      </div>
+
+    </aside>
+
+    <main class="hero-main">
+      <section class="throne-section">
+        <div class="throne-crown">👑</div>
+        <div class="throne-label" id="throneLabel">CURRENT KING OF THE HILL</div>
+      </section>
+
+      <!-- KING CARD -->
+      <div id="kingCard" class="king-card">
+        <div class="king-card-inner">
+          <div class="king-avatar"><span class="king-initial">👑</span></div>
+          <div class="king-info">
+            <div class="king-name">Loading…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-wrap">
+        <button class="btn-claim" onclick="openModal()">
+          CLAIM THE THRONE <span class="btn-price">$1</span>
+        </button>
+        <div class="cta-hint">Most recent $1 is always #1 · Dethrone anyone instantly</div>
+      </div>
+
+      <div class="mobile-only" style="margin-top: 48px; width: 100%;">
+
+      <div class="sidebar-card">
+        <div class="sidebar-title">How it works</div>
+        <div class="how-steps">
+          <div class="how-step">
+            <span class="how-num">1</span>
+            <div class="how-text"><strong>Pay $1</strong> — enter your name, link, and a message. Then pay one dollar.</div>
+          </div>
+          <div class="how-step">
+            <span class="how-num">2</span>
+            <div class="how-text"><strong>You're #1</strong> — you instantly become the current king of the hill.</div>
+          </div>
+          <div class="how-step">
+            <span class="how-num">3</span>
+            <div class="how-text"><strong>Get dethroned</strong> — the moment anyone else pays $1, they take your crown. Most recent always wins.</div>
+          </div>
+        </div>
+      </div>
+      <div class="credit-card">
+        <span style="font-size:13px; font-weight:800; color:var(--text-sub);">Made by r69shabh</span>
+        <div style="display:flex; gap: 12px;">
+          <a href="https://github.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+          <a href="https://x.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        </div>
+      </div>
+
+      </div>
+    </main>
   </div>
 
-  <!-- HOW IT WORKS (MOBILE) -->
-<div class="mobile-only">
-<div class="how-card">
-    <div class="how-title">How it works</div>
-    <div class="how-steps">
-      <div class="how-step">
-        <span class="how-num">1</span>
-        <div class="how-text"><strong>Pay $1</strong> — enter your name, link, and a message. Then pay one dollar.</div>
-      </div>
-      <div class="how-step">
-        <span class="how-num">2</span>
-        <div class="how-text"><strong>You're #1</strong> — you instantly become the current king of the hill.</div>
-      </div>
-      <div class="how-step">
-        <span class="how-num">3</span>
-        <div class="how-text"><strong>Get dethroned</strong> — the moment anyone else pays $1, they take your crown. Most recent always wins.</div>
-      </div>
-    </div>
+  <div class="hof-section">
+    <div class="section-title" id="hofTitle" style="display:none">HALL OF PAST KINGS</div>
+    <ul class="hof-list" id="hofList"></ul>
   </div>
+
 </div>
-
-  <!-- HALL OF FAME -->
-  <div class="section-title" id="hofTitle" style="display:none">Hall of Past Kings</div>
-  <ul class="hof-list" id="hofList"></ul>
-
-</main>
-</div>
-
 
 <!-- INFO MODAL -->
 <div class="modal-overlay" id="infoModalOverlay" role="dialog">
@@ -636,10 +479,10 @@
           <div class="empty-title">The throne is empty!</div>
           <div class="empty-sub">Be the first king for just $1</div>
         </div>`;
-      $('throneLabel').textContent = 'No one rules yet';
+      $('throneLabel').textContent = 'NO ONE RULES YET';
       return;
     }
-    $('throneLabel').textContent = 'Current King of the Hill';
+    $('throneLabel').textContent = 'CURRENT KING OF THE HILL';
     const link = king.payer_url ? `<a class="king-url" href="${esc(king.payer_url)}" target="_blank" rel="noopener">${esc(king.payer_url.replace(/^https?:\/\//, ''))}</a>` : '';
     const tagline = king.payer_tagline ? `<div class="king-tagline">${esc(king.payer_tagline)}</div>` : '';
     card.innerHTML = `
@@ -649,7 +492,7 @@
           <div class="king-name">${esc(king.payer_name || 'Anonymous')}</div>
           ${link}
           ${tagline}
-          <div class="king-time" style="position:absolute; top:24px; right:22px; margin-top:0;">${timeAgo(king.paid_at)}</div>
+          <div class="king-time" style="position:absolute; top:20px; right:20px; margin-top:0; font-size:12px; font-weight:800; color:var(--text-faint); text-transform:uppercase;">${timeAgo(king.paid_at)}</div>
         </div>
       </div>`;
   }
@@ -673,7 +516,7 @@
             ${link}
             ${sub}
           </div>
-          <div class="hof-time" style="margin-top:6px; font-size:12px;">${timeAgo(b.paid_at)}</div>
+          <div class="hof-time" style="font-size:12px; font-weight:800; color:var(--text-faint); margin-top: 6px;">${timeAgo(b.paid_at)}</div>
         </li>`;
     }).join('');
   }
