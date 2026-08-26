@@ -231,6 +231,40 @@
     margin-bottom: 12px;
   }
 
+  /* ── HOW IT WORKS ── */
+  .how-card {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+    margin-bottom: 28px;
+  }
+  .how-title {
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 14px;
+  }
+  .how-steps { display: flex; flex-direction: column; gap: 12px; }
+  .how-step {
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .how-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--line);
+    color: var(--text-sub);
+    font-size: 13px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .how-text {
+    font-size: 14px; font-weight: 700; color: var(--text-sub);
+    line-height: 1.45;
+  }
+  .how-text strong { color: var(--text); font-weight: 900; }
+
   /* ── HALL OF FAME ── */
   .hof-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
   .hof-card {
@@ -390,6 +424,25 @@
       Claim the Throne <span class="btn-price">$1</span>
     </button>
     <div class="cta-hint">Most recent $1 is always #1 · Dethrone anyone instantly</div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-card">
+    <div class="how-title">⚡ How it works</div>
+    <div class="how-steps">
+      <div class="how-step">
+        <span class="how-num">1</span>
+        <div class="how-text"><strong>Pay $1</strong> — enter your name, link, and a message. Then pay one dollar.</div>
+      </div>
+      <div class="how-step">
+        <span class="how-num">2</span>
+        <div class="how-text"><strong>You're #1</strong> — you instantly become the current king of the hill.</div>
+      </div>
+      <div class="how-step">
+        <span class="how-num">3</span>
+        <div class="how-text"><strong>Get dethroned</strong> — the moment anyone else pays $1, they take your crown. Most recent always wins.</div>
+      </div>
+    </div>
   </div>
 
   <!-- HALL OF FAME -->
