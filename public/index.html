@@ -1,1410 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="icon" href="/logo.png?v=3" type="image/png">
-<title>Outbidbid — The Pay-to-Rank Leaderboard Arena | Outbid the Outbidders</title>
-<meta name="description" content="Outbidbid is the premier pay-to-rank leaderboard: bidding sites pay $1+ to list and battle for the #1 throne. Ranks decay after 30 days, highest bid wears the crown.">
-<link rel="canonical" href="https://outbidbid.lol/">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-<meta name="author" content="Outbidbid">
-<meta name="keywords" content="pay to rank, bid to rank, leaderboard, outbid, bidding sites, listing board, pay per rank, bid board, backlink board, promote your site">
-<meta name="theme-color" content="#f7f9fa" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#111b21" media="(prefers-color-scheme: dark)">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Outbidbid — Pay $1, Be #1</title>
+<meta name="description" content="Pay $1, be #1. Get dethroned any second. The king of the hill game where the most recent $1 wins.">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Outbidbid">
-<meta property="og:title" content="Outbidbid — The Pay-to-Rank Leaderboard Arena">
-<meta property="og:description" content="List your bidding site. Pay to rank. Outbid the outbidders. $1 minimum bid, 30-day crown.">
+<meta property="og:title" content="Outbidbid — Pay $1. Be #1.">
+<meta property="og:description" content="Pay $1, claim the throne. Get dethroned any second. The king of the hill game.">
 <meta property="og:url" content="https://outbidbid.lol/">
-<meta property="og:image" content="https://outbidbid.lol/og.png?v=2">
-<meta property="og:image:alt" content="Outbidbid Leaderboard Arena">
+<meta property="og:image" content="https://outbidbid.lol/og.png?v=3">
+<meta property="og:image:alt" content="Outbidbid — Pay $1 to be #1">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@outbidbid">
-<meta name="twitter:title" content="Outbidbid — Outbid the Outbidders">
-<meta name="twitter:description" content="The bid-to-rank arena for bid-to-rank boards. $1 takes the throne.">
-<meta name="twitter:image" content="https://outbidbid.lol/og.png?v=2">
-<meta name="twitter:image:alt" content="Outbidbid Leaderboard Arena">
+<meta name="twitter:title" content="Outbidbid — Pay $1. Be #1.">
+<meta name="twitter:description" content="Pay $1, claim the throne. Get dethroned any second.">
+<meta name="twitter:image" content="https://outbidbid.lol/og.png?v=3">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="dns-prefetch" href="https://icons.duckduckgo.com">
-<link rel="dns-prefetch" href="https://unavatar.io">
+<link rel="icon" href="/logo.png" type="image/png">
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": "https://outbidbid.lol/#website",
-      "url": "https://outbidbid.lol/",
-      "name": "Outbidbid",
-      "description": "The pay-to-rank leaderboard arena where bidding sites outbid each other for the #1 spot.",
-      "inLanguage": "en"
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://outbidbid.lol/#org",
-      "name": "Outbidbid",
-      "url": "https://outbidbid.lol/",
-      "logo": { "@type": "ImageObject", "url": "https://outbidbid.lol/logo.png" }
-    },
-    {
-      "@type": "FAQPage",
-      "@id": "https://outbidbid.lol/#faq",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "How does Outbidbid work?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Sites pay real money to list on the leaderboard. Your rank is the total of your paid bids in the last 30 days — the highest total is #1. Pay more than the site above you to take its spot." }
-        },
-        {
-          "@type": "Question",
-          "name": "What is the minimum bid on Outbidbid?",
-          "acceptedAnswer": { "@type": "Answer", "text": "The minimum bid is $1 USD, paid in whole dollars. Every listing on the board comes from a real, settled payment." }
-        },
-        {
-          "@type": "Question",
-          "name": "Why do ranks drop on Outbidbid?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Only bids from the last 30 days count toward your rank. As bids age out of the 30-day window, totals decay and the leaderboard reshuffles — keep bidding to defend your spot." }
-        },
-        {
-          "@type": "Question",
-          "name": "Is Outbidbid advertising worth it?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Every listing is a direct, dofollow-free sponsored link seen by every visitor of the arena. You set your own budget — from $1 to $10,000 per bid — and only pay to climb." }
-        }
-      ]
-    }
-  ]
-}
-</script>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
-    --bg: #f7f9fa;
-    --card-bg: #ffffff;
-    --text-main: #3c3c3c;
-    --text-sub: #777777;
-    --text-faint: #afafaf;
-    --line: #e5e5e5;
-    
-    --gold: #ffc800;
-    --gold-light: #ffeba3;
-    --silver: #e5e5e5;
-    --bronze: #cda886;
-    
-    --gold-text: #b98e00;
-    --silver-text: #7b7b7b;
-    --bronze-text: #8c5e31;
-
-    --green: #58cc02;
-    --green-dark: #46a302;
-    
-    --blue: #1cb0f6;
-    --blue-dark: #1899d6;
-
-    --radius: 16px;
-    --font: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-  
-  [data-theme="dark"] {
-    --bg: #111b21;
-    --card-bg: #1f2c34;
-    --text-main: #e8e8e8;
-    --text-sub: #b0b0b0;
-    --text-faint: #606060;
-    --line: #2a3942;
-    --gold-light: #443c16;
+    --bg:        #111b21;
+    --card:      #1b2933;
+    --card2:     #1e3040;
+    --line:      #28404f;
+    --text:      #e8f4f8;
+    --text-sub:  #7fa8bc;
+    --text-faint:#4a7a92;
+    --gold:      #f5c518;
+    --gold-dark: #c9900a;
+    --gold-light:rgba(245,197,24,0.12);
+    --green:     #58cc02;
+    --green-dark:#46a302;
+    --blue:      #1cb0f6;
+    --blue-dark: #0e86c0;
+    --red:       #ff4b4b;
+    --font:      'Nunito', system-ui, sans-serif;
+    --radius:    18px;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
 
   body {
-    background-color: var(--bg);
-    color: var(--text-main);
+    background: var(--bg);
+    color: var(--text);
     font-family: var(--font);
-    -webkit-font-smoothing: antialiased;
     min-height: 100vh;
-    padding: 80px 20px 40px;
-    transition: background-color 0.2s, color 0.2s;
+    max-width: 100vw;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
-  
-  .header-top {
-    position: absolute;
-    top: 24px;
-    left: 24px;
-    right: 24px;
+
+  /* ── HEADER ── */
+  .header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 80;
+    padding: 12px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .header-top-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .brand-logo {
-    width: 48px;
-    height: 48px;
-    object-fit: contain;
-  }
-  
-  .brand {
-    font-size: 26px;
-    font-weight: 800;
-    color: var(--text-main);
-    letter-spacing: -0.5px;
-  }
-
-  .header-top-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: relative;
-  }
-
-  .info-btn, .theme-toggle {
-    background: var(--card-bg);
-    border: 2px solid var(--line);
-    border-radius: 12px;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--text-main);
-    box-shadow: 0 4px 0 var(--line);
-    transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s, border-color 0.2s;
-  }
-  .info-btn:active, .theme-toggle:active {
-    transform: translateY(4px);
-    box-shadow: 0 0 0 var(--line);
-  }
-  .info-btn svg, .theme-toggle svg { width: 22px; height: 22px; fill: currentColor; }
-
-  .info-popover {
-    position: absolute;
-    top: calc(100% + 14px);
-    right: 60px;
-    width: 250px;
-    background: var(--card-bg);
-    border: 2px solid var(--line);
-    border-radius: 16px;
-    padding: 16px 18px;
-    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
-    display: none;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 100;
-    animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .info-popover.open { display: flex; }
-  @keyframes popIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
-
-  .info-popover-text {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-main);
-    line-height: 1.4;
-  }
-  .info-popover-text .dev-tag {
-    color: var(--blue);
-    font-weight: 800;
-  }
-
-  .info-social-links {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-top: 10px;
-    border-top: 2px solid var(--line);
-  }
-  .social-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 12px;
-    border-radius: 10px;
-    background: var(--bg);
-    border: 2px solid var(--line);
-    color: var(--text-main);
-    font-size: 13px;
-    font-weight: 800;
-    text-decoration: none;
-    transition: all 0.15s;
-    flex: 1;
-    justify-content: center;
-    box-shadow: 0 2px 0 var(--line);
-  }
-  .social-link:hover {
-    border-color: var(--blue);
-    color: var(--blue);
-    transform: translateY(-1px);
-  }
-  .social-link:active {
-    transform: translateY(2px);
-    box-shadow: 0 0 0 var(--line);
-  }
-  .social-link svg { width: 15px; height: 15px; fill: currentColor; }
-
-  html, body {
-    max-width: 100vw;
-    overflow-x: hidden;
-  }
-
-  .layout {
-    display: grid;
-    grid-template-columns: 220px minmax(0, 580px) 280px;
-    grid-template-rows: auto auto 1fr;
-    column-gap: 32px;
-    max-width: 1140px;
-    margin: 0 auto;
-    width: 100%;
-    align-items: start;
-    justify-content: center;
-    box-sizing: border-box;
-  }
-  .left-side { grid-column: 1; grid-row: 3; }
-  .right-side { grid-column: 3; grid-row: 3; }
-  .center-header {
-    grid-column: 2;
-    grid-row: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 0;
-    max-width: 100%;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .center-card {
-    grid-column: 2;
-    grid-row: 3;
-    min-width: 0;
-    max-width: 100%;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .side-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .side-card {
-    background: var(--card-bg);
-    border: 2px solid var(--line);
-    border-radius: var(--radius);
-    padding: 24px 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-  }
-  
-  .stat-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    font-weight: 700;
-    color: var(--text-main);
-    font-size: 16px;
-  }
-  .stat-icon-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-  }
-  
-  .claim-banner {
-    background: transparent;
-    padding: 0 0 24px 0;
-    text-align: center;
-    margin-bottom: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .claim-text {
-    font-size: 54px;
-    font-weight: 900;
-    letter-spacing: -2px;
-    line-height: 1.1;
-    background: linear-gradient(90deg, #ffc800 0%, #ffe066 20%, #ffc800 40%, #ffc800 100%);
-    background-size: 200% auto;
-    color: transparent;
-    -webkit-background-clip: text;
-    animation: shimmer 3s linear infinite;
-    text-align: center;
-  }
-  @keyframes shimmer {
-    to { background-position: -200% center; }
-  }
-
-  .filters {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 4px 2px 10px 2px;
-    width: 100%;
-    max-width: 100%;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    box-sizing: border-box;
-  }
-  .filters::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
-  }
-  
-  .filter-chip {
-    background: var(--card-bg);
-    border: 2px solid var(--line);
-    border-radius: 12px;
-    padding: 9px 14px;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-sub);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.15s;
-    font-family: var(--font);
-    box-shadow: 0 2px 0 var(--line);
-    flex-shrink: 0;
-  }
-  .filter-chip:active {
-    transform: translateY(2px);
-    box-shadow: 0 0 0 var(--line);
-  }
-  
-  .filter-chip.active {
-    background: var(--blue-dark);
-    border-color: var(--blue-dark);
-    color: #fff;
-    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
-  }
-  
-  .card {
-    background: var(--card-bg);
-    border: 2px solid var(--line);
-    border-radius: var(--radius);
-    width: 100%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-    overflow: hidden;
-  }
-  
-  .list {
-    list-style: none;
-  }
-
-  .row {
-    display: flex;
-    align-items: center;
-    padding: 16px 20px;
-    cursor: pointer;
-    transition: background 0.15s;
+    background: rgba(17,27,33,0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 2px solid var(--line);
-    gap: 14px;
   }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .logo img { width: 32px; height: 32px; }
+  .logo-text { font-size: 20px; font-weight: 900; color: var(--text); }
 
-  .row:last-child {
-    border-bottom: none;
+  .header-stats {
+    display: flex; align-items: center; gap: 16px;
   }
-
-  .row:hover {
-    background: var(--bg);
-  }
-
-  .row.top-3 {
-    padding: 18px 22px;
-    background: var(--card-bg);
-  }
-  .row.top-3:hover {
-    background: var(--bg);
-  }
-  .row.top-3 .avatar {
-    width: 56px;
-    height: 56px;
-    border-radius: 14px;
-    border-width: 2.5px;
-  }
-  .row.top-3 .name-title {
-    font-size: 20px;
-    font-weight: 900;
-  }
-  .row.top-3 .desc {
-    font-size: 14.5px;
-  }
-  .row.top-3 .price {
-    font-size: 20px;
-  }
-  .row.top-3 .rank {
-    width: 38px;
-    height: 38px;
-    font-size: 18px;
-  }
-
-  .rank {
-    width: 34px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 15px;
-    flex-shrink: 0;
-  }
-
-  .rank-1 { background: var(--gold); color: white; border-radius: 50%; box-shadow: 0 3px 0 var(--gold-text); }
-  .rank-2 { background: var(--silver); color: var(--silver-text); border-radius: 50%; box-shadow: 0 3px 0 #cccccc; }
-  .rank-3 { background: var(--bronze); color: white; border-radius: 50%; box-shadow: 0 3px 0 var(--bronze-text); }
-  .rank-plain { color: var(--green); }
-
-  .avatar {
-    position: relative;
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: transparent;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    border: 2px solid var(--line);
-  }
-
-  .avatar img {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: transparent;
-    padding: 2px;
-    box-sizing: border-box;
-  }
-
-  .mono-fallback {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    font-weight: 900;
+  .stat-pill {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 13px; font-weight: 800;
     color: var(--text-sub);
-    user-select: none;
-    background: transparent;
-    width: 100%;
-    height: 100%;
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 20px;
+    padding: 5px 12px;
+  }
+  .stat-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(.85)} }
+
+  /* ── MAIN LAYOUT ── */
+  .page {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 80px 16px 32px;
   }
 
-  .info {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  /* ── THRONE HERO ── */
+  .throne-section {
+    text-align: center;
+    padding: 36px 0 28px;
   }
-
-  .name-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-    min-width: 0;
+  .throne-crown {
+    font-size: 64px;
+    line-height: 1;
+    margin-bottom: 12px;
+    animation: floatCrown 3s ease-in-out infinite;
   }
+  @keyframes floatCrown { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
-  .name-title {
-    font-size: 17px;
+  .throne-label {
+    font-size: 12px;
     font-weight: 800;
-    color: var(--text-main);
-    line-height: 1.25;
-    word-break: break-word;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 8px;
   }
 
-  .desc {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-sub);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    word-break: break-word;
-    margin-top: 4px;
-    line-height: 1.35;
-  }
-
-  .price {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--text-main);
-    flex-shrink: 0;
-    margin-left: auto;
-    text-align: right;
-  }
-
-  .row:hover .price {
-    display: none;
-  }
-
-  .btn-outbid-row {
-    display: none;
-    background: var(--blue);
-    color: white;
-    font-weight: 800;
-    padding: 9px 18px;
-    border-radius: 12px;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0 4px 0 var(--blue-dark);
-    flex-shrink: 0;
-    margin-left: auto;
-  }
-
-  .row:hover .btn-outbid-row {
-    display: block;
-  }
-
-  .btn-outbid-row:active {
-    transform: translateY(4px);
-    box-shadow: 0 0 0 var(--blue-dark);
-  }
-  
-  .bet-input {
-    width: 100%;
-    background: var(--bg);
-    border: 2px solid var(--line);
-    border-radius: 12px;
-    padding: 14px;
-    font-size: 16px;
-    font-weight: 800;
-    margin-bottom: 16px;
-    outline: none;
-    color: var(--text-main);
-    font-family: var(--font);
-  }
-  .bet-input:focus {
-    border-color: var(--gold);
-  }
-  
-  .side-title {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--text-main);
+  /* ── KING CARD ── */
+  .king-card {
+    background: var(--card2);
+    border: 2px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 24px 22px;
     margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(245,197,24,.15), 0 8px 32px rgba(0,0,0,.3);
   }
-  
-  .btn-primary {
+  .king-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+  }
+  .king-card-inner {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .king-avatar {
+    width: 64px; height: 64px;
+    border-radius: 14px;
+    border: 2.5px solid var(--gold);
+    background: var(--card);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .king-avatar img {
+    width: 100%; height: 100%; object-fit: contain; padding: 4px;
+    background: transparent;
+  }
+  .king-avatar .king-initial {
+    font-size: 28px; font-weight: 900; color: var(--gold);
+  }
+  .king-info { flex: 1; min-width: 0; }
+  .king-name {
+    font-size: 22px; font-weight: 900; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .king-url {
+    font-size: 13.5px; font-weight: 700; color: var(--blue);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    text-decoration: none;
+    display: block; margin-top: 2px;
+  }
+  .king-url:hover { text-decoration: underline; }
+  .king-tagline {
+    font-size: 13px; font-weight: 700; color: var(--text-sub);
+    margin-top: 5px; line-height: 1.35;
+  }
+  .king-time {
+    font-size: 11.5px; font-weight: 800; color: var(--gold-dark);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px;
+  }
+
+  .empty-throne {
+    text-align: center; padding: 32px 20px;
+  }
+  .empty-throne .big-emoji { font-size: 48px; margin-bottom: 12px; }
+  .empty-throne .empty-title { font-size: 20px; font-weight: 900; color: var(--text); margin-bottom: 6px; }
+  .empty-throne .empty-sub { font-size: 14px; font-weight: 700; color: var(--text-sub); }
+
+  /* ── CTA BUTTON ── */
+  .cta-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    margin-bottom: 36px;
+  }
+  .btn-claim {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
     background: var(--green);
     color: white;
-    font-weight: 800;
-    font-size: 16px;
-    padding: 16px 32px;
+    font-family: var(--font);
+    font-size: 20px;
+    font-weight: 900;
+    padding: 16px 40px;
     border-radius: 16px;
     border: none;
     cursor: pointer;
-    box-shadow: 0 4px 0 var(--green-dark);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 0 6px 0 var(--green-dark);
+    transition: transform .1s, box-shadow .1s;
     width: 100%;
+    max-width: 380px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .btn-claim:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--green-dark); }
+  .btn-claim:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--green-dark); }
+  .btn-claim .btn-price { background: rgba(0,0,0,.18); border-radius: 8px; padding: 3px 10px; font-size: 16px; }
+  .cta-hint { font-size: 13px; font-weight: 700; color: var(--text-faint); }
+
+  /* ── DIVIDER ── */
+  .section-title {
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding: 0 4px;
+    margin-bottom: 12px;
   }
 
-  .btn-primary:active {
-    transform: translateY(4px);
-    box-shadow: 0 0 0 var(--green-dark);
+  /* ── HALL OF FAME ── */
+  .hof-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .hof-card {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    cursor: default;
+    transition: border-color .15s;
   }
+  .hof-card:hover { border-color: #3a5c70; }
+  .hof-card.is-king { border-color: var(--gold); background: var(--card2); }
+  .hof-rank {
+    font-size: 14px; font-weight: 900; color: var(--text-faint);
+    width: 28px; text-align: center; flex-shrink: 0;
+  }
+  .hof-rank.rank-1 { color: var(--gold); font-size: 16px; }
+  .hof-avatar {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    border: 2px solid var(--line);
+    background: var(--bg);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .hof-avatar img { width: 100%; height: 100%; object-fit: contain; padding: 3px; background: transparent; }
+  .hof-avatar .hof-initial { font-size: 18px; font-weight: 900; color: var(--text-sub); }
+  .hof-info { flex: 1; min-width: 0; }
+  .hof-name {
+    font-size: 15px; font-weight: 800; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .hof-sub {
+    font-size: 12px; font-weight: 700; color: var(--text-faint);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    margin-top: 2px;
+  }
+  .hof-time { font-size: 11.5px; font-weight: 800; color: var(--text-faint); flex-shrink: 0; text-align: right; }
 
-  /* MODAL */
+  /* ── MODAL ── */
   .modal-overlay {
-    position: fixed; inset: 0; z-index: 100;
-    background: rgba(0, 0, 0, 0.4);
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,.65);
     display: none; align-items: center; justify-content: center;
     padding: 20px;
+    backdrop-filter: blur(4px);
   }
   .modal-overlay.open { display: flex; }
   .modal-window {
-    width: 100%; max-width: 400px;
-    background: var(--card-bg);
+    width: 100%; max-width: 420px;
+    background: var(--card);
     border-radius: 24px;
-    padding: 32px 24px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    position: relative;
+    padding: 32px 24px 24px;
     border: 2px solid var(--line);
+    position: relative;
   }
   .modal-close {
-    position: absolute;
-    top: 16px; right: 16px;
-    background: none; border: none;
-    font-size: 24px; color: var(--text-faint);
-    cursor: pointer;
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; font-size: 24px; color: var(--text-faint); cursor: pointer;
   }
-  .modal-title { font-size: 22px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; text-align: center; }
-  .modal-sub { font-size: 15px; color: var(--text-sub); margin-bottom: 24px; text-align: center; font-weight: 600; }
-
-  .form-group { margin-bottom: 16px; }
+  .modal-crown { font-size: 48px; text-align: center; margin-bottom: 8px; }
+  .modal-title { font-size: 22px; font-weight: 900; text-align: center; margin-bottom: 4px; }
+  .modal-sub { font-size: 14px; font-weight: 700; color: var(--text-sub); text-align: center; margin-bottom: 24px; }
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 12px; font-weight: 800; color: var(--text-sub); letter-spacing: .5px; text-transform: uppercase; margin-bottom: 6px; display: block; }
   .form-input {
-    width: 100%;
-    background: var(--bg);
-    border: 2px solid var(--line);
-    border-radius: 12px;
-    padding: 14px 16px;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-main);
-    outline: none;
-    font-family: var(--font);
+    width: 100%; background: var(--bg); border: 2px solid var(--line);
+    border-radius: 12px; padding: 12px 14px; font-size: 15px; font-weight: 700;
+    color: var(--text); outline: none; font-family: var(--font);
   }
-  .form-input:focus {
-    border-color: var(--blue);
-  }
+  .form-input:focus { border-color: var(--blue); }
   .form-input::placeholder { color: var(--text-faint); }
-  
-  .form-select {
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23777777' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-    background-size: 16px;
-    padding-right: 40px;
+  .modal-price-row {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--gold-light); border: 2px solid var(--gold);
+    border-radius: 14px; padding: 14px 16px; margin: 20px 0 16px;
   }
-  
-  .category-pill {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 8px;
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    background: var(--bg);
-    border: 1.5px solid var(--line);
-    color: var(--text-sub);
-    margin-left: 8px;
-    vertical-align: middle;
+  .modal-price-label { font-size: 14px; font-weight: 800; color: var(--gold-dark); }
+  .modal-price-val { font-size: 28px; font-weight: 900; color: var(--gold); }
+  .modal-err { color: var(--red); font-size: 13px; font-weight: 800; text-align: center; min-height: 18px; margin-bottom: 10px; }
+  .btn-pay {
+    width: 100%; background: var(--green); color: white; font-family: var(--font);
+    font-size: 18px; font-weight: 900; padding: 15px; border-radius: 14px; border: none;
+    cursor: pointer; box-shadow: 0 5px 0 var(--green-dark); transition: transform .1s, box-shadow .1s;
+    text-transform: uppercase; letter-spacing: .5px;
   }
-  .category-pill.cat-outbid {
-    border-color: var(--gold);
-    color: var(--gold-text);
-    background: var(--gold-light);
-  }
+  .btn-pay:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--green-dark); }
+  .btn-pay:disabled { opacity: .6; cursor: not-allowed; }
 
-  .amount-box { position: relative; }
-  .amount-box .cur { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-weight: 800; color: var(--text-main); font-size: 18px; }
-  .amount-input { padding-left: 32px; font-size: 18px; }
-
-  .modal-err { color: #ff4b4b; font-size: 14px; font-weight: 700; margin-bottom: 16px; text-align: center; min-height: 20px; }
-  
-  .sim { text-align: center; font-size: 15px; color: var(--text-sub); margin-bottom: 16px; font-weight: 700; }
-
-  @media (max-width: 900px) {
-    .layout {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    
-    .center-header { order: 1; width: 100%; max-width: 100vw; }
-    
-    .left-side { 
-      order: 2; 
-      width: 100%; 
-    }
-    .left-side .side-card {
-      flex-direction: row !important;
-      justify-content: space-evenly;
-      gap: 16px !important;
-      padding: 14px;
-    }
-    
-    .center-card { order: 3; width: 100%; margin-bottom: 90px; }
-    
-    .right-side { display: none; }
-    
-    .mobile-bet-bar {
-      display: block !important;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      padding: 14px 16px;
-      background: var(--bg);
-      border-top: 2px solid var(--line);
-      z-index: 50;
-      box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
-    }
-
-    body { padding: 76px 12px 16px; }
-    .header-top { position: absolute; top: 12px; left: 12px; right: 12px; }
-    
-    .claim-text { font-size: 38px; }
-
-    .row, .row.top-3 {
-      padding: 14px 12px;
-      gap: 10px;
-    }
-    .rank, .row.top-3 .rank {
-      width: 30px;
-      height: 30px;
-      font-size: 13.5px;
-    }
-    .avatar, .row.top-3 .avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 11px;
-      border-width: 2px;
-    }
-    .name-title, .row.top-3 .name-title {
-      font-size: 16px;
-    }
-    .category-pill {
-      font-size: 9.5px;
-      padding: 1.5px 6px;
-      border-radius: 5px;
-    }
-    .desc, .row.top-3 .desc {
-      font-size: 12.5px;
-      line-height: 1.35;
-      margin-top: 2px;
-      -webkit-line-clamp: 2;
-    }
-    .price, .row.top-3 .price {
-      font-size: 16px;
-      margin-left: auto;
-    }
-  }
-
-  @media (max-width: 480px) {
-    body { padding: 70px 8px 16px; }
-    .header-top { top: 10px; left: 8px; right: 8px; }
-    .claim-text { font-size: 32px; letter-spacing: -1px; }
-
-    .row, .row.top-3 {
-      padding: 12px 10px;
-      gap: 8px;
-    }
-    .rank, .row.top-3 .rank {
-      width: 26px;
-      height: 26px;
-      font-size: 12px;
-    }
-    .avatar, .row.top-3 .avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 9px;
-    }
-    .name-title, .row.top-3 .name-title {
-      font-size: 15px;
-    }
-    .desc, .row.top-3 .desc {
-      font-size: 12px;
-      line-height: 1.28;
-    }
-    .price, .row.top-3 .price {
-      font-size: 15px;
-    }
-  }
-
-  /* TOAST NOTIFICATION */
+  /* ── TOAST ── */
   #toast {
-    position: fixed;
-    top: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-40px);
-    background: var(--card-bg);
-    border: 2px solid var(--line);
-    border-radius: 16px;
-    padding: 14px 24px;
-    font-size: 15px;
-    font-weight: 800;
-    color: var(--text-main);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-    z-index: 200;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-80px);
+    background: var(--card); border: 2px solid var(--line); border-radius: 14px;
+    padding: 12px 22px; font-size: 14px; font-weight: 800; color: var(--text);
+    box-shadow: 0 8px 24px rgba(0,0,0,.25); z-index: 300; opacity: 0;
+    pointer-events: none; transition: all .3s cubic-bezier(.16,1,.3,1);
+    display: flex; align-items: center; gap: 8px; white-space: nowrap;
+    max-width: calc(100vw - 32px);
   }
-  #toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-    pointer-events: auto;
-  }
-  #toast.toast-syncing {
-    border-color: var(--blue);
-  }
-  #toast.toast-success {
-    border-color: var(--green);
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #toast.toast-success { border-color: var(--green); }
+  #toast.toast-syncing { border-color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 520px) {
+    .header-stats { gap: 8px; }
+    .stat-pill { font-size: 12px; padding: 4px 9px; }
+    .throne-crown { font-size: 52px; }
+    .king-name { font-size: 19px; }
+    .btn-claim { font-size: 18px; padding: 15px 28px; }
   }
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="header-top">
-  <div class="header-top-left">
-    <img src="/logo.png?v=3" alt="Outbidbid Logo" class="brand-logo">
-    <div class="brand">outbidbid</div>
+<!-- HEADER -->
+<header class="header">
+  <a class="logo" href="/">
+    <img src="/logo.png" alt="Outbidbid logo">
+    <span class="logo-text">outbidbid</span>
+  </a>
+  <div class="header-stats">
+    <div class="stat-pill"><span class="dot"></span><span id="onlineCount">1 Online</span></div>
+    <div class="stat-pill">👁 <span id="viewCount">— Views</span></div>
   </div>
-  <div class="header-top-right">
-    <button class="info-btn" id="infoBtn" aria-label="About developer" aria-expanded="false" title="About">
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+</header>
+
+<!-- MAIN -->
+<main class="page">
+
+  <!-- THRONE HERO -->
+  <section class="throne-section">
+    <div class="throne-crown">👑</div>
+    <div class="throne-label" id="throneLabel">Current King of the Hill</div>
+  </section>
+
+  <!-- KING CARD -->
+  <div id="kingCard" class="king-card">
+    <div class="king-card-inner">
+      <div class="king-avatar">
+        <span class="king-initial">👑</span>
+      </div>
+      <div class="king-info">
+        <div class="king-name">Loading…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <button class="btn-claim" onclick="openModal()">
+      Claim the Throne <span class="btn-price">$1</span>
     </button>
-    <div class="info-popover" id="infoPopover" role="dialog" aria-label="Developer Information">
-      <div class="info-popover-text">Developed by <span class="dev-tag">@r69shabh</span></div>
-      <div class="info-social-links">
-        <a href="https://github.com/r69shabh" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
-          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span>GitHub</span>
-        </a>
-        <a href="https://x.com/r69shabh" target="_blank" rel="noopener noreferrer" class="social-link" title="X (Twitter)">
-          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          <span>X</span>
-        </a>
-      </div>
-    </div>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-      <svg id="moonIcon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg id="sunIcon" style="display:none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
-  </div>
-</div>
-
-<div class="layout">
-  <!-- Left Sidebar -->
-  <div class="side-panel left-side">
-    <div class="side-card" style="display:flex; flex-direction:column; gap:24px;">
-      <div class="stat-row">
-        <div class="stat-icon-wrap">
-          <svg viewBox="0 0 24 24" style="width:32px; height:32px; fill:#58cc02;"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-        </div>
-        <span id="onlineCount">1 Online</span>
-      </div>
-      <div class="stat-row">
-        <div class="stat-icon-wrap">
-          <svg viewBox="0 0 24 24" style="width:32px; height:32px; fill:#1cb0f6;"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-        </div>
-        <span id="viewCount">1 Views</span>
-      </div>
-    </div>
+    <div class="cta-hint">Most recent $1 is always #1 · Dethrone anyone instantly</div>
   </div>
 
-  <div class="center-header">
-    <div class="claim-banner">
-      <h1 class="claim-text" id="arenaTitle" style="margin:0">Claim #1 for $1</h1>
-    </div>
-    <div class="filters" id="categoryFilters">
-      <button class="filter-chip active" data-cat="All">All</button>
-      <button class="filter-chip" data-cat="Outbid">Outbid</button>
-      <button class="filter-chip" data-cat="Site">Site</button>
-      <button class="filter-chip" data-cat="App">App</button>
-      <button class="filter-chip" data-cat="Startup">Startup</button>
-      <button class="filter-chip" data-cat="SaaS">SaaS</button>
-      <button class="filter-chip" data-cat="AI">AI</button>
-      <button class="filter-chip" data-cat="Crypto">Crypto</button>
-      <button class="filter-chip" data-cat="Tools">Tools</button>
-      <button class="filter-chip" data-cat="Directory">Directory</button>
-      <button class="filter-chip" data-cat="Other">Other</button>
-    </div>
-  </div>
+  <!-- HALL OF FAME -->
+  <div class="section-title" id="hofTitle" style="display:none">Hall of Past Kings</div>
+  <ul class="hof-list" id="hofList"></ul>
 
-  <div class="center-card">
-    <div class="card">
-      <ul class="list" id="boardList">
-        <!-- Dynamic listings -->
-      </ul>
-    </div>
-  </div>
+</main>
 
-  <!-- Right Sidebar -->
-  <div class="side-panel right-side">
-    <div class="side-card">
-      <div class="side-title">Create your bet</div>
-      <input type="number" id="quickBetAmount" class="bet-input" placeholder="$ Amount" min="1" step="1">
-      <button class="btn-primary" id="quickBetBtn" style="padding:14px; font-size:16px; border-radius:14px;">Place Bet</button>
-    </div>
-  </div>
-</div>
-
-<div class="mobile-bet-bar" style="display: none;">
-  <button class="btn-primary" onclick="window.openModal()" style="width: 100%; padding: 18px; font-size: 18px;">PLACE BET</button>
-</div>
-
-<!-- Modal -->
-<div class="modal-overlay" id="bidModal">
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
   <div class="modal-window">
-    <button class="modal-close" onclick="window.closeModal()">&times;</button>
-    <div class="modal-title" id="modalTitle">Place Your Bet</div>
-    <div class="modal-sub" id="modalSub">Outbid the competition to take the rank</div>
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    <div class="modal-crown">👑</div>
+    <div class="modal-title">Claim the Throne</div>
+    <div class="modal-sub">Pay $1 · Be #1 · Get dethroned any second</div>
 
     <div class="form-group">
-      <input type="text" id="inTitle" class="form-input" placeholder="Site / App Name">
+      <label class="form-label" for="inName">Your Name *</label>
+      <input class="form-input" id="inName" type="text" placeholder="e.g. Rishabh" maxlength="40" autocomplete="name">
     </div>
     <div class="form-group">
-      <input type="url" id="inUrl" class="form-input" placeholder="https://example.com">
+      <label class="form-label" for="inUrl">Your Link (optional)</label>
+      <input class="form-input" id="inUrl" type="url" placeholder="https://yourdomain.com" maxlength="200">
     </div>
     <div class="form-group">
-      <select id="inCategory" class="form-input form-select" title="Category">
-        <option value="Outbid">Outbid (Bidding / Pay-to-Rank Arena)</option>
-        <option value="Site" selected>Site (Website / Landing Page)</option>
-        <option value="App">App (Web / Mobile App)</option>
-        <option value="Startup">Startup (Indie Project / Company)</option>
-        <option value="SaaS">SaaS (Software as a Service)</option>
-        <option value="AI">AI (AI App / Agent / Tool)</option>
-        <option value="Crypto">Crypto (Crypto / Web3 Project)</option>
-        <option value="Tools">Tools (Developer / Creator Tool)</option>
-        <option value="Directory">Directory (Curated List / Platform)</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <input type="text" id="inTagline" class="form-input" placeholder="Short description / tagline">
-    </div>
-    <div class="form-group">
-      <input type="text" id="inPayer" class="form-input" placeholder="Your name (optional)">
-    </div>
-    <div class="form-group amount-box">
-      <span class="cur">$</span>
-      <input type="number" id="inAmount" class="form-input amount-input" placeholder="1" min="1" step="1">
+      <label class="form-label" for="inTagline">Message / Tagline (optional)</label>
+      <input class="form-input" id="inTagline" type="text" placeholder="e.g. Proud sponsor of chaos" maxlength="100">
     </div>
 
-    <div class="sim" id="simText">Projected Rank: #1</div>
+    <div class="modal-price-row">
+      <div class="modal-price-label">💰 You pay</div>
+      <div class="modal-price-val">$1.00</div>
+    </div>
+
     <div class="modal-err" id="modalErr"></div>
-
-    <button class="btn-primary" id="modalSubmitBtn" onclick="window.submitBid()">Pay &amp; Climb</button>
+    <button class="btn-pay" id="payBtn" onclick="submitBid()">Pay $1 & Claim Throne 👑</button>
   </div>
 </div>
+
+<div id="toast"></div>
 
 <script>
 (() => {
+  'use strict';
+
   const $ = (id) => document.getElementById(id);
-  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const money = (c) => '$' + Math.round(c / 100);
 
-  // Theme support
-  let isDark = localStorage.getItem('theme');
-  if (isDark === null) {
-    isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  } else {
-    isDark = isDark === 'dark';
-  }
-
-  function updateTheme() {
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    $('sunIcon').style.display = isDark ? 'block' : 'none';
-    $('moonIcon').style.display = isDark ? 'none' : 'block';
-  }
-  updateTheme();
-
-  $('themeToggle').addEventListener('click', () => {
-    isDark = !isDark;
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    updateTheme();
-  });
-
-  // Info popover
-  const infoBtn = $('infoBtn');
-  const infoPopover = $('infoPopover');
-  if (infoBtn && infoPopover) {
-    infoBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const open = infoPopover.classList.toggle('open');
-      infoBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    document.addEventListener('click', (e) => {
-      if (!infoPopover.contains(e.target) && e.target !== infoBtn) {
-        infoPopover.classList.remove('open');
-        infoBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        infoPopover.classList.remove('open');
-        infoBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-
+  // ---------- data state ----------
   let LB = null;
-  let modalCtx = { siteId: null, host: null, totalCents: null, category: null };
-  let selectedCategory = 'All';
 
-  // Category filter buttons
-  document.querySelectorAll('#categoryFilters .filter-chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#categoryFilters .filter-chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedCategory = btn.dataset.cat || 'All';
-      render();
-    });
-  });
+  // ---------- utils ----------
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-  function getLogoUrls(host) {
-    const cleanHost = encodeURIComponent(host || 'default.com');
-    const isSelf = host === 'outbidbid.lol' || host === window.location.host;
-    if (isSelf) {
-      return ['/logo.png?v=3', `https://icons.duckduckgo.com/ip3/${cleanHost}.ico`, `https://www.google.com/s2/favicons?domain=${cleanHost}&sz=128`];
-    }
-    return [
-      `https://icons.duckduckgo.com/ip3/${cleanHost}.ico`,
-      `https://unavatar.io/${cleanHost}?fallback=false`,
-      `https://www.google.com/s2/favicons?domain=${cleanHost}&sz=128`
-    ];
+  function timeAgo(ts) {
+    if (!ts) return '';
+    const s = Math.floor(Date.now() / 1000) - ts;
+    if (s < 5) return 'just now';
+    if (s < 60) return `${s}s ago`;
+    if (s < 3600) return `${Math.floor(s / 60)}m ago`;
+    if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
+    return `${Math.floor(s / 86400)}d ago`;
   }
 
-  // Walk the fallback chain; only show mono letter if all logo sources fail
-  window.logoNext = function(img) {
-    if (img.dataset.done) return;
-    let urls = [];
-    try { urls = JSON.parse(img.dataset.urls || '[]'); } catch { return; }
-    const next = Number(img.dataset.tried || 0) + 1;
-    if (next < urls.length) {
-      img.dataset.tried = next;
-      img.src = urls[next];
-    } else {
-      img.dataset.done = '1';
-      const letter = img.dataset.letter || '?';
-      const parent = img.parentElement;
-      if (parent) {
-        parent.innerHTML = `<span class="mono-fallback">${esc(letter)}</span>`;
-      }
-    }
-  };
-
-  function logoImgHTML(title, host) {
-    const urls = getLogoUrls(host);
-    const letter = (title || host || '?').trim().charAt(0).toUpperCase();
-    return `<img src="${esc(urls[0])}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"
-      data-urls='${esc(JSON.stringify(urls))}'
-      data-letter='${esc(letter)}'
-      onload="if(this.src.indexOf('s2/favicons')!==-1 && this.naturalWidth && this.naturalWidth<48){window.logoNext(this)}"
-      onerror="window.logoNext(this)">`;
+  function faviconUrl(urlStr) {
+    try {
+      const u = new URL(urlStr.startsWith('http') ? urlStr : 'https://' + urlStr);
+      return `https://icons.duckduckgo.com/ip3/${u.hostname}.ico`;
+    } catch { return null; }
   }
 
-  function rankBadgeHTML(rank) {
-    if (rank === 1) return `<div class="rank rank-1">1</div>`;
-    if (rank === 2) return `<div class="rank rank-2">2</div>`;
-    if (rank === 3) return `<div class="rank rank-3">3</div>`;
-    return `<div class="rank rank-plain">${rank}</div>`;
+  function avatarHTML(name, url, sizeClass) {
+    const fav = url ? faviconUrl(url) : null;
+    const initial = (name || '?')[0].toUpperCase();
+    if (fav) {
+      return `<img src="${esc(fav)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<span class=\\"${sizeClass === 'king' ? 'king-initial' : 'hof-initial'}\\">${esc(initial)}</span>'">`;
+    }
+    return `<span class="${sizeClass === 'king' ? 'king-initial' : 'hof-initial'}">${esc(initial)}</span>`;
   }
 
-  function render() {
-    if (!LB) return;
-
-    $('arenaTitle').textContent = `Claim #1 for ${money(LB.take_over_cents || 100)}`;
-    if ($('onlineCount') && typeof LB.online_count !== 'undefined') {
-      $('onlineCount').textContent = `${LB.online_count} Online`;
-    }
-    if ($('viewCount') && typeof LB.view_count !== 'undefined') {
-      const vc = LB.view_count >= 1000 ? (LB.view_count / 1000).toFixed(1) + 'k' : LB.view_count;
-      $('viewCount').textContent = `${vc} Views`;
-    }
-
-    const list = $('boardList');
-    if (!LB.sites || LB.sites.length === 0) {
-      list.innerHTML = `
-        <li class="row" style="justify-content:center; padding:48px 24px; text-align:center; color:var(--text-sub);">
-          <div>
-            <div style="font-size:20px; font-weight:800; color:var(--text-main); margin-bottom:8px;">The board is empty!</div>
-            <div style="font-size:15px; font-weight:600;">Be the first to claim #1 for just ${money(LB.min_bid_cents || 100)}.</div>
-          </div>
-        </li>`;
+  // ---------- render ----------
+  function renderKing(king) {
+    const card = $('kingCard');
+    if (!king) {
+      card.innerHTML = `
+        <div class="empty-throne">
+          <div class="big-emoji">🪑</div>
+          <div class="empty-title">The throne is empty!</div>
+          <div class="empty-sub">Be the first king for just $1</div>
+        </div>`;
+      $('throneLabel').textContent = 'No one rules yet';
       return;
     }
+    $('throneLabel').textContent = '👑 Current King of the Hill';
+    const link = king.payer_url ? `<a class="king-url" href="${esc(king.payer_url)}" target="_blank" rel="noopener">${esc(king.payer_url.replace(/^https?:\/\//, ''))}</a>` : '';
+    const tagline = king.payer_tagline ? `<div class="king-tagline">${esc(king.payer_tagline)}</div>` : '';
+    card.innerHTML = `
+      <div class="king-card-inner">
+        <div class="king-avatar">${avatarHTML(king.payer_name, king.payer_url, 'king')}</div>
+        <div class="king-info">
+          <div class="king-name">${esc(king.payer_name || 'Anonymous')}</div>
+          ${link}
+          ${tagline}
+          <div class="king-time">👑 Crowned ${timeAgo(king.paid_at)}</div>
+        </div>
+      </div>`;
+  }
 
-    const filtered = LB.sites.filter(s => {
-      if (selectedCategory === 'All') return true;
-      return (s.category || 'Site').toLowerCase() === selectedCategory.toLowerCase();
-    });
-
-    if (filtered.length === 0) {
-      list.innerHTML = `
-        <li class="row" style="justify-content:center; padding:48px 24px; text-align:center; color:var(--text-sub);">
-          <div>
-            <div style="font-size:18px; font-weight:800; color:var(--text-main); margin-bottom:6px;">No sites in "${esc(selectedCategory)}" yet</div>
-            <div style="font-size:14px; font-weight:600;">Be the first to rank in this category!</div>
-          </div>
-        </li>`;
-      return;
-    }
-
-    list.innerHTML = filtered.map(s => {
-      const cat = s.category || 'Site';
+  function renderHof(hof, currentKingId) {
+    const list = $('hofList');
+    const title = $('hofTitle');
+    // hof[0] is the current king — skip it, show rest as past kings
+    const past = hof.filter((b, i) => i > 0);
+    if (past.length === 0) { title.style.display = 'none'; list.innerHTML = ''; return; }
+    title.style.display = 'block';
+    list.innerHTML = past.map((b, i) => {
+      const link = b.payer_url ? `<a href="${esc(b.payer_url)}" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none;font-size:12px">${esc(b.payer_url.replace(/^https?:\/\//, ''))}</a>` : '';
+      const sub = b.payer_tagline ? esc(b.payer_tagline) : (link ? '' : '');
       return `
-        <li class="row ${s.rank <= 3 ? 'top-3' : ''}" onclick="window.open('${esc(s.url)}', '_blank')">
-          ${rankBadgeHTML(s.rank)}
-          <div class="avatar">
-            ${logoImgHTML(s.title, s.host)}
+        <li class="hof-card">
+          <div class="hof-rank">${i + 2}</div>
+          <div class="hof-avatar">${avatarHTML(b.payer_name, b.payer_url, 'hof')}</div>
+          <div class="hof-info">
+            <div class="hof-name">${esc(b.payer_name || 'Anonymous')}</div>
+            <div class="hof-sub">${link || sub || 'Was king'}</div>
           </div>
-          <div class="info">
-            <div class="name-row">
-              <span class="name-title">${esc(s.title || s.host)}</span>
-              <span class="category-pill ${cat === 'Outbid' ? 'cat-outbid' : ''}">${esc(cat)}</span>
-            </div>
-            <div class="desc">${esc(s.tagline || 'Leading innovation with high quality tools and products.')}</div>
-          </div>
-          <div class="price">${money(s.total_cents)}</div>
-          <button class="btn-outbid-row" onclick="event.stopPropagation(); window.openModal(${s.id}, '${esc(s.host)}', ${s.total_cents}, '${esc(cat)}')">Outbid</button>
+          <div class="hof-time">${timeAgo(b.paid_at)}</div>
         </li>`;
     }).join('');
-
-    injectDynamicJSONLD(LB.sites);
   }
 
-  function injectDynamicJSONLD(sites) {
-    let script = document.getElementById('dynamic-json-ld');
-    if (!script) {
-      script = document.createElement('script');
-      script.id = 'dynamic-json-ld';
-      script.type = 'application/ld+json';
-      document.head.appendChild(script);
-    }
-    script.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "name": "Outbidbid Leaderboard",
-      "description": "Live rankings of bidding sites outbidding each other for the #1 spot.",
-      "itemListElement": sites.map((s, idx) => ({
-        "@type": "ListItem",
-        "position": s.rank || idx + 1,
-        "item": {
-          "@type": "WebSite",
-          "name": s.title || s.host,
-          "url": s.url,
-          "description": s.tagline || ("Bidding site " + (s.host || "") + " on the Outbidbid leaderboard")
-        }
-      }))
-    });
+  function renderStats(lb) {
+    if (!lb) return;
+    const oc = lb.online_count || 1;
+    const vc = lb.view_count || 0;
+    $('onlineCount').textContent = `${oc} Online`;
+    $('viewCount').textContent = vc >= 1000 ? (vc / 1000).toFixed(1) + 'k Views' : `${vc} Views`;
   }
 
+  // ---------- load ----------
   async function load() {
     try {
       const r = await fetch('/api/leaderboard');
+      if (!r.ok) return;
       LB = await r.json();
-      render();
-    } catch(e) {
-      console.warn('Leaderboard refresh error:', e);
-    }
+      renderKing(LB.current_king);
+      renderHof(LB.hall_of_fame, LB.current_king?.id);
+      renderStats(LB);
+    } catch (e) { console.warn('load error', e); }
   }
 
-  window.openModal = function(siteId = null, host = null, totalCents = null, category = null) {
-    modalCtx = { siteId, host, totalCents, category };
-    let defaultAmt;
-    if (typeof totalCents === 'number' && totalCents > 0) {
-      defaultAmt = Math.ceil((totalCents + 100) / 100);
-    } else if (LB && LB.take_over_cents) {
-      defaultAmt = Math.ceil(LB.take_over_cents / 100);
-    } else {
-      defaultAmt = 1;
-    }
-
-    $('modalTitle').textContent = host ? `Outbid ${host}` : 'Place Your Bet';
-    $('modalSub').textContent = `Minimum bid ${money(LB?.min_bid_cents || 100)}. Beat ${money(LB?.take_over_cents || 100)} to take #1.`;
-    $('inAmount').value = defaultAmt;
-    if (category && $('inCategory')) {
-      $('inCategory').value = category;
-    } else if (selectedCategory !== 'All' && $('inCategory')) {
-      $('inCategory').value = selectedCategory;
-    }
+  // ---------- modal ----------
+  window.openModal = function() {
+    $('modalOverlay').classList.add('open');
     $('modalErr').textContent = '';
-    
-    updateSimulation();
-    $('bidModal').classList.add('open');
-    setTimeout(() => $('inTitle').focus(), 80);
+    setTimeout(() => $('inName').focus(), 80);
   };
-
   window.closeModal = function() {
-    $('bidModal').classList.remove('open');
+    $('modalOverlay').classList.remove('open');
   };
+  $('modalOverlay').addEventListener('click', (e) => { if (e.target === $('modalOverlay')) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-  function updateSimulation() {
-    if (!LB) return;
-    const amount = parseFloat($('inAmount').value || '0');
-    const cents = Math.round(amount * 100);
-    let rank = 1;
-    if (LB.sites) {
-      for (const s of LB.sites) {
-        if (s.total_cents >= cents) rank++;
-      }
-    }
-    $('simText').textContent = rank === 1 ? '👑 Projected Rank: #1 (Takes the Crown!)' : `⚡ Projected Rank: #${rank}`;
-  }
-
-  $('inAmount').addEventListener('input', updateSimulation);
-  $('quickBetBtn').addEventListener('click', () => {
-    const amt = parseFloat($('quickBetAmount').value || '0');
-    window.openModal(null, null, null);
-    if (amt > 0) {
-      $('inAmount').value = amt;
-      updateSimulation();
-    }
-  });
-
+  // ---------- submit ----------
   window.submitBid = async function() {
-    const cents = Math.round(parseFloat($('inAmount').value || '0') * 100);
-    if (!cents || cents < (LB?.min_bid_cents || 100)) {
-      $('modalErr').textContent = `Minimum bid is ${money(LB?.min_bid_cents || 100)}`;
-      return;
-    }
+    const name = $('inName').value.trim();
+    if (!name) { $('modalErr').textContent = 'Enter your name to claim the throne'; return; }
 
-    const payload = {
-      amount_cents: cents,
-      payer_name: $('inPayer').value.trim(),
-      new_site: {
-        title: $('inTitle').value.trim() || modalCtx.host || 'My Project',
-        url: $('inUrl').value.trim() || (modalCtx.host ? `https://${modalCtx.host}` : ''),
-        tagline: $('inTagline').value.trim(),
-        category: $('inCategory') ? $('inCategory').value : 'Site'
-      }
-    };
-
-    if (modalCtx.siteId) {
-      payload.site_id = modalCtx.siteId;
-    }
-
-    if (!payload.new_site.url) {
-      $('modalErr').textContent = 'Please enter a valid website URL.';
-      return;
-    }
-
-    $('modalSubmitBtn').disabled = true;
-    $('modalSubmitBtn').textContent = 'PROCESSING...';
+    $('payBtn').disabled = true;
+    $('payBtn').textContent = 'Processing…';
     $('modalErr').textContent = '';
 
     try {
-      const res = await fetch('/api/bid', {
+      const r = await fetch('/api/bid', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ payer_name: name, payer_url: $('inUrl').value.trim(), payer_tagline: $('inTagline').value.trim() }),
       });
-      const data = await res.json();
-
-      if (!res.ok) {
-        $('modalErr').textContent = data.detail || data.error || 'Bid failed';
-        return;
-      }
+      const data = await r.json();
+      if (!r.ok) { $('modalErr').textContent = data.error || data.detail || 'Error, please try again'; return; }
 
       if (data.type === 'dodo' || data.type === 'stripe' || data.type === 'nowpayments') {
         window.location.href = data.checkout_url;
         return;
       }
 
-      // Demo Pay
-      const pay = await fetch('/api/demo-pay', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ bid_id: data.bid_id })
-      });
+      // demo pay
+      const pay = await fetch('/api/demo-pay', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ bid_id: data.bid_id }) });
       const pr = await pay.json();
       if (!pay.ok) throw new Error(pr.error || 'Payment failed');
 
-      window.closeModal();
+      closeModal();
       await load();
-    } catch(e) {
-      $('modalErr').textContent = 'Network or payment error. Please try again.';
+      toast('👑 You\'re the king! Rule until someone dethrones you.', 'success', 5000);
+    } catch (e) {
+      $('modalErr').textContent = 'Network error. Please try again.';
     } finally {
-      $('modalSubmitBtn').disabled = false;
-      $('modalSubmitBtn').textContent = 'PAY & CLIMB';
+      $('payBtn').disabled = false;
+      $('payBtn').textContent = 'Pay $1 & Claim Throne 👑';
     }
   };
 
-  // Toast helper
-  const toast = (msg, icon = '👑', type = '', dur = 4000) => {
+  // ---------- toast ----------
+  function toast(msg, type = '', dur = 4000) {
     let t = $('toast');
-    if (!t) {
-      t = document.createElement('div');
-      t.id = 'toast';
-      document.body.appendChild(t);
-    }
     t.className = type ? `show toast-${type}` : 'show';
-    t.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
+    t.textContent = msg;
     clearTimeout(t._t);
     t._t = setTimeout(() => t.classList.remove('show'), dur);
-  };
+  }
 
-  // Check for returning payment redirect
+  // ---------- payment return ----------
   const q = new URLSearchParams(location.search);
   const sid = q.get('session_id') || q.get('payment_id') || q.get('invoice_id') || q.get('bid_id');
   const isPaid = q.get('paid') === '1' || !!sid;
 
   if (isPaid) {
-    toast('Syncing your bid into the leaderboard…', '⏳', 'syncing', 8000);
+    toast('⏳ Syncing your throne claim…', 'syncing', 9000);
     (async () => {
       const confirmParam = q.get('bid_id')
         ? `bid_id=${encodeURIComponent(q.get('bid_id'))}`
         : (q.get('payment_id') || q.get('invoice_id')
             ? `payment_id=${encodeURIComponent(sid)}`
             : (sid ? `session_id=${encodeURIComponent(sid)}` : 'paid=1'));
-
-      for (let i = 0; i < 6; i++) {
-        try {
-          const r = await fetch(`/api/confirm?${confirmParam}`);
-          const d = await r.json();
-          if (d.paid) break;
-        } catch(e) {}
+      for (let i = 0; i < 7; i++) {
+        try { const r = await fetch(`/api/confirm?${confirmParam}`); const d = await r.json(); if (d.paid) break; } catch {}
         await new Promise(r => setTimeout(r, 1200));
       }
       await load();
-      toast('Payment settled! Your bid is now live on the board.', '👑', 'success', 5000);
-      try {
-        history.replaceState(null, '', window.location.pathname);
-      } catch(e) {}
+      toast('👑 You\'re the king! Reign until someone dethrones you.', 'success', 6000);
+      try { history.replaceState(null, '', window.location.pathname); } catch {}
     })();
   }
 
-  // Real-time WebSocket Presence & Live Sync
+  // ---------- real-time presence ----------
   function connectPresence() {
     try {
       const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
       const ws = new WebSocket(`${proto}//${location.host}/api/presence`);
-
       ws.onmessage = (e) => {
         try {
           const data = JSON.parse(e.data);
           if (data.type === 'presence') {
-            if (typeof data.online !== 'undefined' && $('onlineCount')) {
-              $('onlineCount').textContent = `${data.online} Online`;
-            }
-            if (typeof data.views !== 'undefined' && $('viewCount')) {
-              const vc = data.views >= 1000 ? (data.views / 1000).toFixed(1) + 'k' : data.views;
-              $('viewCount').textContent = `${vc} Views`;
+            if (typeof data.online !== 'undefined') $('onlineCount').textContent = `${data.online} Online`;
+            if (typeof data.views !== 'undefined') {
+              const vc = data.views >= 1000 ? (data.views / 1000).toFixed(1) + 'k Views' : `${data.views} Views`;
+              $('viewCount').textContent = vc;
             }
           }
-        } catch(err) {}
+        } catch {}
       };
-
-      ws.onclose = () => {
-        setTimeout(connectPresence, 3000 + Math.random() * 2000);
-      };
-
-      ws.onerror = () => {
-        try { ws.close(); } catch(e) {}
-      };
-    } catch(e) {
-      console.warn('WebSocket presence not supported or blocked:', e);
-    }
+      ws.onclose = () => setTimeout(connectPresence, 3000 + Math.random() * 2000);
+      ws.onerror = () => { try { ws.close(); } catch {} };
+    } catch (e) { console.warn('WS presence not available'); }
   }
 
-  // Boot
+  // refresh time-ago labels every 30s without full reload
+  setInterval(() => {
+    if (!LB) return;
+    if (LB.current_king) renderKing(LB.current_king);
+    if (LB.hall_of_fame) renderHof(LB.hall_of_fame, LB.current_king?.id);
+  }, 30000);
+
+  // ---------- boot ----------
   load();
   setInterval(load, 10000);
   connectPresence();
 })();
 </script>
-<div id="toast"></div>
 </body>
 </html>

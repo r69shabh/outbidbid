@@ -1,37 +1,25 @@
--- Outbidbid schema
--- sites are created only when a bid is PAID (no free listings, no URL squatting)
-CREATE TABLE IF NOT EXISTS sites (
-  id         INTEGER PRIMARY KEY AUTOINCREMENT,
-  title      TEXT NOT NULL,
-  url        TEXT NOT NULL,
-  host       TEXT NOT NULL UNIQUE,
-  tagline    TEXT NOT NULL DEFAULT '',
-  category   TEXT NOT NULL DEFAULT 'Site',
-  created_at INTEGER NOT NULL
-);
+-- Outbidbid — King of the Hill schema
+-- No sites table. The throne belongs to the most recent paid bidder.
 
 -- bids: pending -> paid | abandoned
--- new_* columns carry the listing payload when the bid creates a new site
+-- paid bids ordered by paid_at DESC = live leaderboard (most recent = #1 / current king)
 CREATE TABLE IF NOT EXISTS bids (
-  id           INTEGER PRIMARY KEY AUTOINCREMENT,
-  site_id      INTEGER REFERENCES sites(id),
-  new_title    TEXT,
-  new_url      TEXT,
-  new_tagline  TEXT,
-  new_category TEXT DEFAULT 'Site',
-  amount_cents INTEGER NOT NULL,
-  payer_name   TEXT NOT NULL DEFAULT '',
-  provider     TEXT NOT NULL DEFAULT 'demo',  -- 'stripe' | 'demo'
-  provider_ref TEXT NOT NULL DEFAULT '',       -- stripe checkout session id
-  status       TEXT NOT NULL DEFAULT 'pending',
-  created_at   INTEGER NOT NULL,
-  paid_at      INTEGER
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  payer_name    TEXT NOT NULL DEFAULT '',
+  payer_url     TEXT NOT NULL DEFAULT '',
+  payer_tagline TEXT NOT NULL DEFAULT '',
+  amount_cents  INTEGER NOT NULL,
+  provider      TEXT NOT NULL DEFAULT 'demo',
+  provider_ref  TEXT NOT NULL DEFAULT '',
+  status        TEXT NOT NULL DEFAULT 'pending',
+  created_at    INTEGER NOT NULL,
+  paid_at       INTEGER
 );
 
-CREATE INDEX IF NOT EXISTS idx_bids_site ON bids(site_id, status, paid_at);
-CREATE INDEX IF NOT EXISTS idx_bids_ref  ON bids(provider_ref);
+CREATE INDEX IF NOT EXISTS idx_bids_status_paid ON bids(status, paid_at DESC);
+CREATE INDEX IF NOT EXISTS idx_bids_ref         ON bids(provider_ref);
 
--- one Dodo product per dollar amount, so checkouts show "$N + tax" not "$1 x N"
+-- one Dodo product per dollar amount (cached, reused across bids)
 CREATE TABLE IF NOT EXISTS price_products (
   amount_cents INTEGER PRIMARY KEY,
   product_id   TEXT NOT NULL,
