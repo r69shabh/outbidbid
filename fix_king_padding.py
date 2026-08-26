@@ -1,7 +1,9 @@
 with open('/Users/rishabh/pgming/outbid/public/index.html', 'r') as f:
     html = f.read()
 
-html = html.replace('padding: 24px;\\n    display: flex;\\n    align-items: flex-start;', 'padding: 32px 24px;\\n    display: flex;\\n    align-items: flex-start;')
+import re
+# We need to specifically replace the padding inside .king-card-inner
+html = re.sub(r'(\.king-card-inner\s*\{\s*)\n\s*padding:\s*16px\s*20px;', r'\1\n    padding: 32px 24px;', html)
 
 with open('/Users/rishabh/pgming/outbid/public/index.html', 'w') as f:
     f.write(html)
