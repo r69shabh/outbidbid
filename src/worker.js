@@ -277,21 +277,38 @@ async function handleNpIpn(request, env) {
 // ---------- Dodo Payments ----------
 
 const dodoHeaders = (env) => ({ authorization: `Bearer ${env.DODO_API_KEY}`, 'content-type': 'application/json' });
-const dodoClient = (env) => new DodoPayments({ bearerToken: env.DODO_API_KEY, environment: (env.DODO_BASE ?? '').includes('test') ? 'test_mode' : 'live_mode' });
+const dodoClient = (env) => new DodoPayments({ bearerToken: env.DODO_API_KEY, environment: (env.DODO_BASE ?? '').includes('live') ? 'live_mode' : 'test_mode' });
 
 async function createDodoCheckout(env, { requestOrigin, bidId }) {
-  const productId = await getDodoProductForAmount(env, BID_AMOUNT_CENTS);
-  const session = await dodoClient(env).checkoutSessions.create({
-    product_cart: [{ product_id: productId, quantity: 1 }],
-    return_url: `${requestOrigin}/?paid=1&bid_id=${bidId}`,
-    metadata: { bid_id: String(bidId) },
-  });
-  if (!session?.checkout_url || !session?.session_id) return { error: session?.message ?? 'dodo_checkout_failed' };
-  await env.DB.prepare("UPDATE bids SET provider = 'dodo', provider_ref = ? WHERE id = ?").bind(session.session_id, bidId).run();
-  return { url: session.checkout_url };
+  try {
+    const productId = env.DODO_PRODUCT_ID || await getDodoProductForAmount(env, BID_AMOUNT_CENTS);
+    const base = env.DODO_BASE || 'https://test.dodopayments.com';
+    const res = await fetch(`${base}/checkouts`, {
+      method: 'POST',
+      headers: dodoHeaders(env),
+      body: JSON.stringify({
+        product_cart: [{ product_id: productId, quantity: 1 }],
+        return_url: `${requestOrigin}/?paid=1&bid_id=${bidId}`,
+        metadata: { bid_id: String(bidId) },
+      }),
+    });
+    const session = await res.json().catch(() => ({}));
+    if (!res.ok || !session.checkout_url || !session.session_id) {
+      console.error('Dodo checkout failed:', session);
+      return { error: 'dodo_error', detail: session?.message || session?.error || 'dodo_checkout_failed' };
+    }
+    await env.DB.prepare("UPDATE bids SET provider = 'dodo', provider_ref = ? WHERE id = ?").bind(session.session_id, bidId).run();
+    return { url: session.checkout_url };
+  } catch (err) {
+    console.error('Dodo checkout exception:', err);
+    return { error: 'dodo_error', detail: err?.message || String(err) };
+  }
 }
 
 async function getDodoProductForAmount(env, amountCents) {
+  if (env.DODO_PRODUCT_ID && amountCents === BID_AMOUNT_CENTS) {
+    return env.DODO_PRODUCT_ID;
+  }
   const cached = await env.DB.prepare('SELECT product_id FROM price_products WHERE amount_cents = ?1').bind(amountCents).first();
   if (cached) return cached.product_id;
   try {
@@ -450,8 +467,19 @@ async function handleConfirm(request, env, url) {
 
   if (!(env.DODO_API_KEY && env.DODO_BASE)) return json({ paid: false, mode: 'demo' });
   let session;
-  try { session = await dodoClient(env).checkoutSessions.retrieve(sessionId); }
-  catch (e) { return json({ error: 'dodo_lookup_failed', detail: String(e?.message ?? e).slice(0, 120) }, 502); }
+  try {
+    const base = env.DODO_BASE || 'https://test.dodopayments.com';
+    const res = await fetch(`${base}/checkouts/${encodeURIComponent(sessionId)}`, {
+      headers: dodoHeaders(env),
+    });
+    if (res.ok) {
+      session = await res.json().catch(() => ({}));
+    } else {
+      session = await dodoClient(env).checkoutSessions.retrieve(sessionId);
+    }
+  } catch (e) {
+    return json({ error: 'dodo_lookup_failed', detail: String(e?.message ?? e).slice(0, 120) }, 502);
+  }
   const isPaid = session?.payment_status === 'paid' || session?.payment_status === 'succeeded' || session?.status === 'succeeded' || session?.status === 'complete';
   if (isPaid) {
     const result = await markPaid(env, { ref: sessionId });

@@ -647,7 +647,7 @@
         body: JSON.stringify({ payer_name: name, payer_url: $('inUrl').value.trim(), payer_tagline: $('inTagline').value.trim() }),
       });
       const data = await r.json();
-      if (!r.ok) { $('modalErr').textContent = data.error || data.detail || 'Error, please try again'; return; }
+      if (!r.ok) { $('modalErr').textContent = data.detail || data.error || 'Error, please try again'; return; }
 
       if (data.type === 'dodo' || data.type === 'stripe' || data.type === 'nowpayments') {
         window.location.href = data.checkout_url;
