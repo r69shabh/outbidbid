@@ -8,7 +8,13 @@
   Cache-Control: public, max-age=3600
 
 /og.png
-  Cache-Control: public, max-age=86400
+  Cache-Control: public, max-age=3600
+
+/og-king.png
+  Cache-Control: public, max-age=3600
+
+/preview.png
+  Cache-Control: public, max-age=3600
 
 /logo.png
   Cache-Control: public, max-age=86400
