@@ -294,8 +294,8 @@ async function createDodoCheckout(env, { requestOrigin, bidId }) {
     });
     const session = await res.json().catch(() => ({}));
     if (!res.ok || !session.checkout_url || !session.session_id) {
-      console.error('Dodo checkout failed:', session);
-      return { error: 'dodo_error', detail: session?.message || session?.error || 'dodo_checkout_failed' };
+      console.error('Dodo checkout failed:', res.status, session);
+      return { error: 'dodo_error', detail: `HTTP ${res.status}: ${JSON.stringify(session)}` };
     }
     await env.DB.prepare("UPDATE bids SET provider = 'dodo', provider_ref = ? WHERE id = ?").bind(session.session_id, bidId).run();
     return { url: session.checkout_url };

@@ -18,8 +18,8 @@
     { "pattern": "outbidbid.lol", "custom_domain": true }
   ],
   "vars": {
-    "DODO_BASE": "https://test.dodopayments.com",
-    "DODO_PRODUCT_ID": "pdt_0Nm5UYjiECVXnZNzh0a2X"
+    "DODO_BASE": "https://live.dodopayments.com",
+    "DODO_PRODUCT_ID": "pdt_0Nm2g6AkVcf4sSybPOz5T"
   },
   "durable_objects": {
     "bindings": [
