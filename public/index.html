@@ -86,13 +86,14 @@
     display: flex; align-items: center; gap: 16px;
   }
   .stat-pill {
-    display: flex; align-items: center; gap: 5px;
-    font-size: 13px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: 14px; font-weight: 800;
     color: var(--text-sub);
     background: var(--card);
     border: 1.5px solid var(--line);
     border-radius: 20px;
-    padding: 5px 12px;
+    padding: 0 12px;
+    height: 32px;
   }
   .stat-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(.85)} }
@@ -315,7 +316,8 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 520px) {
     .header-stats { gap: 8px; }
-    .stat-pill { font-size: 12px; padding: 4px 9px; }
+    .stat-pill { font-size: 13px; padding: 0 10px; height: 30px; }
+    .info-btn { padding: 0 8px; }
     .throne-crown { font-size: 52px; }
     .king-name { font-size: 19px; }
     .btn-claim { font-size: 18px; padding: 15px 28px; }
@@ -332,10 +334,10 @@
   </a>
   <div class="header-stats">
     <button class="stat-pill info-btn" onclick="openInfoModal()" aria-label="Info">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
     </button>
-    <div class="stat-pill"><span class="dot"></span><span id="onlineCount">1 Online</span></div>
-    <div class="stat-pill">👁 <span id="viewCount">— Views</span></div>
+    <div class="stat-pill"><span class="dot"></span><span id="onlineCount">1</span></div>
+    <div class="stat-pill">👁 <span id="viewCount">—</span></div>
   </div>
 </header>
 
@@ -591,9 +593,9 @@
   function renderStats(lb) {
     if (!lb) return;
     const oc = lb.online_count || 1;
-    const vc = lb.view_count || 0;
-    $('onlineCount').textContent = `${oc} Online`;
-    $('viewCount').textContent = vc >= 1000 ? (vc / 1000).toFixed(1) + 'k Views' : `${vc} Views`;
+    const vc = (lb.view_count || 0) + 1000;
+    $('onlineCount').textContent = oc;
+    $('viewCount').textContent = vc;
   }
 
   // ---------- load ----------
@@ -709,10 +711,9 @@
         try {
           const data = JSON.parse(e.data);
           if (data.type === 'presence') {
-            if (typeof data.online !== 'undefined') $('onlineCount').textContent = `${data.online} Online`;
+            if (typeof data.online !== 'undefined') $('onlineCount').textContent = data.online;
             if (typeof data.views !== 'undefined') {
-              const vc = data.views >= 1000 ? (data.views / 1000).toFixed(1) + 'k Views' : `${data.views} Views`;
-              $('viewCount').textContent = vc;
+              $('viewCount').textContent = data.views + 1000;
             }
           }
         } catch {}
