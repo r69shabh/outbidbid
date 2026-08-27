@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /thanks.html
 
-Sitemap: https://outbidbid.lol/sitemap.xml
+Sitemap: https://tinyspot.lol/sitemap.xml

@@ -1,4 +1,4 @@
-// Outbidbid — King of the Hill.
+// Tinyspot — King of the Hill.
 // Pay $1. Be #1. Get dethroned any second.
 // Cloudflare Worker + D1. Payments via Dodo Payments SDK, Stripe, and NOWPayments.
 
@@ -175,7 +175,7 @@ async function createStripeCheckout(env, { requestOrigin, bidId }) {
   p.set('line_items[0][quantity]', '1');
   p.set('line_items[0][price_data][currency]', 'usd');
   p.set('line_items[0][price_data][unit_amount]', String(BID_AMOUNT_CENTS));
-  p.set('line_items[0][price_data][product_data][name]', 'Outbidbid — Claim the Throne');
+  p.set('line_items[0][price_data][product_data][name]', 'Tinyspot — Claim the Throne');
   p.set('line_items[0][price_data][product_data][description]', 'Pay $1 to be #1. Get dethroned any second.');
   const res = await fetch('https://api.stripe.com/v1/checkout/sessions', {
     method: 'POST',
@@ -230,7 +230,7 @@ async function createNpInvoice(env, { requestOrigin, bidId }) {
       price_amount: BID_AMOUNT_CENTS / 100,
       price_currency: 'usd',
       order_id: `bid_${bidId}`,
-      order_description: 'Outbidbid — Claim the Throne for $1',
+      order_description: 'Tinyspot — Claim the Throne for $1',
       success_url: `${requestOrigin}/?paid=1&bid_id=${bidId}`,
       cancel_url: `${requestOrigin}/`,
       ipn_callback_url: `${requestOrigin}/api/nowpayments/ipn`,
@@ -282,7 +282,7 @@ const dodoClient = (env) => new DodoPayments({ bearerToken: env.DODO_API_KEY, en
 async function createDodoCheckout(env, { requestOrigin, bidId }) {
   try {
     const productId = env.DODO_PRODUCT_ID || await getDodoProductForAmount(env, BID_AMOUNT_CENTS);
-    const base = env.DODO_BASE || 'https://test.dodopayments.com';
+    const base = env.DODO_BASE || 'https://live.dodopayments.com';
     const res = await fetch(`${base}/checkouts`, {
       method: 'POST',
       headers: dodoHeaders(env),
@@ -295,7 +295,7 @@ async function createDodoCheckout(env, { requestOrigin, bidId }) {
     const session = await res.json().catch(() => ({}));
     if (!res.ok || !session.checkout_url || !session.session_id) {
       console.error('Dodo checkout failed:', res.status, session);
-      return { error: 'dodo_error', detail: `HTTP ${res.status}: ${JSON.stringify(session)}` };
+      return { error: 'dodo_error', detail: session?.message || session?.error || 'dodo_checkout_failed' };
     }
     await env.DB.prepare("UPDATE bids SET provider = 'dodo', provider_ref = ? WHERE id = ?").bind(session.session_id, bidId).run();
     return { url: session.checkout_url };
@@ -321,7 +321,7 @@ async function getDodoProductForAmount(env, amountCents) {
   } catch { /* fall through */ }
   const createRes = await fetch(`${env.DODO_BASE}/products`, {
     method: 'POST', headers: dodoHeaders(env),
-    body: JSON.stringify({ name: 'Outbidbid — Claim the Throne', description: 'Pay $1 to be #1 on Outbidbid. Get dethroned any second.', tax_category: 'digital_products', price: { type: 'one_time_price', currency: 'USD', price: amountCents, discount: 0 } }),
+    body: JSON.stringify({ name: 'Tinyspot — Claim the Throne', description: 'Pay $1 to be #1 on Tinyspot. Get dethroned any second.', tax_category: 'digital_products', price: { type: 'one_time_price', currency: 'USD', price: amountCents, discount: 0 } }),
   });
   const product = await createRes.json().catch(() => ({}));
   if (!createRes.ok || !product.product_id) throw new Error(product?.error?.message ?? 'dodo_product_create_failed');
@@ -525,11 +525,11 @@ async function handleAdmin(request, env) {
       if (!working) return json({ ok: false, error: 'api_key_rejected_on_both_environments' }, 502);
       const listRes = await fetch(`${working.base}/products?limit=100`, { headers: dodoHeaders(env) });
       const list = await listRes.json().catch(() => ({ items: [] }));
-      const existing = (list.items ?? list ?? []).find?.((p) => p.name === 'Outbidbid — Claim the Throne' && p.price?.price === 100);
+      const existing = (list.items ?? list ?? []).find?.((p) => p.name === 'Tinyspot — Claim the Throne' && p.price?.price === 100);
       if (existing) return json({ ok: true, base: working.base, product_id: existing.product_id, reused: true });
       const createRes = await fetch(`${working.base}/products`, {
         method: 'POST', headers: dodoHeaders(env),
-        body: JSON.stringify({ name: 'Outbidbid — Claim the Throne', description: 'Pay $1 to be #1. Get dethroned any second.', tax_category: 'digital_products', price: { type: 'one_time_price', currency: 'USD', price: 100, discount: 0 } }),
+        body: JSON.stringify({ name: 'Tinyspot — Claim the Throne', description: 'Pay $1 to be #1. Get dethroned any second.', tax_category: 'digital_products', price: { type: 'one_time_price', currency: 'USD', price: 100, discount: 0 } }),
       });
       const product = await createRes.json().catch(() => ({}));
       if (!createRes.ok || !product.product_id) return json({ ok: false, error: 'product_create_failed', detail: product?.error?.message ?? product }, 502);
@@ -540,7 +540,7 @@ async function handleAdmin(request, env) {
       const origin = new URL(request.url).origin;
       const res = await fetch(`${env.DODO_BASE}/webhooks`, {
         method: 'POST', headers: dodoHeaders(env),
-        body: JSON.stringify({ url: `${origin}/api/dodo/webhook`, description: 'outbidbid payment settlement', filter_types: ['payment.succeeded'] }),
+        body: JSON.stringify({ url: `${origin}/api/dodo/webhook`, description: 'tinyspot payment settlement', filter_types: ['payment.succeeded'] }),
       });
       const wh = await res.json().catch(() => ({}));
       if (!res.ok) return json({ ok: false, error: 'webhook_create_failed', detail: wh?.error?.message ?? wh }, 502);
@@ -551,7 +551,7 @@ async function handleAdmin(request, env) {
       const ins = await env.DB.prepare(
         `INSERT INTO bids (payer_name, payer_url, payer_tagline, amount_cents, provider, status, created_at, paid_at)
          VALUES (?, ?, ?, ?, 'demo', 'paid', ?, ?)`
-      ).bind('outbidbid', 'https://outbidbid.lol', 'The king of the hill game. Pay $1, be #1.', 100, now() - 3600, now() - 3600).run();
+      ).bind('tinyspot', 'https://tinyspot.lol', 'The king of the hill game. Pay $1, be #1.', 100, now() - 3600, now() - 3600).run();
       return json({ ok: true, bid_id: ins.meta.last_row_id });
     }
     default:

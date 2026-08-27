@@ -1,8 +1,8 @@
 {
-  "name": "outbidbid",
+  "name": "tinyspot",
   "version": "1.0.0",
   "private": true,
-  "description": "Bid-to-rank leaderboard for bid-to-rank boards. Outbid the outbidders.",
+  "description": "Tinyspot — Pay $1. Be #1. King of the Hill game.",
   "scripts": {
     "dev": "wrangler dev --port 3000",
     "setup:local": "wrangler d1 execute outbidbid --local --file=schema.sql",
