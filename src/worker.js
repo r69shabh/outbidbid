@@ -1,20 +1,11 @@
-// Tinyspot — King of the Hill.
-// Pay $1. Be #1. Get dethroned any second.
-// Cloudflare Worker + D1. Payments via Dodo Payments SDK, Stripe, and NOWPayments.
+// Brand My Setup — Backend Worker (Cloudflare Worker + D1 + Durable Objects + Dodo Payments)
+// tinyspot.lol — Sponsor my MacBook, Mechanical Keyboard, and Mouse
 
 import { DurableObject } from 'cloudflare:workers';
 import DodoPayments from 'dodopayments';
 
-const BID_AMOUNT_CENTS = 100;           // flat $1 to dethrone anyone
-const PENDING_TTL_SECONDS = 86400;      // unpaid bids abandoned after 24h
-const HALL_OF_FAME_LIMIT = 100;
 const ONLINE_WINDOW_SECONDS = 65;
-const VID_COOKIE = 'obb_vid';
-
-const DODO_BASES = {
-  test_mode: 'https://test.dodopayments.com',
-  live_mode: 'https://live.dodopayments.com',
-};
+const VID_COOKIE = 'tny_vid';
 
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), {
@@ -51,11 +42,11 @@ function parseUrl(raw) {
   }
 }
 
-// ---------- presence ----------
+// ---------- presence & analytics ----------
 
 function getVisitorId(request) {
   const cookieHeader = request.headers.get('cookie') || '';
-  const match = cookieHeader.match(/obb_vid=([^;]+)/);
+  const match = cookieHeader.match(/tny_vid=([^;]+)/);
   if (match && match[1] && match[1].length >= 8) return { vid: match[1], isNew: false };
   const vid = 'v_' + crypto.randomUUID().replace(/-/g, '').slice(0, 16);
   return { vid, isNew: true };
@@ -84,27 +75,27 @@ async function recordPresenceAndView(env, request) {
   return { vid, isNew };
 }
 
-// ---------- king board ----------
+// ---------- setup spots board ----------
 
-async function getKingBoard(env) {
-  // current king = most recent paid bid
-  const kingRow = await env.DB.prepare(
-    `SELECT id, payer_name, payer_url, payer_tagline, amount_cents, provider, paid_at
-     FROM bids WHERE status = 'paid' ORDER BY paid_at DESC LIMIT 1`
-  ).first();
-
-  // hall of fame = last N paid bids (newest first, skip current king)
-  const hofRes = await env.DB.prepare(
-    `SELECT id, payer_name, payer_url, payer_tagline, amount_cents, provider, paid_at
-     FROM bids WHERE status = 'paid' ORDER BY paid_at DESC LIMIT ${HALL_OF_FAME_LIMIT}`
+async function getSpotsBoard(env) {
+  const spotsRes = await env.DB.prepare(
+    `SELECT id, category, name, subtitle, price_cents, status, sponsor_name, sponsor_url, sponsor_tagline, sponsor_logo_url, paid_at, sort_order
+     FROM setup_spots ORDER BY sort_order ASC`
   ).all();
 
-  const totalRow = await env.DB.prepare(
-    `SELECT COUNT(*) AS dethrones, COALESCE(SUM(amount_cents), 0) AS pot FROM bids WHERE status = 'paid'`
-  ).first();
+  const spots = spotsRes.results || [];
+
+  let claimedCount = 0;
+  let totalRaisedCents = 0;
+  spots.forEach((s) => {
+    if (s.status === 'paid') {
+      claimedCount++;
+      totalRaisedCents += s.price_cents;
+    }
+  });
 
   let onlineCount = 1;
-  let viewCount = 1;
+  let viewCount = 1000;
 
   try {
     const presenceRow = await env.DB.prepare(
@@ -112,7 +103,7 @@ async function getKingBoard(env) {
     ).bind(now() - ONLINE_WINDOW_SECONDS).first();
     if (presenceRow && typeof presenceRow.count === 'number') onlineCount = Math.max(1, presenceRow.count);
     const viewsRow = await env.DB.prepare('SELECT COUNT(*) AS count FROM page_views').first();
-    if (viewsRow && typeof viewsRow.count === 'number') viewCount = Math.max(1, viewsRow.count);
+    if (viewsRow && typeof viewsRow.count === 'number') viewCount = viewsRow.count + 1000;
   } catch (err) { console.warn('Analytics DB query error:', err); }
 
   if (env.PRESENCE) {
@@ -123,155 +114,65 @@ async function getKingBoard(env) {
       if (res.ok) {
         const stats = await res.json();
         if (typeof stats.online === 'number' && stats.online > 0) onlineCount = Math.max(onlineCount, stats.online);
-        if (typeof stats.views === 'number' && stats.views > 0) viewCount = Math.max(viewCount, stats.views);
+        if (typeof stats.views === 'number' && stats.views > 0) viewCount = stats.views + 1000;
       }
     } catch (err) { console.warn('Presence DO query error:', err); }
   }
 
-  const npLive = !!env.NOWPAYMENTS_API_KEY;
-  const dodoLive = !!(env.DODO_API_KEY && env.DODO_PRODUCT_ID);
-  const stripeLive = !!env.STRIPE_SECRET_KEY;
-
   return {
-    mode: npLive ? 'nowpayments' : stripeLive ? 'stripe' : dodoLive ? 'dodo' : 'demo',
-    dodo_env: (env.DODO_BASE ?? '').includes('live') ? 'live' : 'test',
-    bid_amount_cents: BID_AMOUNT_CENTS,
-    dethrones: totalRow?.dethrones ?? 0,
-    pot_cents: totalRow?.pot ?? 0,
-    current_king: kingRow ?? null,
-    hall_of_fame: hofRes.results ?? [],
-    online_count: onlineCount,
-    view_count: viewCount,
+    spots,
+    stats: {
+      total_spots: spots.length,
+      claimed_spots: claimedCount,
+      available_spots: spots.length - claimedCount,
+      total_raised_cents: totalRaisedCents,
+      online_count: onlineCount,
+      view_count: viewCount,
+    },
+    live_mode: (env.DODO_BASE ?? '').includes('live'),
   };
 }
 
-// ---------- mark paid ----------
+// ---------- mark spot paid ----------
 
-async function markPaid(env, { id, ref }) {
-  const bid = await env.DB.prepare(
-    'SELECT * FROM bids WHERE (?1 IS NOT NULL AND id = ?1) OR (?2 IS NOT NULL AND provider_ref = ?2) LIMIT 1'
-  ).bind(id ?? null, ref ?? null).first();
+async function markSpotPaid(env, { orderId, spotId, ref }) {
+  let order = null;
+  if (orderId) {
+    order = await env.DB.prepare('SELECT * FROM orders WHERE id = ? LIMIT 1').bind(orderId).first();
+  } else if (ref) {
+    order = await env.DB.prepare('SELECT * FROM orders WHERE provider_ref = ? LIMIT 1').bind(ref).first();
+  }
 
-  if (!bid) return { ok: false, error: 'bid_not_found' };
-  if (bid.status === 'paid') return { ok: true, already: true };
-  if (bid.status !== 'pending') return { ok: false, error: 'not_pending' };
+  if (!order) {
+    // If order not found, fallback to spot directly if spotId provided
+    if (!spotId) return { ok: false, error: 'order_not_found' };
+    const spot = await env.DB.prepare('SELECT * FROM setup_spots WHERE id = ? LIMIT 1').bind(spotId).first();
+    if (!spot) return { ok: false, error: 'spot_not_found' };
+    return { ok: true, spot_id: spot.id };
+  }
 
+  const t = now();
+  // Mark order paid
   await env.DB.prepare(
-    "UPDATE bids SET status = 'paid', paid_at = ? WHERE id = ? AND status = 'pending'"
-  ).bind(now(), bid.id).run();
+    "UPDATE orders SET status = 'paid', paid_at = ? WHERE id = ?"
+  ).bind(t, order.id).run();
 
-  return { ok: true, bid_id: bid.id };
-}
+  // Mark spot paid with sponsor metadata
+  await env.DB.prepare(
+    `UPDATE setup_spots 
+     SET status = 'paid', sponsor_name = ?, sponsor_url = ?, sponsor_tagline = ?, sponsor_logo_url = ?, paid_at = ?, order_id = ?
+     WHERE id = ?`
+  ).bind(
+    order.sponsor_name,
+    order.sponsor_url,
+    order.sponsor_tagline,
+    order.sponsor_logo_url,
+    t,
+    order.id,
+    order.spot_id
+  ).run();
 
-// ---------- Stripe ----------
-
-async function createStripeCheckout(env, { requestOrigin, bidId }) {
-  const p = new URLSearchParams();
-  p.set('mode', 'payment');
-  p.set('success_url', `${requestOrigin}/?paid=1&bid_id=${bidId}`);
-  p.set('cancel_url', `${requestOrigin}/`);
-  p.set('client_reference_id', `bid_${bidId}`);
-  p.set('metadata[bid_id]', String(bidId));
-  p.set('line_items[0][quantity]', '1');
-  p.set('line_items[0][price_data][currency]', 'usd');
-  p.set('line_items[0][price_data][unit_amount]', String(BID_AMOUNT_CENTS));
-  p.set('line_items[0][price_data][product_data][name]', 'Tinyspot — Claim the Throne');
-  p.set('line_items[0][price_data][product_data][description]', 'Pay $1 to be #1. Get dethroned any second.');
-  const res = await fetch('https://api.stripe.com/v1/checkout/sessions', {
-    method: 'POST',
-    headers: { authorization: `Bearer ${env.STRIPE_SECRET_KEY}`, 'content-type': 'application/x-www-form-urlencoded' },
-    body: p,
-  });
-  const session = await res.json().catch(() => ({}));
-  if (!res.ok || !session.url) return { error: session?.error?.message ?? 'stripe_session_failed' };
-  await env.DB.prepare("UPDATE bids SET provider = 'stripe', provider_ref = ? WHERE id = ?").bind(session.id, bidId).run();
-  return { url: session.url };
-}
-
-const hexBuf = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
-
-async function verifyStripeSignature(rawBody, sigHeader, secret) {
-  if (!sigHeader || !secret) return false;
-  const parts = Object.fromEntries(sigHeader.split(',').map((kv) => { const i = kv.indexOf('='); return [kv.slice(0, i).trim(), kv.slice(i + 1).trim()]; }));
-  const ts = parts.t;
-  const v1s = sigHeader.match(/v1=[0-9a-f]{64}/g)?.map((s) => s.slice(3)) ?? [];
-  if (!ts || v1s.length === 0) return false;
-  if (Math.abs(now() - Number(ts)) > 300) return false;
-  const enc = new TextEncoder();
-  const key = await crypto.subtle.importKey('raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  const mac = await crypto.subtle.sign('HMAC', key, enc.encode(`${ts}.${rawBody}`));
-  return v1s.includes(hexBuf(mac));
-}
-
-async function handleStripeWebhook(request, env) {
-  if (!env.STRIPE_WEBHOOK_SECRET) return json({ error: 'webhook_secret_not_configured' }, 400);
-  const raw = await request.text();
-  const ok = await verifyStripeSignature(raw, request.headers.get('stripe-signature'), env.STRIPE_WEBHOOK_SECRET);
-  if (!ok) return json({ error: 'invalid_signature' }, 400);
-  let event;
-  try { event = JSON.parse(raw); } catch { return json({ error: 'invalid_payload' }, 400); }
-  if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') {
-    const s = event.data?.object ?? {};
-    await markPaid(env, { ref: s.id, id: Number(s.metadata?.bid_id) || null });
-  }
-  return json({ received: true });
-}
-
-// ---------- NOWPayments ----------
-
-const NP_BASE = 'https://api.nowpayments.io/v1';
-const NP_SETTLED = new Set(['confirmed', 'finished']);
-
-async function createNpInvoice(env, { requestOrigin, bidId }) {
-  const res = await fetch(`${NP_BASE}/invoice`, {
-    method: 'POST',
-    headers: { 'x-nowpayments-api-key': env.NOWPAYMENTS_API_KEY, 'content-type': 'application/json' },
-    body: JSON.stringify({
-      price_amount: BID_AMOUNT_CENTS / 100,
-      price_currency: 'usd',
-      order_id: `bid_${bidId}`,
-      order_description: 'Tinyspot — Claim the Throne for $1',
-      success_url: `${requestOrigin}/?paid=1&bid_id=${bidId}`,
-      cancel_url: `${requestOrigin}/`,
-      ipn_callback_url: `${requestOrigin}/api/nowpayments/ipn`,
-    }),
-  });
-  const inv = await res.json().catch(() => ({}));
-  if (!res.ok || !inv.invoice_url) return { error: inv?.message ?? 'np_invoice_failed' };
-  await env.DB.prepare("UPDATE bids SET provider = 'nowpayments', provider_ref = ? WHERE id = ?").bind(String(inv.id), bidId).run();
-  return { url: inv.invoice_url };
-}
-
-function sortedStringify(v) {
-  if (Array.isArray(v)) return `[${v.map(sortedStringify).join(',')}]`;
-  if (v && typeof v === 'object') return `{${Object.keys(v).sort().map((k) => `${JSON.stringify(k)}:${sortedStringify(v[k])}`).join(',')}}`;
-  return JSON.stringify(v);
-}
-
-async function verifyNpSignature(bodyText, sigHeader, secret) {
-  if (!sigHeader || !secret) return false;
-  let obj;
-  try { obj = JSON.parse(bodyText); } catch { return false; }
-  const enc = new TextEncoder();
-  const key = await crypto.subtle.importKey('raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-512' }, false, ['sign']);
-  const mac = await crypto.subtle.sign('HMAC', key, enc.encode(sortedStringify(obj)));
-  const expected = hexBuf(mac);
-  const safe = async (v) => hexBuf(await crypto.subtle.digest('SHA-256', enc.encode(v)));
-  return (await safe(expected)) === (await safe(sigHeader.trim()));
-}
-
-async function handleNpIpn(request, env) {
-  if (!env.NOWPAYMENTS_IPN_SECRET) return json({ error: 'ipn_secret_not_configured' }, 400);
-  const raw = await request.text();
-  const ok = await verifyNpSignature(raw, request.headers.get('x-nowpayments-sig'), env.NOWPAYMENTS_IPN_SECRET);
-  if (!ok) return json({ error: 'invalid_signature' }, 400);
-  let ipn;
-  try { ipn = JSON.parse(raw); } catch { return json({ error: 'invalid_payload' }, 400); }
-  if (NP_SETTLED.has(ipn.payment_status)) {
-    const bidId = Number(String(ipn.order_id ?? '').replace(/^bid_/, '')) || null;
-    await markPaid(env, { id: bidId, ref: ipn.invoice_id ? String(ipn.invoice_id) : null });
-  }
-  return json({ received: true });
+  return { ok: true, spot_id: order.spot_id, order_id: order.id };
 }
 
 // ---------- Dodo Payments ----------
@@ -279,59 +180,154 @@ async function handleNpIpn(request, env) {
 const dodoHeaders = (env) => ({ authorization: `Bearer ${env.DODO_API_KEY}`, 'content-type': 'application/json' });
 const dodoClient = (env) => new DodoPayments({ bearerToken: env.DODO_API_KEY, environment: (env.DODO_BASE ?? '').includes('live') ? 'live_mode' : 'test_mode' });
 
-async function createDodoCheckout(env, { requestOrigin, bidId }) {
+async function getDodoProductForAmount(env, amountCents, spotName) {
+  // Check cached price tier
+  const cached = await env.DB.prepare('SELECT product_id FROM price_products WHERE amount_cents = ?1').bind(amountCents).first();
+  if (cached) return cached.product_id;
+
+  const base = env.DODO_BASE || 'https://live.dodopayments.com';
   try {
-    const productId = env.DODO_PRODUCT_ID || await getDodoProductForAmount(env, BID_AMOUNT_CENTS);
+    const listRes = await fetch(`${base}/products?limit=100`, { headers: dodoHeaders(env) });
+    if (listRes.ok) {
+      const list = await listRes.json().catch(() => ({}));
+      const match = (list.items ?? []).find((p) => p.price === amountCents && p.currency === 'USD' && !p.is_recurring);
+      if (match?.product_id) {
+        await env.DB.prepare('INSERT OR REPLACE INTO price_products (amount_cents, product_id, created_at) VALUES (?1, ?2, ?3)')
+          .bind(amountCents, match.product_id, now()).run();
+        return match.product_id;
+      }
+    }
+  } catch { /* fall through to create */ }
+
+  const formattedPrice = (amountCents / 100).toFixed(0);
+  const createRes = await fetch(`${base}/products`, {
+    method: 'POST',
+    headers: dodoHeaders(env),
+    body: JSON.stringify({
+      name: `Brand My Setup — $${formattedPrice} Spot`,
+      description: `Sponsor a custom spot on my desk setup (MacBook, Keyboard keycap, or Mouse) on tinyspot.lol`,
+      tax_category: 'digital_products',
+      price: { type: 'one_time_price', currency: 'USD', price: amountCents, discount: 0 },
+    }),
+  });
+  const product = await createRes.json().catch(() => ({}));
+  if (!createRes.ok || !product.product_id) throw new Error(product?.error?.message || product?.message || 'dodo_product_create_failed');
+  
+  await env.DB.prepare('INSERT OR REPLACE INTO price_products (amount_cents, product_id, created_at) VALUES (?1, ?2, ?3)')
+    .bind(amountCents, product.product_id, now()).run();
+  return product.product_id;
+}
+
+async function createDodoCheckout(env, { requestOrigin, orderId, spot, sponsorName }) {
+  try {
+    const productId = await getDodoProductForAmount(env, spot.price_cents, spot.name);
     const base = env.DODO_BASE || 'https://live.dodopayments.com';
     const res = await fetch(`${base}/checkouts`, {
       method: 'POST',
       headers: dodoHeaders(env),
       body: JSON.stringify({
         product_cart: [{ product_id: productId, quantity: 1 }],
-        return_url: `${requestOrigin}/?paid=1&bid_id=${bidId}`,
-        metadata: { bid_id: String(bidId) },
+        return_url: `${requestOrigin}/?paid=1&order_id=${orderId}&spot_id=${spot.id}`,
+        metadata: { order_id: String(orderId), spot_id: spot.id, sponsor_name: sponsorName },
       }),
     });
     const session = await res.json().catch(() => ({}));
     if (!res.ok || !session.checkout_url || !session.session_id) {
-      console.error('Dodo checkout failed:', res.status, session);
+      console.error('Dodo checkout creation failed:', res.status, session);
       return { error: 'dodo_error', detail: session?.message || session?.error || 'dodo_checkout_failed' };
     }
-    await env.DB.prepare("UPDATE bids SET provider = 'dodo', provider_ref = ? WHERE id = ?").bind(session.session_id, bidId).run();
-    return { url: session.checkout_url };
+    await env.DB.prepare("UPDATE orders SET provider = 'dodo', provider_ref = ? WHERE id = ?").bind(session.session_id, orderId).run();
+    return { url: session.checkout_url, session_id: session.session_id };
   } catch (err) {
     console.error('Dodo checkout exception:', err);
     return { error: 'dodo_error', detail: err?.message || String(err) };
   }
 }
 
-async function getDodoProductForAmount(env, amountCents) {
-  if (env.DODO_PRODUCT_ID && amountCents === BID_AMOUNT_CENTS) {
-    return env.DODO_PRODUCT_ID;
+// ---------- handleClaim ----------
+
+async function handleClaim(request, env) {
+  let body;
+  try { body = await request.json(); } catch { return json({ error: 'invalid_json' }, 400); }
+
+  const spotId = cleanText(body.spot_id, 40);
+  if (!spotId) return json({ error: 'spot_required', detail: 'Please choose a spot to sponsor.' }, 400);
+
+  const sponsorName = cleanText(body.sponsor_name, 40);
+  if (!sponsorName) return json({ error: 'name_required', detail: 'Please enter your Brand / Sponsor Name.' }, 400);
+
+  const sponsorUrl = parseUrl(body.sponsor_url ?? '');
+  const sponsorTagline = body.sponsor_tagline ? (cleanText(body.sponsor_tagline, 100) ?? '') : '';
+  let sponsorLogoUrl = parseUrl(body.sponsor_logo_url ?? '');
+  if (!sponsorLogoUrl && sponsorUrl) {
+    try {
+      const hostname = new URL(sponsorUrl).hostname;
+      sponsorLogoUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=128`;
+    } catch {}
   }
-  const cached = await env.DB.prepare('SELECT product_id FROM price_products WHERE amount_cents = ?1').bind(amountCents).first();
-  if (cached) return cached.product_id;
-  try {
-    const listRes = await fetch(`${env.DODO_BASE}/products?limit=100`, { headers: dodoHeaders(env) });
-    if (listRes.ok) {
-      const list = await listRes.json().catch(() => ({}));
-      const match = (list.items ?? []).find((p) => p.price === amountCents && p.currency === 'USD' && !p.is_recurring);
-      if (match?.product_id) { await cachePriceProduct(env, amountCents, match.product_id); return match.product_id; }
-    }
-  } catch { /* fall through */ }
-  const createRes = await fetch(`${env.DODO_BASE}/products`, {
-    method: 'POST', headers: dodoHeaders(env),
-    body: JSON.stringify({ name: 'Tinyspot — Claim the Throne', description: 'Pay $1 to be #1 on Tinyspot. Get dethroned any second.', tax_category: 'digital_products', price: { type: 'one_time_price', currency: 'USD', price: amountCents, discount: 0 } }),
-  });
-  const product = await createRes.json().catch(() => ({}));
-  if (!createRes.ok || !product.product_id) throw new Error(product?.error?.message ?? 'dodo_product_create_failed');
-  await cachePriceProduct(env, amountCents, product.product_id);
-  return product.product_id;
+
+  // Check spot existence and availability
+  const spot = await env.DB.prepare('SELECT * FROM setup_spots WHERE id = ?').bind(spotId).first();
+  if (!spot) return json({ error: 'spot_not_found', detail: 'This spot does not exist.' }, 404);
+  if (spot.status === 'paid') return json({ error: 'spot_taken', detail: 'This spot has already been claimed!' }, 409);
+
+  // Create pending order
+  const ins = await env.DB.prepare(
+    `INSERT INTO orders (spot_id, amount_cents, sponsor_name, sponsor_url, sponsor_tagline, sponsor_logo_url, provider, status, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, 'dodo', 'pending', ?)`
+  ).bind(spotId, spot.price_cents, sponsorName, sponsorUrl, sponsorTagline, sponsorLogoUrl, now()).run();
+  const orderId = ins.meta.last_row_id;
+
+  const origin = new URL(request.url).origin;
+  const checkout = await createDodoCheckout(env, { requestOrigin: origin, orderId, spot, sponsorName });
+
+  if (checkout.error) {
+    await env.DB.prepare("UPDATE orders SET status = 'abandoned' WHERE id = ?").bind(orderId).run();
+    return json({ error: 'checkout_failed', detail: checkout.detail || checkout.error }, 502);
+  }
+
+  return json({ type: 'dodo', checkout_url: checkout.url, order_id: orderId, spot_id: spotId });
 }
 
-const cachePriceProduct = (env, amountCents, productId) =>
-  env.DB.prepare('INSERT OR REPLACE INTO price_products (amount_cents, product_id, created_at) VALUES (?1, ?2, ?3)')
-    .bind(amountCents, productId, now()).run();
+// ---------- handleConfirm ----------
+
+async function handleConfirm(request, env, url) {
+  const orderIdParam = url.searchParams.get('order_id');
+  const spotIdParam = url.searchParams.get('spot_id');
+  let sessionId = url.searchParams.get('session_id');
+
+  if (orderIdParam) {
+    const order = await env.DB.prepare('SELECT * FROM orders WHERE id = ?').bind(Number(orderIdParam)).first();
+    if (order?.status === 'paid') return json({ paid: true, spot_id: order.spot_id, order_id: order.id });
+    if (order?.provider_ref) sessionId = order.provider_ref;
+  }
+
+  if (!sessionId && spotIdParam) {
+    const spot = await env.DB.prepare('SELECT * FROM setup_spots WHERE id = ?').bind(spotIdParam).first();
+    if (spot?.status === 'paid') return json({ paid: true, spot_id: spot.id });
+  }
+
+  if (!sessionId) return json({ error: 'missing_session_id' }, 400);
+
+  const base = env.DODO_BASE || 'https://live.dodopayments.com';
+  let session = null;
+  try {
+    const res = await fetch(`${base}/checkouts/${encodeURIComponent(sessionId)}`, { headers: dodoHeaders(env) });
+    session = await res.json().catch(() => ({}));
+  } catch (e) {
+    return json({ error: 'dodo_lookup_failed', detail: String(e?.message ?? e) }, 502);
+  }
+
+  const isPaid = session?.payment_status === 'paid' || session?.payment_status === 'succeeded' || session?.status === 'succeeded' || session?.status === 'complete';
+  if (isPaid) {
+    const result = await markSpotPaid(env, { orderId: Number(orderIdParam) || null, spotId: spotIdParam || null, ref: sessionId });
+    return json({ paid: true, ...result });
+  }
+
+  return json({ paid: false, status: session?.payment_status ?? session?.status ?? 'unknown' });
+}
+
+// ---------- Webhook ----------
 
 async function verifyDodoSignature(rawBody, headers, secret) {
   const id = headers.get('webhook-id');
@@ -359,204 +355,13 @@ async function handleDodoWebhook(request, env) {
   try { event = JSON.parse(raw); } catch { return json({ error: 'invalid_payload' }, 400); }
   if (event.type === 'payment.succeeded') {
     const d = event.data ?? {};
-    await markPaid(env, { id: Number(d.metadata?.bid_id) || null, ref: d.checkout_session_id ?? null });
+    await markSpotPaid(env, {
+      orderId: Number(d.metadata?.order_id) || null,
+      spotId: d.metadata?.spot_id || null,
+      ref: d.checkout_session_id ?? null,
+    });
   }
   return json({ received: true });
-}
-
-// ---------- handleBid ----------
-
-async function handleBid(request, env) {
-  let body;
-  try { body = await request.json(); } catch { return json({ error: 'invalid_json' }, 400); }
-
-  const npLive = !!env.NOWPAYMENTS_API_KEY;
-  const dodoLive = !!(env.DODO_API_KEY && env.DODO_PRODUCT_ID);
-  const stripeLive = !!env.STRIPE_SECRET_KEY;
-
-  // payer_name required
-  const payerName = cleanText(body.payer_name, 40);
-  if (!payerName) return json({ error: 'name_required', detail: 'Provide your name (1-40 chars)' }, 400);
-
-  const payerUrl = parseUrl(body.payer_url ?? '');
-  const payerTagline = body.payer_tagline ? (cleanText(body.payer_tagline, 100) ?? '') : '';
-
-  // expire stale pending bids
-  await env.DB.prepare("UPDATE bids SET status = 'abandoned' WHERE status = 'pending' AND created_at < ?")
-    .bind(now() - PENDING_TTL_SECONDS).run();
-
-  const ins = await env.DB.prepare(
-    `INSERT INTO bids (payer_name, payer_url, payer_tagline, amount_cents, provider, status, created_at)
-     VALUES (?, ?, ?, ?, 'demo', 'pending', ?)`
-  ).bind(payerName, payerUrl, payerTagline, BID_AMOUNT_CENTS, now()).run();
-  const bidId = ins.meta.last_row_id;
-
-  const origin = new URL(request.url).origin;
-
-  if (npLive) {
-    const inv = await createNpInvoice(env, { requestOrigin: origin, bidId });
-    if (inv.error) { await env.DB.prepare("UPDATE bids SET status = 'abandoned' WHERE id = ?").bind(bidId).run(); return json({ error: 'nowpayments_error', detail: inv.error }, 502); }
-    return json({ type: 'nowpayments', checkout_url: inv.url, bid_id: bidId });
-  }
-  if (stripeLive) {
-    const checkout = await createStripeCheckout(env, { requestOrigin: origin, bidId });
-    if (checkout.error) { await env.DB.prepare("UPDATE bids SET status = 'abandoned' WHERE id = ?").bind(bidId).run(); return json({ error: 'stripe_error', detail: checkout.error }, 502); }
-    return json({ type: 'stripe', checkout_url: checkout.url, bid_id: bidId });
-  }
-  if (dodoLive) {
-    const checkout = await createDodoCheckout(env, { requestOrigin: origin, bidId });
-    if (checkout.error) { await env.DB.prepare("UPDATE bids SET status = 'abandoned' WHERE id = ?").bind(bidId).run(); return json({ error: 'dodo_error', detail: checkout.error }, 502); }
-    return json({ type: 'dodo', checkout_url: checkout.url, bid_id: bidId });
-  }
-
-  return json({ type: 'demo', bid_id: bidId, amount_cents: BID_AMOUNT_CENTS });
-}
-
-async function handleDemoPay(request, env) {
-  if ((env.DODO_API_KEY && env.DODO_PRODUCT_ID) || env.STRIPE_SECRET_KEY || env.NOWPAYMENTS_API_KEY) {
-    return json({ error: 'demo_disabled_in_live_mode' }, 403);
-  }
-  let body;
-  try { body = await request.json(); } catch { return json({ error: 'invalid_json' }, 400); }
-  const result = await markPaid(env, { id: Number(body.bid_id) || null });
-  if (!result.ok) return json({ error: result.error }, 400);
-  return json({ ok: true, ...result });
-}
-
-async function handleConfirm(request, env, url) {
-  let sessionId = url.searchParams.get('session_id');
-  const bidIdParam = url.searchParams.get('bid_id');
-
-  if (!sessionId && bidIdParam) {
-    const bid = await env.DB.prepare('SELECT provider_ref FROM bids WHERE id = ?').bind(Number(bidIdParam)).first();
-    if (bid?.provider_ref) sessionId = bid.provider_ref;
-  }
-
-  if (!sessionId) {
-    const recent = await env.DB.prepare("SELECT provider_ref FROM bids WHERE status = 'pending' AND created_at > ? ORDER BY id DESC LIMIT 1")
-      .bind(now() - 900).first();
-    if (recent?.provider_ref) sessionId = recent.provider_ref;
-  }
-
-  if (!sessionId) return json({ error: 'missing_session_id' }, 400);
-
-  const npId = url.searchParams.get('payment_id') ?? (sessionId && !sessionId.startsWith('cs_') && !sessionId.startsWith('cks_') ? sessionId : null);
-  if (npId && env.NOWPAYMENTS_API_KEY) {
-    const res = await fetch(`${NP_BASE}/payment/${encodeURIComponent(npId)}`, { headers: { 'x-nowpayments-api-key': env.NOWPAYMENTS_API_KEY } });
-    const p = await res.json().catch(() => ({}));
-    if (!res.ok) return json({ error: 'np_lookup_failed' }, 502);
-    if (NP_SETTLED.has(p.payment_status)) {
-      const bidId = Number(String(p.order_id ?? '').replace(/^bid_/, '')) || null;
-      const result = await markPaid(env, { id: bidId, ref: p.invoice_id ? String(p.invoice_id) : null });
-      return json({ paid: true, ...result });
-    }
-    return json({ paid: false, status: p.payment_status });
-  }
-
-  if (sessionId?.startsWith('cs_')) {
-    if (!env.STRIPE_SECRET_KEY) return json({ paid: false });
-    const res = await fetch(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(sessionId)}`, { headers: { authorization: `Bearer ${env.STRIPE_SECRET_KEY}` } });
-    const session = await res.json().catch(() => ({}));
-    if (!res.ok) return json({ error: 'stripe_lookup_failed' }, 502);
-    if (session.payment_status === 'paid') {
-      const result = await markPaid(env, { ref: sessionId, id: Number(session.metadata?.bid_id) || null });
-      return json({ paid: true, ...result });
-    }
-    return json({ paid: false, status: session.payment_status });
-  }
-
-  if (!(env.DODO_API_KEY && env.DODO_BASE)) return json({ paid: false, mode: 'demo' });
-  let session;
-  try {
-    const base = env.DODO_BASE || 'https://test.dodopayments.com';
-    const res = await fetch(`${base}/checkouts/${encodeURIComponent(sessionId)}`, {
-      headers: dodoHeaders(env),
-    });
-    if (res.ok) {
-      session = await res.json().catch(() => ({}));
-    } else {
-      session = await dodoClient(env).checkoutSessions.retrieve(sessionId);
-    }
-  } catch (e) {
-    return json({ error: 'dodo_lookup_failed', detail: String(e?.message ?? e).slice(0, 120) }, 502);
-  }
-  const isPaid = session?.payment_status === 'paid' || session?.payment_status === 'succeeded' || session?.status === 'succeeded' || session?.status === 'complete';
-  if (isPaid) {
-    const result = await markPaid(env, { ref: sessionId });
-    return json({ paid: true, ...result });
-  }
-  return json({ paid: false, status: session?.payment_status ?? session?.status ?? 'unknown' });
-}
-
-// ---------- admin ----------
-
-async function handleAdmin(request, env) {
-  if (!env.ADMIN_TOKEN) return json({ error: 'admin_not_configured' }, 404);
-  let body;
-  try { body = await request.json(); } catch { return json({ error: 'invalid_json' }, 400); }
-  const enc = new TextEncoder();
-  const hexOf = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
-  const [a, b] = await Promise.all([body.token ?? '', env.ADMIN_TOKEN].map((v) => crypto.subtle.digest('SHA-256', enc.encode(v)).then(hexOf)));
-  if (a !== b) return json({ error: 'unauthorized' }, 401);
-
-  switch (body.action) {
-    case 'wipe_demo': {
-      const r = await env.DB.prepare("DELETE FROM bids WHERE provider = 'demo' AND status = 'paid'").run();
-      return json({ ok: true, deleted: r.meta.changes });
-    }
-    case 'remove_bid': {
-      const bidId = Number(body.bid_id);
-      if (!bidId) return json({ error: 'bid_id_required' }, 400);
-      await env.DB.prepare('DELETE FROM bids WHERE id = ?').bind(bidId).run();
-      return json({ ok: true });
-    }
-    case 'stats': {
-      const row = await env.DB.prepare(
-        `SELECT (SELECT COUNT(*) FROM bids WHERE status='paid') AS paid_bids,
-                (SELECT COALESCE(SUM(amount_cents),0) FROM bids WHERE status='paid') AS gross_cents`
-      ).first();
-      return json({ ok: true, ...row });
-    }
-    case 'dodo_setup': {
-      if (!env.DODO_API_KEY) return json({ error: 'dodo_api_key_missing' }, 400);
-      const probe = async (base) => { const r = await fetch(`${base}/products?limit=1`, { headers: dodoHeaders(env) }); return { base, status: r.status }; };
-      const [test, live] = await Promise.all([probe(DODO_BASES.test_mode), probe(DODO_BASES.live_mode)]);
-      const working = live.status === 200 ? live : test.status === 200 ? test : null;
-      if (!working) return json({ ok: false, error: 'api_key_rejected_on_both_environments' }, 502);
-      const listRes = await fetch(`${working.base}/products?limit=100`, { headers: dodoHeaders(env) });
-      const list = await listRes.json().catch(() => ({ items: [] }));
-      const existing = (list.items ?? list ?? []).find?.((p) => p.name === 'Tinyspot — Claim the Throne' && p.price?.price === 100);
-      if (existing) return json({ ok: true, base: working.base, product_id: existing.product_id, reused: true });
-      const createRes = await fetch(`${working.base}/products`, {
-        method: 'POST', headers: dodoHeaders(env),
-        body: JSON.stringify({ name: 'Tinyspot — Claim the Throne', description: 'Pay $1 to be #1. Get dethroned any second.', tax_category: 'digital_products', price: { type: 'one_time_price', currency: 'USD', price: 100, discount: 0 } }),
-      });
-      const product = await createRes.json().catch(() => ({}));
-      if (!createRes.ok || !product.product_id) return json({ ok: false, error: 'product_create_failed', detail: product?.error?.message ?? product }, 502);
-      return json({ ok: true, base: working.base, product_id: product.product_id });
-    }
-    case 'dodo_webhook': {
-      if (!env.DODO_API_KEY || !env.DODO_BASE) return json({ error: 'run_dodo_setup_first' }, 400);
-      const origin = new URL(request.url).origin;
-      const res = await fetch(`${env.DODO_BASE}/webhooks`, {
-        method: 'POST', headers: dodoHeaders(env),
-        body: JSON.stringify({ url: `${origin}/api/dodo/webhook`, description: 'tinyspot payment settlement', filter_types: ['payment.succeeded'] }),
-      });
-      const wh = await res.json().catch(() => ({}));
-      if (!res.ok) return json({ ok: false, error: 'webhook_create_failed', detail: wh?.error?.message ?? wh }, 502);
-      return json({ ok: true, webhook_id: wh.id, url: wh.url, note: 'copy signing secret from dashboard -> DODO_WEBHOOK_SECRET' });
-    }
-    case 'seed': {
-      // seed a demo paid bid so the board isn't empty on first deploy
-      const ins = await env.DB.prepare(
-        `INSERT INTO bids (payer_name, payer_url, payer_tagline, amount_cents, provider, status, created_at, paid_at)
-         VALUES (?, ?, ?, ?, 'demo', 'paid', ?, ?)`
-      ).bind('tinyspot', 'https://tinyspot.lol', 'The king of the hill game. Pay $1, be #1.', 100, now() - 3600, now() - 3600).run();
-      return json({ ok: true, bid_id: ins.meta.last_row_id });
-    }
-    default:
-      return json({ error: 'unknown_action' }, 400);
-  }
 }
 
 // ---------- PresenceTracker Durable Object ----------
@@ -581,7 +386,7 @@ export class PresenceTracker extends DurableObject {
       await this.storage.put('views', views);
       const sockets = this.ctx.getWebSockets ? this.ctx.getWebSockets() : [];
       const count = Math.max(1, sockets.length);
-      this.broadcast(JSON.stringify({ type: 'presence', online: count, views }));
+      this.broadcast(JSON.stringify({ type: 'presence', online: count, views: views + 1000 }));
       return new Response(null, { status: 101, webSocket: client });
     }
 
@@ -590,7 +395,7 @@ export class PresenceTracker extends DurableObject {
       if (url.searchParams.get('hit') === '1') { views++; await this.storage.put('views', views); }
       const sockets = this.ctx.getWebSockets ? this.ctx.getWebSockets() : [];
       const count = Math.max(1, sockets.length);
-      return new Response(JSON.stringify({ online: count, views: Math.max(1, views) }), { headers: { 'content-type': 'application/json' } });
+      return new Response(JSON.stringify({ online: count, views: views + 1000 }), { headers: { 'content-type': 'application/json' } });
     }
 
     return new Response('Not found', { status: 404 });
@@ -600,7 +405,7 @@ export class PresenceTracker extends DurableObject {
     const sockets = this.ctx.getWebSockets ? this.ctx.getWebSockets() : [];
     const count = Math.max(1, sockets.length);
     const views = (await this.storage.get('views')) || 1;
-    this.broadcast(JSON.stringify({ type: 'presence', online: count, views }));
+    this.broadcast(JSON.stringify({ type: 'presence', online: count, views: views + 1000 }));
   }
 
   async webSocketError(ws) { try { ws.close(); } catch (e) {} }
@@ -636,29 +441,17 @@ export default {
           const stub = env.PRESENCE.get(id);
           return stub.fetch(request);
         }
-        if (request.method === 'GET' && pathname === '/api/leaderboard') {
-          return attachCookies(json(await getKingBoard(env)));
+        if (request.method === 'GET' && pathname === '/api/spots') {
+          return attachCookies(json(await getSpotsBoard(env)));
         }
-        if (request.method === 'POST' && pathname === '/api/bid') {
-          return attachCookies(await handleBid(request, env));
-        }
-        if (request.method === 'POST' && pathname === '/api/demo-pay') {
-          return attachCookies(await handleDemoPay(request, env));
+        if (request.method === 'POST' && pathname === '/api/claim') {
+          return attachCookies(await handleClaim(request, env));
         }
         if (request.method === 'GET' && pathname === '/api/confirm') {
           return attachCookies(await handleConfirm(request, env, url));
         }
         if (request.method === 'POST' && pathname === '/api/dodo/webhook') {
           return await handleDodoWebhook(request, env);
-        }
-        if (request.method === 'POST' && pathname === '/api/stripe/webhook') {
-          return await handleStripeWebhook(request, env);
-        }
-        if (request.method === 'POST' && pathname === '/api/nowpayments/ipn') {
-          return await handleNpIpn(request, env);
-        }
-        if (request.method === 'POST' && pathname === '/api/admin') {
-          return await handleAdmin(request, env);
         }
         return attachCookies(json({ error: 'not_found' }, 404));
       } catch (err) {

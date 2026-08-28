@@ -3,326 +3,702 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Tinyspot — Pay $1. Be #1.</title>
-<meta name="description" content="Pay $1. Be #1. King of the hill — most recent $1 spot claim dethrones anyone instantly.">
+<title>Brand My Setup — Sponsor my MacBook, Keyboard & Mouse</title>
+<meta name="description" content="Sponsor physical spots on my daily driver desk setup: die-cut MacBook stickers, custom mechanical keyboard keycaps, and mouse spots. Featured in all build-in-public content.">
 
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Tinyspot">
-<meta property="og:title" content="Tinyspot — Pay $1. Be #1.">
-<meta property="og:description" content="Pay $1. Be #1. King of the hill — most recent $1 spot claim dethrones anyone instantly.">
+<meta property="og:site_name" content="Brand My Setup · tinyspot.lol">
+<meta property="og:title" content="Brand My Setup — Sponsor my MacBook, Keyboard & Mouse">
+<meta property="og:description" content="Put your brand on my physical daily driver setup. Die-cut MacBook stickers, artisan keyboard keycaps, and mouse spots on tinyspot.lol.">
 <meta property="og:url" content="https://tinyspot.lol/">
-<meta property="og:image" content="https://tinyspot.lol/og-tinyspot.png?v=6">
-<meta property="og:image:secure_url" content="https://tinyspot.lol/og-tinyspot.png?v=6">
+<meta property="og:image" content="https://tinyspot.lol/og-tinyspot.png?v=7">
+<meta property="og:image:secure_url" content="https://tinyspot.lol/og-tinyspot.png?v=7">
 <meta property="og:image:type" content="image/png">
-<meta property="og:image:alt" content="Tinyspot — Pay $1 to be #1">
+<meta property="og:image:alt" content="Brand My Setup — tinyspot.lol">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@tinyspot">
-<meta name="twitter:title" content="Tinyspot — Pay $1. Be #1.">
-<meta name="twitter:description" content="Pay $1. Be #1. King of the hill — most recent $1 spot claim dethrones anyone instantly.">
-<meta name="twitter:image" content="https://tinyspot.lol/og-tinyspot.png?v=6">
+<meta name="twitter:title" content="Brand My Setup — Sponsor my MacBook, Keyboard & Mouse">
+<meta name="twitter:description" content="Put your brand on my physical daily driver setup. Die-cut MacBook stickers, artisan keyboard keycaps, and mouse spots.">
+<meta name="twitter:image" content="https://tinyspot.lol/og-tinyspot.png?v=7">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="icon" href="/logo.png" type="image/png">
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:        #111b21;
-    --card:      #1b2933;
-    --card2:     #1e3040;
-    --line:      #28404f;
-    --text:      #e8f4f8;
-    --text-sub:  #7fa8bc;
-    --text-faint:#4a7a92;
-    --gold:      #f5c518;
-    --gold-dark: #c9900a;
-    --gold-light:rgba(245,197,24,0.12);
-    --green:     #58cc02;
-    --green-dark:#46a302;
-    --blue:      #1cb0f6;
-    --blue-dark: #0e86c0;
-    --red:       #ff4b4b;
-    --font:      'Nunito', system-ui, sans-serif;
-    --radius:    18px;
+    --bg:          #0c1216;
+    --bg-card:     #131c22;
+    --bg-card2:    #18242c;
+    --border:      #22323d;
+    --border-glow: #2d4554;
+    --text:        #f0f4f8;
+    --text-muted:  #8b9ca8;
+    --gold:        #f59e0b;
+    --gold-glow:   rgba(245, 158, 11, 0.25);
+    --green:       #10b981;
+    --green-glow:  rgba(16, 185, 129, 0.25);
+    --cyan:        #06b6d4;
+    --purple:      #a855f7;
+    --font:        'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --mono:        'JetBrains Mono', monospace;
   }
-
-  html { scroll-behavior: smooth; }
 
   body {
-    background: var(--bg);
+    background-color: var(--bg);
     color: var(--text);
     font-family: var(--font);
+    line-height: 1.5;
     min-height: 100vh;
-    max-width: 100vw;
-    overflow-x: hidden;
+    padding-bottom: 80px;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
-  /* ── HEADER ── */
+  a { color: inherit; text-decoration: none; }
+
+  /* HEADER */
   .header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 80;
-    padding: 12px 20px;
+    height: 68px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--bg);
-    border-bottom: none;
+    padding: 0 24px;
+    max-width: 1240px;
+    margin: 0 auto;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
+
   .logo {
-    display: flex; align-items: center; gap: 10px;
-    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 20px;
+    color: #fff;
   }
-  .logo img { width: 32px; height: 32px; }
-  .logo-text { font-size: 20px; font-weight: 900; color: var(--text); }
+  .logo img { width: 34px; height: 34px; border-radius: 50%; }
+  .logo .tag {
+    font-size: 11px;
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--green);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
   .header-stats {
-    display: flex; align-items: center; gap: 16px;
-  }
-  .stat-pill {
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    font-size: 14px; font-weight: 800;
-    color: var(--text-sub);
-    background: var(--card);
-    border: 1.5px solid var(--line);
-    border-radius: 20px;
-    padding: 0 12px;
-    height: 32px;
-  }
-  .stat-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(.85)} }
-
-  
-  
-    /* ── LAYOUT ── */
-  .page-wrapper {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 100px 20px 60px;
     display: flex;
-    flex-direction: column;
-    gap: 48px;
-  }
-  .desktop-only { display: none; }
-  
-  @media (min-width: 1080px) {
-    .page-wrapper {
-      display: grid;
-      grid-template-columns: 1fr minmax(auto, 760px) 1fr;
-      gap: 40px;
-      align-items: start;
-    }
-    .desktop-only { 
-      display: block; 
-      position: sticky; 
-      top: 100px;
-      grid-column: 1;
-      justify-self: end;
-      width: 280px;
-    }
-    .mobile-only { display: none; }
-    .main-center { grid-column: 2; width: 100%; }
+    align-items: center;
+    gap: 10px;
   }
 
-  /* ── SIDEBAR CARDS ── */
-  .sidebar-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    margin-bottom: 16px;
+  .stat-pill {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    height: 36px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    font-family: var(--mono);
   }
-  .sidebar-title {
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-faint);
+  .stat-pill .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .info-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .info-btn:hover { color: #fff; border-color: var(--text-muted); }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 48px 20px 24px;
+    max-width: 840px;
+    margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: var(--gold);
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 700;
     margin-bottom: 20px;
   }
-  .how-steps { display: flex; flex-direction: column; gap: 16px; }
-  .how-step { display: flex; align-items: flex-start; gap: 12px; }
-  .how-num {
-    width: 24px; height: 24px; border-radius: 50%;
-    background: var(--card2);
-    color: var(--text-faint);
-    font-size: 12px; font-weight: 900;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; margin-top: -2px;
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
-  .how-text { font-size: 13.5px; font-weight: 600; color: var(--text-sub); line-height: 1.5; }
-  .how-text strong { color: var(--text); font-weight: 800; }
+  .hero p {
+    font-size: clamp(15px, 2vw, 18px);
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 680px;
+    margin: 0 auto 28px;
+  }
 
-  .credit-card {
-    background: var(--bg);
-    border: 1.5px solid var(--card2);
-    border-radius: 12px;
+  /* PROGRESS BAR */
+  .setup-progress {
+    max-width: 640px;
+    margin: 0 auto 36px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
     padding: 16px 20px;
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .progress-meta .claimed-text { color: var(--green); }
+  .progress-meta .raised-text { color: var(--gold); font-family: var(--mono); }
+  .progress-track {
+    height: 10px;
+    background: #0f161b;
+    border-radius: 99px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--cyan));
+    border-radius: 99px;
+    width: 0%;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* ── HERO MAIN ── */
-  .main-center {
+  /* TABS */
+  .nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tab-btn:hover { color: #fff; border-color: var(--border-glow); }
+  .tab-btn.active {
+    background: var(--bg-card2);
+    color: #fff;
+    border-color: var(--cyan);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+  }
+  .tab-btn .badge {
+    font-size: 11px;
+    background: rgba(255,255,255,0.1);
+    padding: 2px 6px;
+    border-radius: 6px;
+  }
+
+  /* MAIN WRAPPER */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* HARDWARE SHOWCASE CANVAS */
+  .canvas-section {
+    background: radial-gradient(circle at 50% 30%, #15222b 0%, var(--bg-card) 70%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 24px;
+    margin-bottom: 48px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .canvas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding-bottom: 16px;
+  }
+  .canvas-title {
+    font-size: 20px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .canvas-hint {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* 💻 MACBOOK PRO LID DISPLAY */
+  .macbook-chassis {
+    width: 100%;
+    max-width: 780px;
+    height: 480px;
+    margin: 0 auto;
+    background: linear-gradient(145deg, #1c2730 0%, #141c22 100%);
+    border-radius: 28px;
+    border: 3px solid #2d3e4b;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.7), inset 0 2px 6px rgba(255,255,255,0.1);
+    position: relative;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 14px;
+  }
+
+  .apple-logo-center {
+    grid-column: 3 / 5;
+    grid-row: 3 / 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .apple-logo-svg {
+    width: 46px;
+    height: 46px;
+    fill: #ffffff;
+    opacity: 0.85;
+    filter: drop-shadow(0 0 14px rgba(255,255,255,0.6));
+  }
+
+  /* STICKER SLOT STYLES */
+  .spot-slot {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding: 8px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+  }
+  .spot-slot:hover {
+    background: rgba(6, 182, 212, 0.08);
+    border-color: var(--cyan);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.2);
+    z-index: 10;
+  }
+  .spot-slot.claimed {
+    background: rgba(19, 28, 34, 0.95);
+    border: 2px solid rgba(16, 185, 129, 0.4);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .spot-slot.claimed:hover {
+    border-color: var(--green);
+    box-shadow: 0 8px 24px var(--green-glow);
+  }
+
+  .slot-badge-price {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--gold);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-top: 4px;
+  }
+  .slot-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    line-height: 1.2;
+  }
+
+  /* Claimed visual in slot */
+  .claimed-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    object-fit: contain;
+    background: rgba(255,255,255,0.05);
+    padding: 4px;
+  }
+  .claimed-name {
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+  }
+
+  /* Specific Mac Grid Placements */
+  #mac_top_center    { grid-column: 2 / 6; grid-row: 1 / 2; }
+  #mac_top_left      { grid-column: 1 / 2; grid-row: 1 / 3; }
+  #mac_top_right     { grid-column: 6 / 7; grid-row: 1 / 3; }
+  #mac_flank_left    { grid-column: 2 / 3; grid-row: 3 / 4; }
+  #mac_flank_right   { grid-column: 5 / 6; grid-row: 3 / 4; }
+  #mac_bottom_center { grid-column: 2 / 6; grid-row: 5 / 6; }
+  #mac_bottom_left   { grid-column: 1 / 2; grid-row: 4 / 6; }
+  #mac_bottom_right  { grid-column: 6 / 7; grid-row: 4 / 6; }
+  #mac_edge_left     { grid-column: 1 / 2; grid-row: 3 / 4; }
+  #mac_edge_right    { grid-column: 6 / 7; grid-row: 3 / 4; }
+
+  /* ⌨️ MECHANICAL KEYBOARD DISPLAY */
+  .keyboard-chassis {
     width: 100%;
-    max-width: 760px;
+    max-width: 860px;
+    margin: 0 auto;
+    background: #141c22;
+    border-radius: 20px;
+    border: 3px solid #233440;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.7), inset 0 2px 4px rgba(255,255,255,0.08);
+    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    gap: 8px;
+  }
+
+  .keycap {
+    height: 54px;
+    background: #1c2730;
+    border-radius: 8px;
+    border-bottom: 4px solid #111a21;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #4b6375;
+    user-select: none;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .keycap.sponsorable {
+    background: #182833;
+    border: 2px dashed rgba(6, 182, 212, 0.4);
+    border-bottom: 4px solid #0e1e28;
+    color: var(--cyan);
+    cursor: pointer;
+  }
+  .keycap.sponsorable:hover {
+    background: rgba(6, 182, 212, 0.18);
+    border-color: var(--cyan);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(6, 182, 212, 0.25);
+    z-index: 10;
+  }
+  .keycap.claimed {
+    background: #1b2f28;
+    border: 2px solid var(--green);
+    border-bottom: 4px solid #0f1d18;
+    color: #fff;
+    cursor: pointer;
+  }
+  .keycap.claimed:hover {
+    box-shadow: 0 8px 20px var(--green-glow);
+  }
+  .keycap .key-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--gold);
+  }
+  .keycap img { width: 22px; height: 22px; border-radius: 4px; object-fit: contain; }
+
+  /* Width variants */
+  .u-1   { grid-column: span 1; }
+  .u-15  { grid-column: span 2; }
+  .u-2   { grid-column: span 2; }
+  .u-225 { grid-column: span 3; }
+  .u-275 { grid-column: span 3; }
+  .u-625 { grid-column: span 7; }
+
+  /* 🖱️ MOUSE & DESK MAT DISPLAY */
+  .mouse-mat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 860px;
     margin: 0 auto;
   }
-  .throne-section { text-align: center; margin-bottom: 24px; }
-  .throne-crown { font-size: 48px; line-height: 1; margin-bottom: 8px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5)); }
-  .throne-label { font-size: 12px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--text-faint); }
-
-  /* KING CARD */
-  .king-card {
-    width: 100%;
-    background: var(--card);
-    border-radius: 12px;
-    position: relative;
-    margin-bottom: 20px;
-  }
-  .king-card-inner {
-    padding: 32px 24px;
+  .item-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
     display: flex;
-    align-items: flex-start;
-    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
   }
-  .king-avatar {
-    width: 80px; height: 80px;
+  .item-card-preview {
+    width: 100%;
+    height: 200px;
+    background: #141d24;
     border-radius: 16px;
-    background: var(--card2);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; overflow: visible;
+    border: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
   }
-  .king-avatar img { width: 100%; height: 100%; max-width:100%; max-height:100%; object-fit: contain; padding: 4px; display: block; border-radius: inherit; }
-  .king-initial { font-size: 36px; font-weight: 900; color: var(--text-faint); }
-  
-  .king-info { flex: 1; min-width: 0; padding-top: 4px; }
-  .king-name { font-size: 22px; font-weight: 900; color: var(--text); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 80px; }
-  .king-url { font-size: 14px; font-weight: 700; color: var(--text-faint); text-decoration: none; display: block; margin-bottom: 6px; }
-  .king-url:hover { color: var(--blue); }
-  .king-tagline { font-size: 14px; font-weight: 600; color: var(--text-sub); line-height: 1.5; }
-  .king-time { position:absolute; top:24px; right:24px; margin-top:0; font-size:12px; font-weight:800; color:var(--text-faint); text-transform:uppercase; }
 
-  /* CTA */
-  .cta-wrap { text-align: center; width: 100%; margin-bottom: 48px; }
-  .btn-claim {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    background: #4ade80; color: #064e3b;
-    font-family: var(--font); font-size: 20px; font-weight: 900;
-    padding: 16px 40px; border-radius: 12px; border: none; cursor: pointer;
-    box-shadow: 0 6px 0 #166534; transition: transform .1s, box-shadow .1s;
-    width: 100%; text-transform: uppercase; letter-spacing: 0.5px;
+  /* SPONSOR ROSTER */
+  .roster-section {
+    margin-top: 48px;
   }
-  .btn-claim:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #166534; }
-  .btn-claim:active { transform: translateY(6px); box-shadow: 0 0px 0 #166534; }
-  .btn-claim .btn-price { background: rgba(0,0,0,0.15); border-radius: 6px; padding: 2px 8px; font-size: 16px; }
-  .cta-hint { font-size: 12px; font-weight: 700; color: var(--text-faint); margin-top: 16px; }
-
-  /* ── HALL OF FAME ── */
-  .hof-section { width: 100%; }
-  .section-title { font-size: 12px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--text-faint); margin-bottom: 16px; padding-left: 8px; text-align: left; width: 100%; }
-  .hof-list { list-style: none; display: flex; flex-direction: column; gap: 8px; width: 100%; }
-  .hof-card {
-    background: var(--card);
-    border-radius: 12px;
+  .section-title {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sponsors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .sponsor-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
     padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.2s;
+  }
+  .sponsor-card:hover {
+    border-color: var(--green);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .sponsor-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: #1b262e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .sponsor-avatar img { width: 100%; height: 100%; object-fit: contain; }
+  .sponsor-meta { flex: 1; min-width: 0; }
+  .sponsor-card-name { font-weight: 800; font-size: 15px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sponsor-card-slot { font-size: 12px; color: var(--green); font-weight: 700; }
+  .sponsor-card-tagline { font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* CLAIM MODAL */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: #141c22;
+    border: 1px solid var(--border-glow);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+    overflow: hidden;
+    animation: modalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+  .modal-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .modal-title { font-size: 18px; font-weight: 800; }
+  .close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .close-btn:hover { color: #fff; }
+
+  .modal-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* Live Preview Box in Modal */
+  .live-preview-box {
+    background: #0f161c;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
     display: flex;
     align-items: center;
     gap: 16px;
-    transition: background .15s;
-    width: 100%;
   }
-  .hof-card:hover { background: var(--card2); }
-  .hof-rank { font-size: 14px; font-weight: 900; color: var(--text); width: 24px; text-align: center; flex-shrink: 0; margin-top:0 !important; }
-  .hof-avatar { width: 44px; height: 44px; border-radius: 10px; background: var(--card2); overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink:0; margin-top:0 !important; }
-  .hof-avatar img { width: 100%; height: 100%; max-width:100%; max-height:100%; object-fit: contain; padding: 3px; display: block; border-radius: inherit; }
-  .hof-initial { font-size: 20px; font-weight: 900; color: var(--text-faint); }
-  .hof-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; text-align: left; }
-  .hof-name { font-size: 15px; font-weight: 900; color: var(--text); margin-bottom: 2px; }
-  .hof-time { flex-shrink: 0; font-size:12px; font-weight:800; color:var(--text-faint); text-transform: uppercase; text-align: right; }
+  .preview-slot-badge {
+    width: 60px;
+    height: 60px;
+    background: #1c2730;
+    border-radius: 12px;
+    border: 2px dashed var(--cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .preview-slot-badge img { width: 100%; height: 100%; object-fit: contain; }
 
-  
-  /* ── MODAL ── */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(0,0,0,.65);
-    display: none; align-items: center; justify-content: center;
-    padding: 20px;
-    backdrop-filter: blur(4px);
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
-  .modal-overlay.open { display: flex; }
-  .modal-window {
-    width: 100%; max-width: 420px;
-    background: var(--card);
-    border-radius: 24px;
-    padding: 32px 24px 24px;
-    border: 2px solid var(--line);
-    position: relative;
+  .form-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
   }
-  .modal-close {
-    position: absolute; top: 16px; right: 16px;
-    background: none; border: none; font-size: 24px; color: var(--text-faint); cursor: pointer;
-  }
-  .modal-crown { font-size: 48px; text-align: center; margin-bottom: 8px; }
-  .modal-title { font-size: 22px; font-weight: 900; text-align: center; margin-bottom: 4px; }
-  .modal-sub { font-size: 14px; font-weight: 700; color: var(--text-sub); text-align: center; margin-bottom: 24px; }
-  .form-group { margin-bottom: 14px; }
-  .form-label { font-size: 12px; font-weight: 800; color: var(--text-sub); letter-spacing: .5px; text-transform: uppercase; margin-bottom: 6px; display: block; }
   .form-input {
-    width: 100%; background: var(--bg); border: 2px solid var(--line);
-    border-radius: 12px; padding: 12px 14px; font-size: 15px; font-weight: 700;
-    color: var(--text); outline: none; font-family: var(--font);
+    background: #0e161c;
+    border: 1px solid var(--border);
+    color: #fff;
+    font-family: var(--font);
+    font-size: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s;
   }
-  .form-input:focus { border-color: var(--blue); }
-  .form-input::placeholder { color: var(--text-faint); }
-  .modal-price-row {
-    display: flex; align-items: center; justify-content: space-between;
-    background: var(--gold-light); border: 2px solid var(--gold);
-    border-radius: 14px; padding: 14px 16px; margin: 20px 0 16px;
-  }
-  .modal-price-label { font-size: 14px; font-weight: 800; color: var(--gold-dark); }
-  .modal-price-val { font-size: 28px; font-weight: 900; color: var(--gold); }
-  .modal-err { color: var(--red); font-size: 13px; font-weight: 800; text-align: center; min-height: 18px; margin-bottom: 10px; }
+  .form-input:focus { border-color: var(--cyan); }
+
   .btn-pay {
-    width: 100%; background: var(--green); color: white; font-family: var(--font);
-    font-size: 18px; font-weight: 900; padding: 15px; border-radius: 14px; border: none;
-    cursor: pointer; box-shadow: 0 5px 0 var(--green-dark); transition: transform .1s, box-shadow .1s;
-    text-transform: uppercase; letter-spacing: .5px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 16px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px var(--green-glow);
   }
-  .btn-pay:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--green-dark); }
-  .btn-pay:disabled { opacity: .6; cursor: not-allowed; }
-
-  /* ── TOAST ── */
-  #toast {
-    position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-80px);
-    background: var(--card); border: 2px solid var(--line); border-radius: 14px;
-    padding: 12px 22px; font-size: 14px; font-weight: 800; color: var(--text);
-    box-shadow: 0 8px 24px rgba(0,0,0,.25); z-index: 300; opacity: 0;
-    pointer-events: none; transition: all .3s cubic-bezier(.16,1,.3,1);
-    display: flex; align-items: center; gap: 8px; white-space: nowrap;
-    max-width: calc(100vw - 32px);
+  .btn-pay:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px var(--green-glow);
   }
-  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  #toast.toast-success { border-color: var(--green); }
-  #toast.toast-syncing { border-color: var(--gold); }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 520px) {
-    .header-stats { gap: 8px; }
-    .stat-pill { font-size: 13px; padding: 0 10px; height: 30px; }
-    .info-btn { padding: 0 8px; }
-    .throne-crown { font-size: 52px; }
-    .king-name { font-size: 19px; }
-    .btn-claim { font-size: 18px; padding: 15px 28px; }
+  /* TOAST NOTIFICATION */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #131d24;
+    border: 1px solid var(--green);
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+    font-weight: 700;
+  }
+  .toast.show { display: flex; animation: slideUp 0.3s ease; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 768px) {
+    .macbook-chassis { height: 380px; gap: 8px; padding: 12px; }
+    .keyboard-chassis { overflow-x: auto; min-width: 640px; }
+    .mouse-mat-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 32px; }
   }
 </style>
 </head>
@@ -332,411 +708,504 @@
 <header class="header">
   <a class="logo" href="/">
     <img src="/logo.png" alt="Tinyspot logo">
-    <span class="logo-text">tinyspot</span>
+    <span>Brand My Setup</span>
+    <span class="tag">Live Setup</span>
   </a>
   <div class="header-stats">
-    <button class="stat-pill info-btn" onclick="openInfoModal()" aria-label="Info">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+    <button class="info-btn" onclick="openInfoModal()" aria-label="Info">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
     </button>
     <div class="stat-pill"><span class="dot"></span><span id="onlineCount">1</span></div>
     <div class="stat-pill">👁 <span id="viewCount">—</span></div>
   </div>
 </header>
 
-<div class="page-wrapper">
-  
-  <aside class="sidebar desktop-only">
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="hero-badge">✨ Physical Desk Sponsorship · Real Daily Driver Setup</div>
+  <h1>Sponsor My Daily Driver Setup.</h1>
+  <p>Put your brand's die-cut sticker on my MacBook Pro, a custom artisan keycap on my mechanical keyboard, or your logo on my mouse. Photographed & featured across all build-in-public posts & videos.</p>
 
-      <div class="sidebar-card">
-        <div class="sidebar-title">How it works</div>
-        <div class="how-steps">
-          <div class="how-step">
-            <span class="how-num">1</span>
-            <div class="how-text"><strong>Pay $1</strong> — enter your name, link, and a message. Then pay one dollar.</div>
-          </div>
-          <div class="how-step">
-            <span class="how-num">2</span>
-            <div class="how-text"><strong>You're #1</strong> — you instantly become the current king of the hill.</div>
-          </div>
-          <div class="how-step">
-            <span class="how-num">3</span>
-            <div class="how-text"><strong>Get dethroned</strong> — the moment anyone else pays $1, they take your crown. Most recent always wins.</div>
-          </div>
+  <!-- PROGRESS BAR -->
+  <div class="setup-progress">
+    <div class="progress-meta">
+      <span class="claimed-text" id="claimedMeta">0 of 28 Spots Claimed</span>
+      <span class="raised-text" id="raisedMeta">$0 Raised</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- VIEW TABS -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('all')">🌟 All Setup <span class="badge" id="badgeAll">28</span></button>
+    <button class="tab-btn" onclick="switchTab('macbook')">💻 MacBook Pro Lid <span class="badge" id="badgeMac">10</span></button>
+    <button class="tab-btn" onclick="switchTab('keyboard')">⌨️ Mechanical Keyboard <span class="badge" id="badgeKey">15</span></button>
+    <button class="tab-btn" onclick="switchTab('mouse')">🖱️ Mouse & Desk Mat <span class="badge" id="badgeMouse">3</span></button>
+  </div>
+</section>
+
+<!-- MAIN HARDWARE CANVAS -->
+<main class="container">
+
+  <!-- 1. 💻 MACBOOK PRO LID -->
+  <div class="canvas-section" id="section-macbook">
+    <div class="canvas-header">
+      <div class="canvas-title">
+        <span>💻</span> MacBook Pro 16" Space Black Lid (10 Spots)
+      </div>
+      <div class="canvas-hint">Click any available zone to place your sticker</div>
+    </div>
+
+    <div class="macbook-chassis">
+      <div class="spot-slot" id="mac_top_left" onclick="selectSpot('mac_top_left')"></div>
+      <div class="spot-slot" id="mac_top_center" onclick="selectSpot('mac_top_center')"></div>
+      <div class="spot-slot" id="mac_top_right" onclick="selectSpot('mac_top_right')"></div>
+      
+      <div class="spot-slot" id="mac_edge_left" onclick="selectSpot('mac_edge_left')"></div>
+      <div class="spot-slot" id="mac_flank_left" onclick="selectSpot('mac_flank_left')"></div>
+      
+      <!-- Apple Logo Center -->
+      <div class="apple-logo-center">
+        <svg class="apple-logo-svg" viewBox="0 0 170 170"><path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.7-3.04-7.7-7.85-12-14.42-6.1-9.33-10.88-19.82-14.35-31.47-3.48-11.66-5.23-22.84-5.23-33.56 0-15.65 4.12-28.79 12.37-39.42 8.24-10.63 18.57-16.06 31-16.29 4.8 0 10.22 1.34 16.27 4.02 6.04 2.68 10.02 4.08 11.93 4.19 1.45 0 5.68-1.46 12.69-4.38 7-2.91 12.74-4.14 17.2-3.7 12.72 1.01 22.95 5.86 30.68 14.54-11.08 6.72-16.53 16-16.35 27.84.22 9.27 3.82 17.07 10.81 23.4 6.99 6.33 15.34 9.77 25.05 10.31-2.12 6.74-4.8 13.5-8.04 20.29zM119.22 31.84c0-7.72 2.76-14.93 8.28-21.63 5.53-6.7 12.28-10.74 20.27-12.11.22 1.23.33 2.34.33 3.35 0 7.61-2.9 14.94-8.71 22-5.81 7.05-12.83 11.19-21.05 12.42-.22-1.34-.33-2.68-.33-4.03z"/></svg>
+      </div>
+
+      <div class="spot-slot" id="mac_flank_right" onclick="selectSpot('mac_flank_right')"></div>
+      <div class="spot-slot" id="mac_edge_right" onclick="selectSpot('mac_edge_right')"></div>
+      
+      <div class="spot-slot" id="mac_bottom_left" onclick="selectSpot('mac_bottom_left')"></div>
+      <div class="spot-slot" id="mac_bottom_center" onclick="selectSpot('mac_bottom_center')"></div>
+      <div class="spot-slot" id="mac_bottom_right" onclick="selectSpot('mac_bottom_right')"></div>
+    </div>
+  </div>
+
+  <!-- 2. ⌨️ MECHANICAL KEYBOARD -->
+  <div class="canvas-section" id="section-keyboard">
+    <div class="canvas-header">
+      <div class="canvas-title">
+        <span>⌨️</span> Custom 75% Mechanical Keyboard (15 Artisan Keycaps)
+      </div>
+      <div class="canvas-hint">Click glowing keycaps to claim custom artisan keys</div>
+    </div>
+
+    <div class="keyboard-chassis">
+      <!-- Row 1 -->
+      <div class="keycap sponsorable u-1" id="key_esc" onclick="selectSpot('key_esc')">ESC</div>
+      <div class="keycap u-1">F1</div><div class="keycap u-1">F2</div><div class="keycap u-1">F3</div>
+      <div class="keycap u-1">F4</div><div class="keycap u-1">F5</div><div class="keycap u-1">F6</div>
+      <div class="keycap u-1">F7</div><div class="keycap u-1">F8</div><div class="keycap u-1">F9</div>
+      <div class="keycap u-1">F10</div><div class="keycap u-1">F11</div><div class="keycap u-1">F12</div>
+      <div class="keycap u-1">DEL</div><div class="keycap u-1">HOME</div>
+
+      <!-- Row 2 -->
+      <div class="keycap u-1">`</div><div class="keycap u-1">1</div><div class="keycap u-1">2</div>
+      <div class="keycap u-1">3</div><div class="keycap u-1">4</div><div class="keycap u-1">5</div>
+      <div class="keycap u-1">6</div><div class="keycap u-1">7</div><div class="keycap u-1">8</div>
+      <div class="keycap u-1">9</div><div class="keycap u-1">0</div><div class="keycap u-1">-</div>
+      <div class="keycap u-1">=</div><div class="keycap sponsorable u-2" id="key_backspace" onclick="selectSpot('key_backspace')">BACKSPACE</div>
+
+      <!-- Row 3 -->
+      <div class="keycap sponsorable u-15" id="key_tab" onclick="selectSpot('key_tab')">TAB</div>
+      <div class="keycap u-1">Q</div><div class="keycap sponsorable u-1" id="key_w" onclick="selectSpot('key_w')">W</div>
+      <div class="keycap u-1">E</div><div class="keycap u-1">R</div><div class="keycap u-1">T</div>
+      <div class="keycap u-1">Y</div><div class="keycap u-1">U</div><div class="keycap u-1">I</div>
+      <div class="keycap u-1">O</div><div class="keycap u-1">P</div><div class="keycap u-1">[</div>
+      <div class="keycap u-1">]</div><div class="keycap u-15">\</div>
+
+      <!-- Row 4 -->
+      <div class="keycap sponsorable u-2" id="key_caps" onclick="selectSpot('key_caps')">CAPS</div>
+      <div class="keycap sponsorable u-1" id="key_a" onclick="selectSpot('key_a')">A</div>
+      <div class="keycap sponsorable u-1" id="key_s" onclick="selectSpot('key_s')">S</div>
+      <div class="keycap sponsorable u-1" id="key_d" onclick="selectSpot('key_d')">D</div>
+      <div class="keycap u-1">F</div><div class="keycap u-1">G</div><div class="keycap u-1">H</div>
+      <div class="keycap u-1">J</div><div class="keycap u-1">K</div><div class="keycap u-1">L</div>
+      <div class="keycap u-1">;</div><div class="keycap u-1">'</div>
+      <div class="keycap sponsorable u-225" id="key_enter" onclick="selectSpot('key_enter')">ENTER ↵</div>
+
+      <!-- Row 5 -->
+      <div class="keycap u-225">SHIFT</div><div class="keycap u-1">Z</div><div class="keycap u-1">X</div>
+      <div class="keycap u-1">C</div><div class="keycap u-1">V</div><div class="keycap u-1">B</div>
+      <div class="keycap u-1">N</div><div class="keycap u-1">M</div><div class="keycap u-1">,</div>
+      <div class="keycap u-1">.</div><div class="keycap u-1">/</div><div class="keycap u-2">SHIFT</div>
+      <div class="keycap sponsorable u-1" id="key_arrow_up" onclick="selectSpot('key_arrow_up')">▲</div><div class="keycap u-1">END</div>
+
+      <!-- Row 6 -->
+      <div class="keycap u-15">CTRL</div><div class="keycap u-1">OPT</div>
+      <div class="keycap sponsorable u-15" id="key_cmd_left" onclick="selectSpot('key_cmd_left')">⌘ CMD</div>
+      <div class="keycap sponsorable u-625" id="key_space" onclick="selectSpot('key_space')">SPACEBAR</div>
+      <div class="keycap sponsorable u-15" id="key_cmd_right" onclick="selectSpot('key_cmd_right')">⌘ CMD</div>
+      <div class="keycap sponsorable u-1" id="key_fn" onclick="selectSpot('key_fn')">FN</div>
+      <div class="keycap u-1">◄</div>
+      <div class="keycap sponsorable u-1" id="key_arrow_down" onclick="selectSpot('key_arrow_down')">▼</div>
+      <div class="keycap u-1">►</div>
+    </div>
+  </div>
+
+  <!-- 3. 🖱️ MOUSE & DESK MAT -->
+  <div class="canvas-section" id="section-mouse">
+    <div class="canvas-header">
+      <div class="canvas-title">
+        <span>🖱️</span> Mouse & Desk Mat Gear (3 Spots)
+      </div>
+      <div class="canvas-hint">Prime physical interaction spots</div>
+    </div>
+
+    <div class="mouse-mat-grid">
+      <!-- Mouse Card -->
+      <div class="item-card">
+        <h3>Logitech MX Master 3S</h3>
+        <p style="color:var(--text-muted);font-size:13px;">Palm grip and thumb wing sponsorship spots</p>
+        <div class="item-card-preview" style="gap:14px;padding:20px;">
+          <div class="spot-slot" id="mouse_palm" style="width:130px;height:140px;" onclick="selectSpot('mouse_palm')"></div>
+          <div class="spot-slot" id="mouse_side" style="width:110px;height:140px;" onclick="selectSpot('mouse_side')"></div>
         </div>
       </div>
-      <div class="credit-card">
-        <span style="font-size:13px; font-weight:800; color:var(--text-sub);">Made by r69shabh</span>
-        <div style="display:flex; gap: 12px;">
-          <a href="https://github.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-          <a href="https://x.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-        </div>
-      </div>
 
-  </aside>
-
-  <main class="main-center">
-    
-
-    <!-- KING CARD -->
-    <div id="kingCard" class="king-card">
-      <div class="king-card-inner">
-        <div class="king-avatar" style="position:relative;">
-          <div style="position:absolute; top:-16px; left:-16px; transform:rotate(-20deg); font-size:36px; z-index:10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">👑</div>
-          <span class="king-initial">?</span>
-        </div>
-        <div class="king-info">
-          <div class="king-name">Loading…</div>
+      <!-- Desk Mat Card -->
+      <div class="item-card">
+        <h3>Wool Felt Desk Mat</h3>
+        <p style="color:var(--text-muted);font-size:13px;">Corner stitched high-visibility brand patch</p>
+        <div class="item-card-preview" style="padding:20px;">
+          <div class="spot-slot" id="desk_mat" style="width:220px;height:140px;" onclick="selectSpot('desk_mat')"></div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- CTA -->
-    <div class="cta-wrap">
-      <button class="btn-claim" onclick="openModal()">
-        CLAIM THE THRONE <span class="btn-price">$1</span>
+  <!-- SPONSORS ROSTER -->
+  <section class="roster-section">
+    <div class="section-title">
+      <span>🏆</span> Official Setup Sponsors
+    </div>
+    <div class="sponsors-grid" id="sponsorsList">
+      <div style="color:var(--text-muted);font-size:14px;">Loading setup sponsors...</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- CLAIM MODAL -->
+<div class="modal-backdrop" id="claimModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Sponsor <span id="modalSpotName" style="color:var(--cyan);">Spot</span></div>
+      <button class="close-btn" onclick="closeClaimModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <!-- Live Preview -->
+      <div class="live-preview-box">
+        <div class="preview-slot-badge">
+          <img id="modalPreviewImg" src="/logo.png" alt="Preview">
+        </div>
+        <div>
+          <div id="modalPreviewName" style="font-weight:800;font-size:15px;color:#fff;">Your Brand</div>
+          <div id="modalPreviewSlot" style="font-size:12px;color:var(--green);font-weight:700;">Spot Preview</div>
+          <div id="modalPreviewPrice" style="font-size:13px;color:var(--gold);font-family:var(--mono);">$0.00</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Brand / Sponsor Name *</label>
+        <input class="form-input" id="sponsorName" placeholder="e.g. Acme Corp" maxlength="40" oninput="updateLivePreview()">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Website URL</label>
+        <input class="form-input" id="sponsorUrl" placeholder="https://yourcompany.com" oninput="updateLivePreview()">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Tagline (optional)</label>
+        <input class="form-input" id="sponsorTagline" placeholder="Fast AI tools for developers" maxlength="100">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Custom Logo Image URL (optional)</label>
+        <input class="form-input" id="sponsorLogoUrl" placeholder="https://.../logo.png (leave blank for favicon)" oninput="updateLivePreview()">
+      </div>
+
+      <button class="btn-pay" id="btnSubmitClaim" onclick="submitClaim()">
+        <span>Sponsor This Spot — <span id="modalBtnPrice">$0</span></span>
       </button>
-      <div class="cta-hint">Most recent $1 is always #1 · Dethrone anyone instantly</div>
-    </div>
-
-    <!-- HOF SECTION -->
-    <div class="hof-section">
-      <div class="section-title" id="hofTitle" style="display:none">HALL OF PAST KINGS</div>
-      <ul class="hof-list" id="hofList"></ul>
-    </div>
-
-    <div class="mobile-only" style="margin-top: 48px; width: 100%;">
-
-      <div class="sidebar-card">
-        <div class="sidebar-title">How it works</div>
-        <div class="how-steps">
-          <div class="how-step">
-            <span class="how-num">1</span>
-            <div class="how-text"><strong>Pay $1</strong> — enter your name, link, and a message. Then pay one dollar.</div>
-          </div>
-          <div class="how-step">
-            <span class="how-num">2</span>
-            <div class="how-text"><strong>You're #1</strong> — you instantly become the current king of the hill.</div>
-          </div>
-          <div class="how-step">
-            <span class="how-num">3</span>
-            <div class="how-text"><strong>Get dethroned</strong> — the moment anyone else pays $1, they take your crown. Most recent always wins.</div>
-          </div>
-        </div>
-      </div>
-      <div class="credit-card">
-        <span style="font-size:13px; font-weight:800; color:var(--text-sub);">Made by r69shabh</span>
-        <div style="display:flex; gap: 12px;">
-          <a href="https://github.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-          <a href="https://x.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-        </div>
-      </div>
-
-    </div>
-  </main>
-
-</div>
-
-<!-- INFO MODAL -->
-<div class="modal-overlay" id="infoModalOverlay" role="dialog">
-  <div class="modal-window">
-    <button class="modal-close" onclick="closeInfoModal()" aria-label="Close">✕</button>
-    <div class="how-title" style="margin-top:10px; font-size:16px;">How it works</div>
-    <div class="how-steps" style="margin-bottom: 24px;">
-      <div class="how-step">
-        <span class="how-num">1</span>
-        <div class="how-text"><strong>Pay $1</strong> — enter your name, link, and a message. Then pay one dollar.</div>
-      </div>
-      <div class="how-step">
-        <span class="how-num">2</span>
-        <div class="how-text"><strong>You're #1</strong> — you instantly become the current king of the hill.</div>
-      </div>
-      <div class="how-step">
-        <span class="how-num">3</span>
-        <div class="how-text"><strong>Get dethroned</strong> — the moment anyone else pays $1, they take your crown. Most recent always wins.</div>
-      </div>
-    </div>
-    <div style="border-top: 2px solid var(--line); padding-top: 20px; display: flex; justify-content: space-between; align-items: center;">
-       <span style="font-size:14px; font-weight:800; color:var(--text-sub);">Made by r69shabh</span>
-       <div style="display:flex; gap: 16px;">
-         <a href="https://github.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-         <a href="https://x.com/r69shabh" target="_blank" style="color:var(--text-faint);"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
-  <div class="modal-window">
-    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
-    <div class="modal-crown">👑</div>
-    <div class="modal-title">Claim the Throne</div>
-    <div class="modal-sub">Pay $1 · Be #1</div>
+<!-- INFO / FAQ MODAL -->
+<div class="modal-backdrop" id="infoModal">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-header">
+      <div class="modal-title">About Brand My Setup</div>
+      <button class="close-btn" onclick="closeInfoModal()">&times;</button>
+    </div>
+    <div class="modal-body" style="line-height:1.6;font-size:14px;color:#cbd5e1;gap:14px;">
+      <p><strong>How does physical sponsorship work?</strong><br>
+      When you sponsor a spot on my desk setup, I print a high-durability, die-cut vinyl sticker (or artisan keycap cover) and apply it directly to my real hardware.</p>
+      
+      <p><strong>Where will my brand be seen?</strong><br>
+      This setup is my daily driver for building startups. Your brand appears in all build-in-public posts, desk photos, coding videos, YouTube content, and coffee shop working sessions.</p>
 
-    <div class="form-group">
-      <label class="form-label" for="inName">Name *</label>
-      <input class="form-input" id="inName" type="text" placeholder="e.g. Rishabh" maxlength="40" autocomplete="name">
+      <p><strong>What do I get online?</strong><br>
+      Your brand is pinned directly onto the interactive setup visualizer on <strong>tinyspot.lol</strong> with do-follow outbound links and high-priority listing in the official sponsors directory.</p>
     </div>
-    <div class="form-group">
-      <label class="form-label" for="inUrl">Link</label>
-      <input class="form-input" id="inUrl" type="url" placeholder="https://yourdomain.com" maxlength="200">
-    </div>
-    <div class="form-group">
-      <label class="form-label" for="inTagline">Message / Tagline (optional)</label>
-      <input class="form-input" id="inTagline" type="text" placeholder="e.g. Proud sponsor of chaos" maxlength="100">
-    </div>
-
-    <div class="modal-price-row">
-      <div class="modal-price-label">💰 You pay</div>
-      <div class="modal-price-val">$1.00</div>
-    </div>
-
-    <div class="modal-err" id="modalErr"></div>
-    <button class="btn-pay" id="payBtn" onclick="submitBid()">Pay $1 & Claim Throne 👑</button>
   </div>
 </div>
 
-<div id="toast"></div>
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span>🎉</span>
+  <span id="toastMsg">Spot successfully claimed!</span>
+</div>
 
 <script>
-(() => {
-  'use strict';
+  let spotsData = [];
+  let currentSelectedSpot = null;
 
-  const $ = (id) => document.getElementById(id);
-
-  // ---------- data state ----------
-  let LB = null;
-
-  // ---------- utils ----------
-  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-
-  function timeAgo(ts) {
-    if (!ts) return '';
-    const s = Math.floor(Date.now() / 1000) - ts;
-    if (s < 5) return 'just now';
-    if (s < 60) return `${s}s ago`;
-    if (s < 3600) return `${Math.floor(s / 60)}m ago`;
-    if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
-    return `${Math.floor(s / 86400)}d ago`;
-  }
-
-  function faviconUrl(urlStr) {
+  async function loadSpots() {
     try {
-      const u = new URL(urlStr.startsWith('http') ? urlStr : 'https://' + urlStr);
-      return `https://unavatar.io/${u.hostname}?fallback=false`; // unavatar is more reliable, otherwise it errors and we fallback to initial
-    } catch { return null; }
-  }
-
-  function avatarHTML(name, url, sizeClass) {
-    const initial = (name || '?')[0].toUpperCase();
-    if (url) {
-      let hostname = url.replace(/^https?:\/\//, '').split('/')[0];
-      const fav = `https://www.google.com/s2/favicons?domain=${hostname}&sz=128`;
-      const fallback = `this.style.display='none'; this.nextElementSibling.style.display='flex';`;
-      return `<img src="${fav}" alt="" style="width:100%; height:100%; object-fit:contain; border-radius:inherit;" onerror="${fallback}"><span class="${sizeClass === 'king' ? 'king-initial' : 'hof-initial'}" style="display:none; align-items:center; justify-content:center; width:100%; height:100%;">${esc(initial)}</span>`;
+      const res = await fetch('/api/spots');
+      const data = await res.json();
+      spotsData = data.spots || [];
+      renderBoard(data);
+    } catch (e) {
+      console.error('Failed to load setup spots:', e);
     }
-    return `<span class="${sizeClass === 'king' ? 'king-initial' : 'hof-initial'}" style="display:flex; align-items:center; justify-content:center; width:100%; height:100%;">${esc(initial)}</span>`;
   }
 
-  // ---------- render ----------
-  function renderKing(king) {
-    const card = $('kingCard');
-    if (!king) {
-      card.innerHTML = `
-        <div class="empty-throne">
-          <div class="big-emoji">🪑</div>
-          <div class="empty-title">The throne is empty!</div>
-          <div class="empty-sub">Be the first king for just $1</div>
-        </div>`;
-      
+  function renderBoard(data) {
+    const { spots, stats } = data;
+
+    // Header stats & progress
+    document.getElementById('onlineCount').innerText = stats.online_count || 1;
+    document.getElementById('viewCount').innerText = stats.view_count || '1,000+';
+    document.getElementById('claimedMeta').innerText = `${stats.claimed_spots} of ${stats.total_spots} Spots Claimed`;
+    document.getElementById('raisedMeta').innerText = `$${(stats.total_raised_cents / 100).toFixed(0)} Raised`;
+
+    const percent = Math.round((stats.claimed_spots / (stats.total_spots || 1)) * 100);
+    document.getElementById('progressFill').style.width = `${percent}%`;
+
+    // Render individual spot slots
+    spots.forEach(spot => {
+      const el = document.getElementById(spot.id);
+      if (!el) return;
+
+      const priceFmt = `$${(spot.price_cents / 100).toFixed(0)}`;
+      if (spot.status === 'paid') {
+        el.classList.add('claimed');
+        el.classList.remove('sponsorable');
+        const logoSrc = spot.sponsor_logo_url || `https://www.google.com/s2/favicons?domain=${spot.sponsor_url}&sz=128`;
+        el.innerHTML = `
+          <img class="claimed-logo" src="${logoSrc}" alt="${spot.sponsor_name}">
+          <span class="claimed-name">${spot.sponsor_name}</span>
+        `;
+        el.title = `${spot.name} — Sponsored by ${spot.sponsor_name}: "${spot.sponsor_tagline || ''}"`;
+      } else {
+        el.classList.remove('claimed');
+        if (spot.category === 'keyboard') {
+          el.classList.add('sponsorable');
+          el.innerHTML = `<span>${spot.name.replace(' Key', '')}</span><span class="key-tag">${priceFmt}</span>`;
+        } else {
+          el.innerHTML = `<span class="slot-label">${spot.name}</span><span class="slot-badge-price">${priceFmt}</span>`;
+        }
+        el.title = `Available: ${spot.name} (${priceFmt})`;
+      }
+    });
+
+    // Render Sponsors Roster
+    const paidSpots = spots.filter(s => s.status === 'paid');
+    const rosterEl = document.getElementById('sponsorsList');
+    if (paidSpots.length === 0) {
+      rosterEl.innerHTML = `
+        <div class="sponsor-card" style="grid-column: 1 / -1; justify-content: center; text-align: center; color: var(--text-muted); padding: 32px;">
+          Be the first to claim a spot on the setup! Pick any spot above to sponsor.
+        </div>
+      `;
+    } else {
+      rosterEl.innerHTML = paidSpots.map(s => {
+        const logoSrc = s.sponsor_logo_url || `https://www.google.com/s2/favicons?domain=${s.sponsor_url}&sz=128`;
+        return `
+          <a class="sponsor-card" href="${s.sponsor_url || '#'}" target="_blank" rel="noopener noreferrer">
+            <div class="sponsor-avatar">
+              <img src="${logoSrc}" alt="${s.sponsor_name}">
+            </div>
+            <div class="sponsor-meta">
+              <div class="sponsor-card-name">${s.sponsor_name}</div>
+              <div class="sponsor-card-slot">Sponsored ${s.name}</div>
+              <div class="sponsor-card-tagline">${s.sponsor_tagline || s.subtitle}</div>
+            </div>
+          </a>
+        `;
+      }).join('');
+    }
+  }
+
+  function selectSpot(spotId) {
+    const spot = spotsData.find(s => s.id === spotId);
+    if (!spot) return;
+
+    if (spot.status === 'paid') {
+      if (spot.sponsor_url) window.open(spot.sponsor_url, '_blank');
       return;
     }
-    
-    const link = king.payer_url ? `<a class="king-url" href="${esc(king.payer_url)}" target="_blank" rel="noopener">${esc(king.payer_url.replace(/^https?:\/\//, ''))}</a>` : '';
-    const tagline = king.payer_tagline ? `<div class="king-tagline">${esc(king.payer_tagline)}</div>` : '';
-    card.innerHTML = `
-      <div class="king-card-inner">
-        <div class="king-avatar" style="position:relative;">
-          <div style="position:absolute; top:-16px; left:-16px; transform:rotate(-20deg); font-size:36px; z-index:10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">👑</div>
-          ${avatarHTML(king.payer_name, king.payer_url, 'king')}
-        </div>
-        <div class="king-info">
-          <div class="king-name">${esc(king.payer_name || 'Anonymous')}</div>
-          ${link}
-          ${tagline}
-          <div class="king-time">${timeAgo(king.paid_at)}</div>
-        </div>
-      </div>`;
+
+    currentSelectedSpot = spot;
+    document.getElementById('modalSpotName').innerText = spot.name;
+    document.getElementById('modalPreviewSlot').innerText = spot.name;
+    const priceFmt = `$${(spot.price_cents / 100).toFixed(0)}`;
+    document.getElementById('modalPreviewPrice').innerText = priceFmt;
+    document.getElementById('modalBtnPrice').innerText = priceFmt;
+
+    updateLivePreview();
+    document.getElementById('claimModal').classList.add('open');
   }
 
-  function renderHof(hof, currentKingId) {
-    const list = $('hofList');
-    const title = $('hofTitle');
-    const past = hof.filter((b, i) => i > 0);
-    if (past.length === 0) { title.style.display = 'none'; list.innerHTML = ''; return; }
-    title.style.display = 'block';
-    list.innerHTML = past.map((b, i) => {
-      const link = b.payer_url ? `<a href="${esc(b.payer_url)}" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none;font-size:13.5px; display:block; margin-top:3px; font-weight:700;">${esc(b.payer_url.replace(/^https?:\/\//, ''))}</a>` : '';
-      const sub = b.payer_tagline ? `<div style="font-size:13.5px; color:var(--text-sub); margin-top:5px; font-weight:700; line-height:1.4;">${esc(b.payer_tagline)}</div>` : '';
-      return `
-        <li class="hof-card">
-          <div class="hof-rank">${i + 2}</div>
-          <div class="hof-avatar">${avatarHTML(b.payer_name, b.payer_url, 'hof')}</div>
-          <div class="hof-info">
-            <div class="hof-name">${esc(b.payer_name || 'Anonymous')}</div>
-            ${link}
-            ${sub}
-          </div>
-          <div class="hof-time">${timeAgo(b.paid_at)}</div>
-        </li>`;
-    }).join('');
+  function updateLivePreview() {
+    const name = document.getElementById('sponsorName').value.trim() || 'Your Brand';
+    const url = document.getElementById('sponsorUrl').value.trim();
+    const customLogo = document.getElementById('sponsorLogoUrl').value.trim();
+
+    document.getElementById('modalPreviewName').innerText = name;
+
+    let logoSrc = '/logo.png';
+    if (customLogo) {
+      logoSrc = customLogo;
+    } else if (url) {
+      try {
+        const domain = new URL(url.startsWith('http') ? url : 'https://' + url).hostname;
+        logoSrc = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+      } catch {}
+    }
+    document.getElementById('modalPreviewImg').src = logoSrc;
   }
 
-  function renderStats(lb) {
-    if (!lb) return;
-    const oc = lb.online_count || 1;
-    const vc = (lb.view_count || 0) + 1000;
-    $('onlineCount').textContent = oc;
-    $('viewCount').textContent = vc;
-  }
+  async function submitClaim() {
+    if (!currentSelectedSpot) return;
 
-  // ---------- load ----------
-  async function load() {
-    try {
-      const r = await fetch('/api/leaderboard');
-      if (!r.ok) return;
-      LB = await r.json();
-      renderKing(LB.current_king);
-      renderHof(LB.hall_of_fame, LB.current_king?.id);
-      renderStats(LB);
-    } catch (e) { console.warn('load error', e); }
-  }
+    const name = document.getElementById('sponsorName').value.trim();
+    if (!name) {
+      alert('Please enter your Brand / Sponsor Name.');
+      return;
+    }
 
-  // ---------- modal ----------
+    const url = document.getElementById('sponsorUrl').value.trim();
+    const tagline = document.getElementById('sponsorTagline').value.trim();
+    const customLogo = document.getElementById('sponsorLogoUrl').value.trim();
 
-  window.openInfoModal = function() {
-    $('infoModalOverlay').classList.add('open');
-  };
-  window.closeInfoModal = function() {
-    $('infoModalOverlay').classList.remove('open');
-  };
-  $('infoModalOverlay').addEventListener('click', (e) => { if (e.target === $('infoModalOverlay')) closeInfoModal(); });
-
-  window.openModal = function() {
-    $('modalOverlay').classList.add('open');
-    $('modalErr').textContent = '';
-    setTimeout(() => $('inName').focus(), 80);
-  };
-  window.closeModal = function() {
-    $('modalOverlay').classList.remove('open');
-  };
-  $('modalOverlay').addEventListener('click', (e) => { if (e.target === $('modalOverlay')) closeModal(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-
-  // ---------- submit ----------
-  window.submitBid = async function() {
-    const name = $('inName').value.trim();
-    if (!name) { $('modalErr').textContent = 'Enter your name to claim the throne'; return; }
-
-    $('payBtn').disabled = true;
-    $('payBtn').textContent = 'Processing…';
-    $('modalErr').textContent = '';
+    const btn = document.getElementById('btnSubmitClaim');
+    btn.disabled = true;
+    btn.innerText = 'Creating Checkout...';
 
     try {
-      const r = await fetch('/api/bid', {
+      const res = await fetch('/api/claim', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ payer_name: name, payer_url: $('inUrl').value.trim(), payer_tagline: $('inTagline').value.trim() }),
+        body: JSON.stringify({
+          spot_id: currentSelectedSpot.id,
+          sponsor_name: name,
+          sponsor_url: url,
+          sponsor_tagline: tagline,
+          sponsor_logo_url: customLogo,
+        }),
       });
-      const data = await r.json();
-      if (!r.ok) { $('modalErr').textContent = data.detail || data.error || 'Error, please try again'; return; }
-
-      if (data.type === 'dodo' || data.type === 'stripe' || data.type === 'nowpayments') {
-        window.location.href = data.checkout_url;
+      const data = await res.json();
+      if (!res.ok || !data.checkout_url) {
+        alert(data.detail || data.error || 'Failed to create checkout session.');
+        btn.disabled = false;
+        btn.innerText = 'Sponsor This Spot';
         return;
       }
-
-      // demo pay
-      const pay = await fetch('/api/demo-pay', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ bid_id: data.bid_id }) });
-      const pr = await pay.json();
-      if (!pay.ok) throw new Error(pr.error || 'Payment failed');
-
-      closeModal();
-      await load();
-      toast('👑 You\'re the king! Rule until someone dethrones you.', 'success', 5000);
+      window.location.href = data.checkout_url;
     } catch (e) {
-      $('modalErr').textContent = 'Network error. Please try again.';
-    } finally {
-      $('payBtn').disabled = false;
-      $('payBtn').textContent = 'Pay $1 & Claim Throne 👑';
+      alert('Network error initiating checkout: ' + e.message);
+      btn.disabled = false;
+      btn.innerText = 'Sponsor This Spot';
     }
-  };
-
-  // ---------- toast ----------
-  function toast(msg, type = '', dur = 4000) {
-    let t = $('toast');
-    t.className = type ? `show toast-${type}` : 'show';
-    t.textContent = msg;
-    clearTimeout(t._t);
-    t._t = setTimeout(() => t.classList.remove('show'), dur);
   }
 
-  // ---------- payment return ----------
-  const q = new URLSearchParams(location.search);
-  const sid = q.get('session_id') || q.get('payment_id') || q.get('invoice_id') || q.get('bid_id');
-  const isPaid = q.get('paid') === '1' || !!sid;
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    event.currentTarget.classList.add('active');
 
-  if (isPaid) {
-    toast('⏳ Syncing your throne claim…', 'syncing', 9000);
-    (async () => {
-      const confirmParam = q.get('bid_id')
-        ? `bid_id=${encodeURIComponent(q.get('bid_id'))}`
-        : (q.get('payment_id') || q.get('invoice_id')
-            ? `payment_id=${encodeURIComponent(sid)}`
-            : (sid ? `session_id=${encodeURIComponent(sid)}` : 'paid=1'));
-      for (let i = 0; i < 7; i++) {
-        try { const r = await fetch(`/api/confirm?${confirmParam}`); const d = await r.json(); if (d.paid) break; } catch {}
-        await new Promise(r => setTimeout(r, 1200));
+    const macSec = document.getElementById('section-macbook');
+    const keySec = document.getElementById('section-keyboard');
+    const mouseSec = document.getElementById('section-mouse');
+
+    if (tab === 'all') {
+      macSec.style.display = 'block';
+      keySec.style.display = 'block';
+      mouseSec.style.display = 'block';
+    } else if (tab === 'macbook') {
+      macSec.style.display = 'block';
+      keySec.style.display = 'none';
+      mouseSec.style.display = 'none';
+    } else if (tab === 'keyboard') {
+      macSec.style.display = 'none';
+      keySec.style.display = 'block';
+      mouseSec.style.display = 'none';
+    } else if (tab === 'mouse') {
+      macSec.style.display = 'none';
+      keySec.style.display = 'none';
+      mouseSec.style.display = 'block';
+    }
+  }
+
+  function closeClaimModal() {
+    document.getElementById('claimModal').classList.remove('open');
+  }
+
+  function openInfoModal() {
+    document.getElementById('infoModal').classList.add('open');
+  }
+  function closeInfoModal() {
+    document.getElementById('infoModal').classList.remove('open');
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastMsg').innerText = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5000);
+  }
+
+  // Check URL params for post-payment confirmation
+  function checkPaymentReturn() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('paid') === '1') {
+      showToast('🎉 Payment complete! Your spot is being applied.');
+      const orderId = params.get('order_id');
+      const spotId = params.get('spot_id');
+      if (orderId || spotId) {
+        fetch(`/api/confirm?order_id=${encodeURIComponent(orderId || '')}&spot_id=${encodeURIComponent(spotId || '')}`)
+          .then(() => loadSpots());
       }
-      await load();
-      toast('👑 You\'re the king! Reign until someone dethrones you.', 'success', 6000);
-      try { history.replaceState(null, '', window.location.pathname); } catch {}
-    })();
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
   }
 
-  // ---------- real-time presence ----------
+  // Live presence connection
   function connectPresence() {
     try {
       const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
       const ws = new WebSocket(`${proto}//${location.host}/api/presence`);
       ws.onmessage = (e) => {
         try {
-          const data = JSON.parse(e.data);
-          if (data.type === 'presence') {
-            if (typeof data.online !== 'undefined') $('onlineCount').textContent = data.online;
-            if (typeof data.views !== 'undefined') {
-              $('viewCount').textContent = data.views + 1000;
-            }
+          const d = JSON.parse(e.data);
+          if (d.type === 'presence') {
+            if (d.online) document.getElementById('onlineCount').innerText = d.online;
+            if (d.views) document.getElementById('viewCount').innerText = d.views;
           }
         } catch {}
       };
-      ws.onclose = () => setTimeout(connectPresence, 3000 + Math.random() * 2000);
-      ws.onerror = () => { try { ws.close(); } catch {} };
-    } catch (e) { console.warn('WS presence not available'); }
+      ws.onclose = () => setTimeout(connectPresence, 4000);
+    } catch {}
   }
 
-  // refresh time-ago labels every 30s without full reload
-  setInterval(() => {
-    if (!LB) return;
-    if (LB.current_king) renderKing(LB.current_king);
-    if (LB.hall_of_fame) renderHof(LB.hall_of_fame, LB.current_king?.id);
-  }, 30000);
-
-  // ---------- boot ----------
-  load();
-  setInterval(load, 10000);
-  connectPresence();
-})();
+  window.addEventListener('DOMContentLoaded', () => {
+    loadSpots();
+    checkPaymentReturn();
+    connectPresence();
+  });
 </script>
 </body>
 </html>
